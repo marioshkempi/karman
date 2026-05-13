@@ -232,7 +232,7 @@ export async function newProductsGetProducts(
   sortBy: string = "created_at:desc"
 ) {
   console.log("eeeeeeeeeeeee")
-  console.log(process.env.NEXT_PUBLIC_TYPESENSE_URL)
+  console.log("TESTING DEV: " + process.env.NEXT_PUBLIC_TYPESENSE_URL)
   // get threshold days from settings
   const newProductThreshold = await getSiteSetting("new_product_threshold")
   const thresholdDays = Number(newProductThreshold || 0)
