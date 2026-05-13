@@ -1,0 +1,94 @@
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+
+import { getCollectionByHandle, listCollections } from "@lib/data/collections"
+import { listRegions } from "@lib/data/regions"
+import { StoreCollection, StoreRegion } from "@medusajs/types"
+import CollectionTemplate from "@modules/collections/templates"
+import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { getBannersByHook } from "@lib/data/banner"
+
+type Props = {
+  params: Promise<{ handle: string;  }>
+  searchParams: Promise<{
+    page?: string
+    sortBy?: SortOptions
+  }>
+}
+
+export async function generateStaticParams() {
+  const { collections } = await listCollections({
+    fields: "*products",
+  })
+
+  if (!collections) {
+    return []
+  }
+
+  const countryCodes = await listRegions().then(
+    (regions: StoreRegion[]) =>
+      regions
+        ?.map((r) => r.countries?.map((c) => c.iso_2))
+        .flat()
+        .filter(Boolean) as string[]
+  )
+
+  const collectionHandles = collections.map(
+    (collection: StoreCollection) => collection.handle
+  )
+
+  const staticParams = countryCodes
+    ?.map(() =>
+      collectionHandles.map((handle: string | undefined) => ({
+        handle,
+      }))
+    )
+    .flat()
+
+  return staticParams
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params
+  const collection = await getCollectionByHandle(params.handle)
+
+  if (!collection) {
+    notFound()
+  }
+
+  const metadata = {
+    title: `${collection.title}`,
+    description: `${collection.title} collection`,
+  } as Metadata
+
+  return metadata
+}
+
+export default async function CollectionPage(props: Props) {
+  const searchParams = await props.searchParams
+  const params = await props.params
+  const { sortBy, page } = searchParams
+
+  const collection = await getCollectionByHandle(params.handle).then(
+    (collection: StoreCollection) => collection
+  )
+
+  if (!collection) {
+    notFound()
+  }
+
+  // Fetch banners for category pages
+  const { banners: topBanners } = await getBannersByHook("category-top")
+  const { banners: sidebarBanners } = await getBannersByHook("category-sidebar")
+
+  return (
+    <CollectionTemplate
+      collection={collection}
+      page={page}
+      sortBy={sortBy}
+      topBanners={topBanners}
+      sidebarBanners={sidebarBanners}
+      // countryCode={params.countryCode}
+    />
+  )
+}
