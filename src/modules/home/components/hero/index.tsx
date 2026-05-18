@@ -2,7 +2,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
+    <section className="relative w-full h-[400px] md:h-[480px] lg:h-[540px] overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -10,8 +10,8 @@ export default function HeroSection() {
           alt="Luxury car on the road"
           className="w-full h-full object-cover object-center"
         />
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/20" />
+        {/* Subtle dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/15" />
       </div>
 
       {/* Content Overlay */}
@@ -19,14 +19,14 @@ export default function HeroSection() {
         <div className="max-w-[1350px] w-full mx-auto px-6">
           <div className="flex flex-col items-center text-center">
             {/* Main Heading - Italic style */}
-            <h1 className="text-white text-[28px] md:text-[40px] lg:text-[52px] font-light italic leading-tight mb-4 text-balance">
+            <h1 className="text-white text-[28px] md:text-[40px] lg:text-[52px] font-light italic leading-tight mb-4 drop-shadow-lg text-balance">
               Φροντίδα & στυλ για κάθε
               <br />
               σας διαδρομή
             </h1>
 
             {/* Subheading */}
-            <p className="text-white/80 text-[14px] md:text-[16px] lg:text-[18px] font-light leading-relaxed mb-8 max-w-[600px] text-balance">
+            <p className="text-white/85 text-[14px] md:text-[16px] lg:text-[18px] font-light leading-relaxed mb-8 max-w-[600px] drop-shadow text-balance">
               Προϊόντα που αναδεικνύουν την άνεση και την
               <br className="hidden md:block" />
               προσωπικότητα του αυτοκινήτου σας
@@ -35,7 +35,7 @@ export default function HeroSection() {
             {/* CTA Button */}
             <LocalizedClientLink
               href="/store"
-              className="inline-flex items-center justify-center bg-white text-secondary px-8 py-3 rounded-full text-[14px] md:text-[15px] font-medium hover:bg-gray-100 transition-colors duration-200"
+              className="inline-flex items-center justify-center bg-white text-secondary px-8 py-3 rounded-full text-[14px] md:text-[15px] font-medium hover:bg-gray-100 transition-colors duration-200 shadow-md"
             >
               Όλα τα προϊόντα
             </LocalizedClientLink>

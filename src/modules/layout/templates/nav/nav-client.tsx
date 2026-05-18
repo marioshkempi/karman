@@ -104,40 +104,38 @@ export default function NavbarClient({
     return () => clearTimeout(timeout)
   }, [query])
 
-  // Navigation items for the sub-menu
-  const subNavItems = [
+  // Navigation items for the main blue nav bar
+  const mainNavItems = [
     { label: "Κατηγορίες προϊόντων", href: "/categories", hasIcon: true },
     { label: "Δημοφιλή προϊόντα", href: "/best-selling" },
     { label: "Σχετικά με μας", href: "/about" },
-    { label: "Blog", href: "/blog" },
     { label: "Επικοινωνία", href: "/contact-us" },
   ]
 
   return (
     <>
       <div className="relative">
-        {/* Tier 2: White Main Header Row */}
-        <div className="bg-white border-b border-gray-200">
+        {/* Main Blue Navigation Bar */}
+        <div className="bg-navblue">
           <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
             {/* Mobile Top Bar */}
             <div className="flex lg:hidden items-center justify-between h-14">
               <div className="flex items-center gap-3">
                 <Button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="p-2 text-secondary hover:text-primary bg-transparent border-none shadow-none"
+                  className="p-2 text-white hover:text-white/80 bg-transparent border-none shadow-none"
                 >
                   {isMobileMenuOpen ? (
                     <X size={28} />
                   ) : (
-                    <Menu size={28} className="text-secondary" />
+                    <Menu size={28} className="text-white" />
                   )}
                 </Button>
                 <LocalizedClientLink href="/">
-                  <Logo
-                    width={35}
-                    height={35}
-                    src={headerLogo}
-                    classNameImage={"w-[100px]"}
+                  <img 
+                    src="/logo.png" 
+                    alt="Karman Logo" 
+                    className="h-8 w-auto"
                   />
                 </LocalizedClientLink>
               </div>
@@ -145,7 +143,7 @@ export default function NavbarClient({
               <div className="flex items-center gap-2">
                 <LocalizedClientLink
                   href="/account/wishlist"
-                  className="relative flex items-center p-2 text-secondary hover:text-primary"
+                  className="relative flex items-center p-2 text-white hover:text-white/80"
                 >
                   <Heart size={22} />
                   {wishlistCount > 0 && (
@@ -156,7 +154,7 @@ export default function NavbarClient({
                 </LocalizedClientLink>
                 <LocalizedClientLink
                   href="/cart"
-                  className="relative flex items-center p-2 text-secondary hover:text-primary"
+                  className="relative flex items-center p-2 text-white hover:text-white/80"
                 >
                   <ShoppingCart size={22} />
                   {cartItemsCount > 0 && (
@@ -168,136 +166,75 @@ export default function NavbarClient({
               </div>
             </div>
 
-            {/* Desktop Main Header */}
-            <div className="hidden lg:flex items-center justify-between h-[60px]">
-              {/* Left Group: Logo + My Garage */}
-              <div className="flex items-center gap-4">
+            {/* Desktop Main Navigation */}
+            <div className="hidden lg:flex items-center justify-between h-[56px]">
+              {/* Left Group: Logo + Nav Items */}
+              <div className="flex items-center gap-6">
                 <LocalizedClientLink href="/">
-                  <Logo 
-                    width={50} 
-                    height={50} 
-                    src={headerLogo} 
-                    classNameImage="w-[120px]"
+                  <img 
+                    src="/logo.png" 
+                    alt="Karman Logo" 
+                    className="h-8 w-auto"
                   />
                 </LocalizedClientLink>
 
-                {/* My Garage Button */}
-                <LocalizedClientLink
-                  href="/my-garage"
-                  className="flex items-center gap-2 bg-navblue text-white px-4 py-2 rounded text-[13px] font-medium hover:bg-primary2 transition-colors"
-                >
-                  <Car size={18} />
-                  <span>My Garage</span>
-                </LocalizedClientLink>
+                {/* Navigation Items */}
+                <nav className="flex items-center gap-1">
+                  {mainNavItems.map((item, index) => (
+                    <LocalizedClientLink
+                      key={index}
+                      href={item.href}
+                      className="flex items-center gap-1.5 px-3 py-2 text-white text-[14px] hover:text-white/80 transition-colors"
+                    >
+                      {item.hasIcon && (
+                        <Menu size={16} className="text-white" />
+                      )}
+                      {item.label}
+                    </LocalizedClientLink>
+                  ))}
+                </nav>
               </div>
 
-              {/* Search Bar */}
-              <div className="relative flex-1 max-w-[400px] mx-6">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onFocus={() => query.trim() && setOpen(true)}
-                    className="w-full h-[40px] pl-4 pr-12 bg-gray-100 border border-gray-200 rounded text-[13px] placeholder:text-gray-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-                  />
-                  <button className="absolute right-0 top-0 h-full px-4 flex items-center justify-center text-gray-500 hover:text-primary">
-                    <Search size={18} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Right Group: Account, Wishlist, Cart */}
+              {/* Right Group: Search Bar, Wishlist, Cart */}
               <div className="flex items-center gap-4">
-                {/* Account */}
-                <LocalizedClientLink
-                  href="/account"
-                  className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
-                >
-                  <div className="w-9 h-9 rounded-full bg-navblue flex items-center justify-center">
-                    <User size={18} className="text-white" />
+                {/* Search Bar */}
+                <div className="relative">
+                  <div className="flex items-center bg-white/10 border border-white/30 rounded-md overflow-hidden">
+                    <div className="flex items-center justify-center pl-3 text-white/70">
+                      <Search size={16} />
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      onFocus={() => query.trim() && setOpen(true)}
+                      className="w-[220px] h-[36px] px-3 bg-transparent text-white text-[13px] placeholder:text-white/60 focus:outline-none"
+                    />
                   </div>
-                  <div className="text-[12px] leading-tight">
-                    <span className="text-gray-500">Σύνδεση</span>
-                    <br />
-                    <span className="font-medium text-secondary">Λογαριασμού</span>
-                  </div>
-                </LocalizedClientLink>
-
-                {/* Wishlist with arrows */}
-                <div className="flex items-center gap-1">
-                  <button className="p-1 text-gray-400 hover:text-primary">
-                    <ChevronLeft size={14} />
-                  </button>
-                  <LocalizedClientLink
-                    href="/account/wishlist"
-                    className="relative flex items-center text-secondary hover:text-primary transition-colors"
-                  >
-                    <Heart size={24} />
-                    <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-0.5 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-bold leading-none">
-                      {wishlistCount}
-                    </span>
-                  </LocalizedClientLink>
-                  <button className="p-1 text-gray-400 hover:text-primary">
-                    <ChevronRight size={14} />
-                  </button>
                 </div>
+
+                {/* Wishlist */}
+                <LocalizedClientLink
+                  href="/account/wishlist"
+                  className="relative flex items-center text-white hover:text-white/80 transition-colors"
+                >
+                  <Heart size={22} />
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[16px] h-[16px] px-0.5 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-bold leading-none">
+                    {wishlistCount}
+                  </span>
+                </LocalizedClientLink>
 
                 {/* Cart */}
                 <LocalizedClientLink
                   href="/cart"
-                  className="relative flex items-center text-secondary hover:text-primary transition-colors"
+                  className="relative flex items-center text-white hover:text-white/80 transition-colors"
                 >
-                  <ShoppingCart size={26} />
-                  <span className="absolute -top-1 -right-2 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-bold leading-none">
+                  <ShoppingCart size={24} />
+                  <span className="absolute -top-1.5 -right-2 min-w-[16px] h-[16px] px-0.5 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-bold leading-none">
                     {cartItemsCount}
                   </span>
                 </LocalizedClientLink>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tier 3: White Sub-Menu Row */}
-        <div className="hidden lg:block bg-white border-b border-gray-200">
-          <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
-            <div className="flex items-center justify-between h-[44px]">
-              {/* Left: Sub-menu items */}
-              <div className="flex items-center gap-1">
-                {subNavItems.map((item, index) => (
-                  <LocalizedClientLink
-                    key={index}
-                    href={item.href}
-                    className="flex items-center gap-1.5 px-3 py-2 text-secondary text-[14px] hover:text-primary transition-colors"
-                  >
-                    {item.hasIcon && (
-                      <Menu size={16} className="text-secondary" />
-                    )}
-                    {item.label}
-                  </LocalizedClientLink>
-                ))}
-              </div>
-
-              {/* Right: Best Seller Sale tag */}
-              <div className="flex items-center gap-2">
-                <span className="text-[14px] font-medium text-secondary">Best Seller</span>
-                <span className="bg-red-500 text-white text-[11px] font-bold px-2 py-0.5 rounded">Sale</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tier 4: Faint Grey Promo Text Row */}
-        <div className="hidden lg:block bg-gray-50 border-b border-gray-100">
-          <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
-            <div className="flex items-center h-[32px] overflow-hidden">
-              <div className="flex items-center gap-4 text-[12px] text-gray-500 whitespace-nowrap">
-                <span>FREE + ΔΩΡΕΑΝ Μεταφορικά για 1-3 συνεχόμενες παραγγελίες.</span>
-                <span className="text-gray-300">|</span>
-                <span>Κερδίστε 10€ για αγορές άνω των 100€</span>
-                <span className="text-gray-300">|</span>
-                <span>Αγοράστε το σετ Δισκόφρενα + Τακάκια και κερδίστε -15% στο σύνολο + ΔΩΡΟ ένα κιτ...</span>
               </div>
             </div>
           </div>
@@ -319,19 +256,21 @@ export default function NavbarClient({
         />
 
         {/* Mobile Search */}
-        <div className="relative lg:hidden py-3 px-4 bg-white border-b border-gray-200">
+        <div className="relative lg:hidden py-3 px-4 bg-navblue border-b border-white/10">
           <div className="relative">
-            <input
-              type="text"
-              placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onFocus={() => query.trim() && setOpen(true)}
-              className="w-full h-[40px] pl-4 pr-12 bg-gray-100 border border-gray-200 rounded text-[13px] placeholder:text-gray-400 focus:outline-none focus:border-primary"
-            />
-            <button className="absolute right-0 top-0 h-full px-4 flex items-center justify-center text-gray-500">
-              <Search size={18} />
-            </button>
+            <div className="flex items-center bg-white/10 border border-white/30 rounded-md overflow-hidden">
+              <div className="flex items-center justify-center pl-3 text-white/70">
+                <Search size={16} />
+              </div>
+              <input
+                type="text"
+                placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onFocus={() => query.trim() && setOpen(true)}
+                className="w-full h-[40px] px-3 bg-transparent text-white text-[13px] placeholder:text-white/60 focus:outline-none"
+              />
+            </div>
           </div>
         </div>
 
