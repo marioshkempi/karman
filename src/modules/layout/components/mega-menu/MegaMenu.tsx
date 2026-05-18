@@ -96,7 +96,7 @@ export default function MegaMenu({
             className={`flex items-center gap-2 px-3 py-2 rounded-md text-[14px] font-medium transition-colors duration-200
               ${isCategoriesOpen 
                 ? "bg-orange text-white" 
-                : "bg-transparent text-gray-700 hover:bg-orange hover:text-white"
+                : "bg-transparent text-white hover:bg-orange hover:text-white"
               }`}
           >
             <Menu size={18} />
@@ -142,7 +142,7 @@ export default function MegaMenu({
           <Link
             key={index}
             href={item.href}
-            className="px-3 py-2 text-[14px] text-gray-700 hover:text-primary transition-colors whitespace-nowrap"
+            className="px-3 py-2 text-[14px] text-white hover:text-white/80 transition-colors whitespace-nowrap"
           >
             {item.label}
           </Link>

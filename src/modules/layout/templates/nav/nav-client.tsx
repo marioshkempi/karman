@@ -115,8 +115,8 @@ export default function NavbarClient({
   return (
     <>
       <div className="relative">
-        {/* Single White Navigation Bar - Desktop */}
-        <div className="hidden lg:block bg-white border-b border-gray-200">
+        {/* Single Blue Gradient Navigation Bar - Desktop */}
+        <div className="hidden lg:block bg-gradient-to-r from-[#283882] via-[#007BFF] to-[#283882]">
           <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
             <div className="flex items-center justify-between h-[64px]">
               {/* Left Group: Logo + Navigation Menu */}
@@ -141,10 +141,10 @@ export default function NavbarClient({
               </div>
 
               {/* Right Group: Search Bar + Wishlist + Cart */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-6">
                 {/* Search Bar */}
                 <div className="relative">
-                  <div className="flex items-center bg-gray-100 border border-gray-300 rounded-md overflow-hidden">
+                  <div className="flex items-center bg-white rounded-md overflow-hidden">
                     <div className="flex items-center justify-center pl-3 text-gray-500">
                       <Search size={18} />
                     </div>
@@ -162,21 +162,23 @@ export default function NavbarClient({
                 {/* Wishlist */}
                 <LocalizedClientLink
                   href="/account/wishlist"
-                  className="relative flex items-center text-gray-700 hover:text-primary transition-colors"
+                  className="relative flex items-center text-white hover:text-white/80 transition-colors"
                 >
                   <Heart size={24} />
-                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-bold leading-none">
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-[#5B9AFF] text-white text-[10px] font-bold leading-none">
                     {wishlistCount}
                   </span>
                 </LocalizedClientLink>
 
-                {/* Cart */}
+                {/* Cart with circular background */}
                 <LocalizedClientLink
                   href="/cart"
-                  className="relative flex items-center text-gray-700 hover:text-primary transition-colors"
+                  className="relative flex items-center"
                 >
-                  <ShoppingCart size={24} />
-                  <span className="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-bold leading-none">
+                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F2F4F8]">
+                    <ShoppingCart size={20} className="text-[#283882]" />
+                  </div>
+                  <span className="absolute -top-0.5 -right-1 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-bold leading-none">
                     {cartItemsCount}
                   </span>
                 </LocalizedClientLink>
