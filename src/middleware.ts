@@ -31,47 +31,61 @@ async function getRegionMap(cacheId: string) {
   const { regionMap, regionMapUpdated } = regionMapCache
 
   if (!BACKEND_URL) {
-    throw new Error(
-      "Middleware.ts: Error fetching regions. Did you set up regions in your Medusa Admin and define a MEDUSA_BACKEND_URL environment variable?"
-    )
+    // Return a default region map with Greece if no backend URL
+    const defaultMap = new Map<string, HttpTypes.StoreRegion>()
+    defaultMap.set("gr", { id: "default", name: "Greece" } as HttpTypes.StoreRegion)
+    return defaultMap
   }
 
   if (
     !regionMap.keys().next().value ||
     regionMapUpdated < Date.now() - 3600 * 1000
   ) {
-    const { regions } = await fetch(`${BACKEND_URL}/store/regions`, {
-      headers: {
-        "x-publishable-api-key": PUBLISHABLE_API_KEY!,
-      },
-      next: {
-        revalidate: 3600,
-        tags: [`regions-${cacheId}`],
-      },
-      cache: "force-cache",
-    }).then(async (response) => {
-      const json = await response.json()
+    try {
+      const response = await fetch(`${BACKEND_URL}/store/regions`, {
+        headers: {
+          "x-publishable-api-key": PUBLISHABLE_API_KEY!,
+        },
+        next: {
+          revalidate: 3600,
+          tags: [`regions-${cacheId}`],
+        },
+        cache: "force-cache",
+      })
 
       if (!response.ok) {
-        throw new Error(json.message)
+        const json = await response.json().catch(() => ({}))
+        throw new Error(json.message || "Failed to fetch regions")
       }
 
-      return json
-    })
+      const { regions } = await response.json()
 
-    if (!regions?.length) {
-      throw new Error(
-        "No regions found. Please set up regions in your Medusa Admin."
-      )
-    }
+      if (!regions?.length) {
+        // Return default if no regions found
+        const defaultMap = new Map<string, HttpTypes.StoreRegion>()
+        defaultMap.set("gr", { id: "default", name: "Greece" } as HttpTypes.StoreRegion)
+        return defaultMap
+      }
 
-    regions.forEach((region: HttpTypes.StoreRegion) => {
-      region.countries?.forEach((c) => {
-        regionMapCache.regionMap.set(c.iso_2 ?? "", region)
+      regions.forEach((region: HttpTypes.StoreRegion) => {
+        region.countries?.forEach((c) => {
+          regionMapCache.regionMap.set(c.iso_2 ?? "", region)
+        })
       })
-    })
 
-    regionMapCache.regionMapUpdated = Date.now()
+      regionMapCache.regionMapUpdated = Date.now()
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("Error fetching regions from Medusa:", error)
+      }
+      // Return cached map if available, or default map
+      if (regionMap.size > 0) {
+        return regionMap
+      }
+      const defaultMap = new Map<string, HttpTypes.StoreRegion>()
+      defaultMap.set("gr", { id: "default", name: "Greece" } as HttpTypes.StoreRegion)
+      return defaultMap
+    }
   }
 
   return regionMapCache.regionMap
