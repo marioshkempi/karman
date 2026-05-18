@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ChevronRight, ChevronLeft, X } from "lucide-react"
+import { ChevronRight, ChevronLeft, X, Menu, Package } from "lucide-react"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -54,6 +54,7 @@ export default function MegaMenu({
   const pathname = usePathname()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
 
   const activeMenuObject = megaMenus.find((m) => m.id === activeMenu)
 
@@ -61,6 +62,7 @@ export default function MegaMenu({
     onMobileMenuToggle(false)
     setSelectedCategory(null)
     setActiveMenu(null)
+    setIsCategoriesOpen(false)
   }, [pathname])
 
   const closeMobileMenu = () => {
@@ -73,6 +75,14 @@ export default function MegaMenu({
 
   const hasChildren = (categoryId: string) =>
     getMenuItemsForCategory(categoryId).length > 0
+
+  // Static navigation items (not part of the dropdown)
+  const staticNavItems = [
+    { label: "Δημοφιλή προϊόντα", href: "/best-selling" },
+    { label: "Σχετικά με μας", href: "/about" },
+    { label: "Blog", href: "/blog" },
+    { label: "Επικοινωνία", href: "/contact-us" },
+  ]
 
   return (
     <>
@@ -112,7 +122,7 @@ export default function MegaMenu({
                   key={megaMenu.id}
                   className={`flex items-center ${
                     hasChildren(megaMenu.id)
-                      ? "bg-white  border-b border-gray-200"
+                      ? "bg-white border-b border-gray-200"
                       : "bg-tertiary"
                   }`}
                 >
@@ -176,80 +186,82 @@ export default function MegaMenu({
         )}
       </div>
 
+      {/* Desktop Navigation Bar */}
       <div
-        className="hidden lg:block bg-white mt-3 lg:sticky lg:top-0 lg:z-30"
-        onMouseLeave={() => setActiveMenu(null)}
+        className="hidden lg:block bg-white border-b border-gray-200 sticky top-0 z-30"
+        onMouseLeave={() => setIsCategoriesOpen(false)}
       >
-        <div className="bg-white border-b">
-          <div className="max-w-[1350px] mx-auto px-4 sm:px-6">
-            <div className="flex items-center justify-evenly space-x-7 py-4">
-              {megaMenus.map((megaMenu) => (
-                <div
-                  key={megaMenu.id}
-                  className="relative m-0"
-                  onMouseEnter={() => setActiveMenu(megaMenu.id)}
-                >
-                  <Link
-                    href={toHref(megaMenu.handle)}
-                    className={`relative inline-block whitespace-nowrap text-[14px] font-medium
-                      transition-colors duration-200
-                      after:absolute after:left-0 after:-bottom-[2px]
-                      after:h-[1px] after:bg-current
-                      after:transition-all after:duration-300 after:ease-out
-                      ${
-                        activeMenuObject === megaMenu
-                          ? "text-primary after:w-full"
-                          : "text-secondary after:w-0 hover:text-primary hover:after:w-full"
-                      }
-                    `}
-                  >
-                    {megaMenu.title}
-                  </Link>
+        <div className="max-w-[1350px] mx-auto px-4 sm:px-6">
+          <div className="flex items-center h-[48px]">
+            {/* Categories Dropdown Trigger */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setIsCategoriesOpen(true)}
+            >
+              <button
+                className={`flex items-center gap-2 px-4 py-2 rounded-md text-[14px] font-medium transition-colors duration-200
+                  ${isCategoriesOpen 
+                    ? "bg-orange text-white" 
+                    : "bg-transparent text-secondary hover:bg-orange hover:text-white"
+                  }`}
+              >
+                <Menu size={18} />
+                <span>Κατηγορίες προϊόντων</span>
+              </button>
+
+              {/* Vertical Dropdown Menu */}
+              <div
+                className={`absolute top-full left-0 w-[320px] bg-white shadow-lg rounded-b-lg border border-gray-200 border-t-0 z-50
+                  transition-all duration-200 ease-out
+                  ${isCategoriesOpen 
+                    ? "opacity-100 translate-y-0 pointer-events-auto" 
+                    : "opacity-0 -translate-y-2 pointer-events-none"
+                  }`}
+              >
+                <div className="py-2">
+                  {megaMenus.map((megaMenu) => (
+                    <LocalizedClientLink
+                      key={megaMenu.id}
+                      href={toHref(megaMenu.handle)}
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors group"
+                    >
+                      {/* Icon placeholder - using Package icon as default */}
+                      <div className="w-10 h-10 flex items-center justify-center rounded-md bg-gray-100 group-hover:bg-gray-200 transition-colors">
+                        <Package size={20} className="text-gray-500" />
+                      </div>
+                      
+                      {/* Category name */}
+                      <span className="flex-1 text-[14px] text-gray-800 font-medium">
+                        {megaMenu.title}
+                      </span>
+                      
+                      {/* Right chevron */}
+                      <ChevronRight size={18} className="text-gray-400" />
+                    </LocalizedClientLink>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div
-          className={`absolute left-0 right-0 bg-white shadow-lg z-[100] border-t
-            transition-all duration-600 delay-600 ease-in-out
-            ${
-              activeMenuObject && activeMenuObject.items.length > 0
-                ? "opacity-100 translate-y-0 pointer-events-auto"
-                : "opacity-0 -translate-y-2 pointer-events-none"
-            }`}
-        >
-          <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8 max-h-[70vh] overflow-y-auto">
-            <div className="columns-5 gap-6 max-w-[1350px] self-center justify-self-center">
-              {(activeMenuObject?.items ?? []).map((section) => (
-                <div
-                  key={section.id}
-                  className="space-y-6 break-inside-avoid mb-6"
+            {/* Static Navigation Items */}
+            <nav className="flex items-center ml-6 gap-1">
+              {staticNavItems.map((item, index) => (
+                <Link
+                  key={index}
+                  href={item.href}
+                  className="px-4 py-2 text-[14px] text-secondary hover:text-primary transition-colors"
                 >
-                  <LocalizedClientLink
-                    href={toHref(section.handle)}
-                    className="relative inline-block text-[14px] font-bold text-secondary
-                      transition-colors duration-200 hover:text-primary"
-                  >
-                    {section.title}
-                  </LocalizedClientLink>
-
-                  <ul className="space-y-1">
-                    {section.children?.map((child) => (
-                      <li key={child.id}>
-                        <LocalizedClientLink
-                          href={toHref(child.handle)}
-                          className="relative inline-block text-secondary text-[14px]
-                            transition-colors duration-200 hover:text-primary"
-                        >
-                          {child.title}
-                        </LocalizedClientLink>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                  {item.label}
+                </Link>
               ))}
+            </nav>
+
+            {/* Best Seller Badge - Right aligned */}
+            <div className="ml-auto flex items-center gap-2">
+              <span className="text-[14px] text-secondary font-medium">Best Seller</span>
+              <span className="px-2 py-0.5 bg-red-500 text-white text-[11px] font-semibold rounded">
+                Sale
+              </span>
             </div>
           </div>
         </div>

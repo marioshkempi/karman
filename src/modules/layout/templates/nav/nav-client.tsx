@@ -105,12 +105,7 @@ export default function NavbarClient({
   }, [query])
 
   // Navigation items for the main blue nav bar
-  const mainNavItems = [
-    { label: "Κατηγορίες προϊόντων", href: "/categories", hasIcon: true },
-    { label: "Δημοφιλή προϊόντα", href: "/best-selling" },
-    { label: "Σχετικά με μας", href: "/about" },
-    { label: "Επικοινωνία", href: "/contact-us" },
-  ]
+  const mainNavItems: { label: string; href: string; hasIcon?: boolean }[] = []
 
   return (
     <>
