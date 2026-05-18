@@ -47,6 +47,10 @@ const nextConfig = {
         protocol: "http",
         hostname: "188.245.98.174",
       },
+      {
+        protocol: "https",
+        hostname: "bio-kifisia.gr",
+      },
     ],
   },
 }
