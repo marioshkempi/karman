@@ -41,6 +41,8 @@ interface MegaMenuProps {
   megaMenus?: MegaMenuCategory[]
   isMobileMenuOpen: boolean
   onMobileMenuToggle: (open: boolean) => void
+  isInline?: boolean
+  staticNavItems?: { label: string; href: string }[]
 }
 
 // All handles are pre-rewritten by the backend, so just prefix with /
@@ -50,6 +52,8 @@ export default function MegaMenu({
   megaMenus = [],
   isMobileMenuOpen,
   onMobileMenuToggle,
+  isInline = false,
+  staticNavItems = [],
 }: MegaMenuProps) {
   const pathname = usePathname()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
@@ -76,21 +80,85 @@ export default function MegaMenu({
   const hasChildren = (categoryId: string) =>
     getMenuItemsForCategory(categoryId).length > 0
 
-  // Static navigation items (not part of the dropdown)
-  const staticNavItems = [
-    { label: "Δημοφιλή προϊόντα", href: "/best-selling" },
-    { label: "Σχετικά με μας", href: "/about" },
-    { label: "Blog", href: "/blog" },
-    { label: "Επικοινωνία", href: "/contact-us" },
-  ]
+  // If inline mode (desktop), render just the nav items inline
+  if (isInline) {
+    return (
+      <div 
+        className="flex items-center gap-1"
+        onMouseLeave={() => setIsCategoriesOpen(false)}
+      >
+        {/* Categories Dropdown Trigger */}
+        <div 
+          className="relative"
+          onMouseEnter={() => setIsCategoriesOpen(true)}
+        >
+          <button
+            className={`flex items-center gap-2 px-3 py-2 rounded-md text-[14px] font-medium transition-colors duration-200
+              ${isCategoriesOpen 
+                ? "bg-orange text-white" 
+                : "bg-transparent text-gray-700 hover:bg-orange hover:text-white"
+              }`}
+          >
+            <Menu size={18} />
+            <span>Κατηγορίες προϊόντων</span>
+          </button>
 
+          {/* Vertical Dropdown Menu */}
+          <div
+            className={`absolute top-full left-0 w-[320px] bg-white shadow-lg rounded-b-lg border border-gray-200 border-t-0 z-50
+              transition-all duration-200 ease-out
+              ${isCategoriesOpen 
+                ? "opacity-100 translate-y-0 pointer-events-auto" 
+                : "opacity-0 -translate-y-2 pointer-events-none"
+              }`}
+          >
+            <div className="py-2">
+              {megaMenus.map((megaMenu) => (
+                <LocalizedClientLink
+                  key={megaMenu.id}
+                  href={toHref(megaMenu.handle)}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors group"
+                >
+                  {/* Icon placeholder - using Package icon as default */}
+                  <div className="w-10 h-10 flex items-center justify-center rounded-md bg-gray-100 group-hover:bg-gray-200 transition-colors">
+                    <Package size={20} className="text-gray-500" />
+                  </div>
+                  
+                  {/* Category name */}
+                  <span className="flex-1 text-[14px] text-gray-800 font-medium">
+                    {megaMenu.title}
+                  </span>
+                  
+                  {/* Right chevron */}
+                  <ChevronRight size={18} className="text-gray-400" />
+                </LocalizedClientLink>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Static Navigation Items */}
+        {staticNavItems.map((item, index) => (
+          <Link
+            key={index}
+            href={item.href}
+            className="px-3 py-2 text-[14px] text-gray-700 hover:text-primary transition-colors whitespace-nowrap"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+    )
+  }
+
+  // Mobile-only rendering (non-inline mode)
   return (
     <>
       {/* Mobile Menu Overlay */}
       <div
         onClick={closeMobileMenu}
         className={`
-          lg:hidden fixed inset-0 z-[100] bg-black
+          fixed inset-0 z-[100] bg-black
           transition-opacity duration-300
           ${
             isMobileMenuOpen
@@ -103,7 +171,7 @@ export default function MegaMenu({
       {/* Mobile Menu Panel */}
       <div
         className={`
-          lg:hidden fixed inset-y-0 left-0 w-full z-[101] bg-white shadow-2xl overflow-y-auto
+          fixed inset-y-0 left-0 w-full z-[101] bg-white shadow-2xl overflow-y-auto
           transform transition-transform duration-300 ease-in-out
           ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
         `}
@@ -142,6 +210,22 @@ export default function MegaMenu({
                       <ChevronRight size={25} className="text-primary" />
                     </button>
                   )}
+                </div>
+              ))}
+
+              {/* Static nav items in mobile */}
+              {staticNavItems.map((item, index) => (
+                <div
+                  key={`static-${index}`}
+                  className="flex items-center bg-white border-b border-gray-200"
+                >
+                  <Link
+                    href={item.href}
+                    onClick={closeMobileMenu}
+                    className="flex-1 px-6 py-4 text-secondary text-[15px]"
+                  >
+                    {item.label}
+                  </Link>
                 </div>
               ))}
             </div>
@@ -184,87 +268,6 @@ export default function MegaMenu({
             </div>
           </div>
         )}
-      </div>
-
-      {/* Desktop Navigation Bar */}
-      <div
-        className="hidden lg:block bg-white border-b border-gray-200 sticky top-0 z-30"
-        onMouseLeave={() => setIsCategoriesOpen(false)}
-      >
-        <div className="max-w-[1350px] mx-auto px-4 sm:px-6">
-          <div className="flex items-center h-[48px]">
-            {/* Categories Dropdown Trigger */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setIsCategoriesOpen(true)}
-            >
-              <button
-                className={`flex items-center gap-2 px-4 py-2 rounded-md text-[14px] font-medium transition-colors duration-200
-                  ${isCategoriesOpen 
-                    ? "bg-orange text-white" 
-                    : "bg-transparent text-secondary hover:bg-orange hover:text-white"
-                  }`}
-              >
-                <Menu size={18} />
-                <span>Κατηγορίες προϊόντων</span>
-              </button>
-
-              {/* Vertical Dropdown Menu */}
-              <div
-                className={`absolute top-full left-0 w-[320px] bg-white shadow-lg rounded-b-lg border border-gray-200 border-t-0 z-50
-                  transition-all duration-200 ease-out
-                  ${isCategoriesOpen 
-                    ? "opacity-100 translate-y-0 pointer-events-auto" 
-                    : "opacity-0 -translate-y-2 pointer-events-none"
-                  }`}
-              >
-                <div className="py-2">
-                  {megaMenus.map((megaMenu) => (
-                    <LocalizedClientLink
-                      key={megaMenu.id}
-                      href={toHref(megaMenu.handle)}
-                      className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors group"
-                    >
-                      {/* Icon placeholder - using Package icon as default */}
-                      <div className="w-10 h-10 flex items-center justify-center rounded-md bg-gray-100 group-hover:bg-gray-200 transition-colors">
-                        <Package size={20} className="text-gray-500" />
-                      </div>
-                      
-                      {/* Category name */}
-                      <span className="flex-1 text-[14px] text-gray-800 font-medium">
-                        {megaMenu.title}
-                      </span>
-                      
-                      {/* Right chevron */}
-                      <ChevronRight size={18} className="text-gray-400" />
-                    </LocalizedClientLink>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Static Navigation Items */}
-            <nav className="flex items-center ml-6 gap-1">
-              {staticNavItems.map((item, index) => (
-                <Link
-                  key={index}
-                  href={item.href}
-                  className="px-4 py-2 text-[14px] text-secondary hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Best Seller Badge - Right aligned */}
-            <div className="ml-auto flex items-center gap-2">
-              <span className="text-[14px] text-secondary font-medium">Best Seller</span>
-              <span className="px-2 py-0.5 bg-red-500 text-white text-[11px] font-semibold rounded">
-                Sale
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
     </>
   )
