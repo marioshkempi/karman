@@ -83,6 +83,8 @@ export default async function Home(props: Params) {
 
       {hasSlider ? <SliderCarousel slides={slider.slides} /> : <Hero />}
 
+      <Reassurances page_type="home" />
+
       <PopularCategories />
 
       <ProductShowCase
@@ -109,7 +111,6 @@ export default async function Home(props: Params) {
       <IntroSection />
       {/*)}*/}
       <SocialFollowSection socials={socials} />
-      <Reassurances page_type="home" />
     </>
   )
 }
