@@ -158,7 +158,11 @@ export default function NavbarClient({
                   <LocalizedClientLink
                     key={index}
                     href={item.href}
-                    className="text-white hover:text-white/80 transition-colors whitespace-nowrap"
+                    className={`transition-colors whitespace-nowrap ${
+                      isScrolled 
+                        ? "text-gray-800 hover:text-gray-600" 
+                        : "text-white hover:text-white/80"
+                    }`}
                   >
                     {item.label}
                   </LocalizedClientLink>
@@ -167,25 +171,39 @@ export default function NavbarClient({
 
               {/* Right: Search, Icons Area - flex items-center gap-6 */}
               <div className="flex items-center gap-6">
-                {/* Search Bar - Grey pill exactly as specified */}
+                {/* Search Bar - scroll-aware styling */}
                 <div className="relative">
-                  <div className="bg-gray-600/50 rounded-full px-4 py-2 flex items-center w-72">
+                  <div className={`rounded-full px-4 py-2 flex items-center w-72 ${
+                    isScrolled 
+                      ? "bg-gray-100 border border-gray-200" 
+                      : "bg-gray-600/50"
+                  }`}>
                     <input
                       type="text"
                       placeholder="Αναζήτηση με κωδικό ή λέξη-κλειδί"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       onFocus={() => query.trim() && setOpen(true)}
-                      className="w-full bg-transparent text-[13px] text-white placeholder:text-gray-400 focus:outline-none"
+                      className={`w-full bg-transparent text-[13px] focus:outline-none ${
+                        isScrolled 
+                          ? "text-gray-800 placeholder:text-gray-500" 
+                          : "text-white placeholder:text-gray-400"
+                      }`}
                     />
-                    <Search size={18} className="text-white ml-2 flex-shrink-0" />
+                    <Search size={18} className={`ml-2 flex-shrink-0 ${
+                      isScrolled ? "text-gray-500" : "text-white"
+                    }`} />
                   </div>
                 </div>
 
-                {/* Wishlist - White icon, white text */}
+                {/* Wishlist - scroll-aware styling */}
                 <LocalizedClientLink
                   href="/account/wishlist"
-                  className="relative flex flex-col items-center text-white hover:text-white/80 transition-colors"
+                  className={`relative flex flex-col items-center transition-colors ${
+                    isScrolled 
+                      ? "text-gray-800 hover:text-gray-600" 
+                      : "text-white hover:text-white/80"
+                  }`}
                 >
                   <div className="relative">
                     <Heart size={24} />
@@ -193,19 +211,22 @@ export default function NavbarClient({
                       {wishlistCount}
                     </span>
                   </div>
-                  <span className="text-[11px] mt-0.5 text-white/80">Αγαπημένα</span>
+                  <span className={`text-[11px] mt-0.5 ${
+                    isScrolled ? "text-gray-600" : "text-white/80"
+                  }`}>Αγαπημένα</span>
                 </LocalizedClientLink>
 
                 {/* Cart Button - THE ONLY RED ELEMENT */}
-                <button className="bg-[#ff0d00] text-white px-4 py-2 rounded-md flex flex-col items-center justify-center">
-                  <LocalizedClientLink href="/cart" className="flex items-center gap-2 text-white">
-                    <ShoppingCart size={20} />
-                    <div className="flex flex-col items-start">
-                      <span className="text-[10px] font-bold leading-none">{cartItemsCount}</span>
-                      <span className="text-[12px] font-medium">Καλάθι</span>
-                    </div>
-                  </LocalizedClientLink>
-                </button>
+                <LocalizedClientLink 
+                  href="/cart" 
+                  className="bg-[#ff0d00] hover:bg-[#e00c00] text-white px-4 py-2 rounded-md flex items-center gap-2 transition-colors"
+                >
+                  <ShoppingCart size={20} />
+                  <div className="flex flex-col items-start">
+                    <span className="text-[10px] font-bold leading-none">{cartItemsCount}</span>
+                    <span className="text-[12px] font-medium">Καλάθι</span>
+                  </div>
+                </LocalizedClientLink>
               </div>
             </div>
           </div>
