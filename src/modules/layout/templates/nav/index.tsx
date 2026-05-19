@@ -31,10 +31,11 @@ export default async function Nav({
   console.log(menu)
   return (
     <>
-      <HeaderTopBar topbarText={topbarText} />
-
       {checkout ? (
-        <NavbarCheckoutClient headerLogo={headerLogo} customer={customer} />
+        <>
+          <HeaderTopBar topbarText={topbarText} />
+          <NavbarCheckoutClient headerLogo={headerLogo} customer={customer} />
+        </>
       ) : (
         <NavbarClient
           cart={cart}

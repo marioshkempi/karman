@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation"
 import { SearchDropdown } from "@modules/search/dropdown/SearchDropdown"
 import LoginPromptModal from "@modules/layout/components/login-prompt-modal"
 import MegaMenu from "@modules/layout/components/mega-menu/MegaMenu"
+import HeaderTopBar from "@modules/layout/components/header-top-bar"
 
 interface NavbarProp {
   regions?: HttpTypes.StoreRegion[] | null
@@ -121,27 +122,31 @@ export default function NavbarClient({
 
   return (
     <>
-      <div className="relative">
+      {/* Fixed Header Wrapper - overlays the hero */}
+      <div 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled 
+            ? "bg-white shadow-md" 
+            : "bg-black/40 backdrop-blur-md border-b border-white/10"
+        }`}
+      >
+        {/* Top Bar - rendered inside the fixed wrapper */}
+        <HeaderTopBar isScrolled={isScrolled} />
+
         {/* Desktop Header */}
-        <div 
-          className={`hidden lg:block sticky top-0 z-50 transition-all duration-300 ${
-            isScrolled 
-              ? "bg-white shadow-md" 
-              : "bg-[#0a0a0a]"
-          }`}
-        >
+        <div className="hidden lg:block">
           <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
             <div className="flex items-center justify-between h-[72px]">
               {/* Left: Logo */}
               <LocalizedClientLink href="/" className="flex-shrink-0">
                 <img 
-                  src="/logo-aglopoulos.png" 
+                  src={isScrolled ? "/logo-aglopoulos.png" : "/logo-aglopoulos.png"} 
                   alt="Aglopoulos Racing" 
                   className="h-10 w-auto"
                 />
               </LocalizedClientLink>
 
-              {/* Center: Navigation Menu - flex container with gap-6, text-sm font-semibold uppercase */}
+              {/* Center: Navigation Menu */}
               <div className="flex items-center gap-6 text-sm font-semibold uppercase">
                 {/* Products Dropdown */}
                 <MegaMenu
@@ -160,7 +165,7 @@ export default function NavbarClient({
                     href={item.href}
                     className={`transition-colors whitespace-nowrap ${
                       isScrolled 
-                        ? "text-gray-800 hover:text-gray-600" 
+                        ? "text-gray-800 hover:text-red-600" 
                         : "text-white hover:text-white/80"
                     }`}
                   >
@@ -169,14 +174,14 @@ export default function NavbarClient({
                 ))}
               </div>
 
-              {/* Right: Search, Icons Area - flex items-center gap-6 */}
+              {/* Right: Search, Icons Area */}
               <div className="flex items-center gap-6">
-                {/* Search Bar - scroll-aware styling */}
+                {/* Search Bar */}
                 <div className="relative">
-                  <div className={`rounded-full px-4 py-2 flex items-center w-72 ${
+                  <div className={`rounded-full px-4 py-2 flex items-center w-72 transition-colors ${
                     isScrolled 
                       ? "bg-gray-100 border border-gray-200" 
-                      : "bg-gray-600/50"
+                      : "bg-white/20 border border-white/30"
                   }`}>
                     <input
                       type="text"
@@ -187,7 +192,7 @@ export default function NavbarClient({
                       className={`w-full bg-transparent text-[13px] focus:outline-none ${
                         isScrolled 
                           ? "text-gray-800 placeholder:text-gray-500" 
-                          : "text-white placeholder:text-gray-400"
+                          : "text-white placeholder:text-white/70"
                       }`}
                     />
                     <Search size={18} className={`ml-2 flex-shrink-0 ${
@@ -196,7 +201,7 @@ export default function NavbarClient({
                   </div>
                 </div>
 
-                {/* Wishlist - scroll-aware styling */}
+                {/* Wishlist */}
                 <LocalizedClientLink
                   href="/account/wishlist"
                   className={`relative flex flex-col items-center transition-colors ${
@@ -233,11 +238,7 @@ export default function NavbarClient({
         </div>
 
         {/* Mobile Header */}
-        <div className={`lg:hidden sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? "bg-white shadow-md" 
-            : "bg-[#0a0a0a]"
-        }`}>
+        <div className="lg:hidden">
           <div className="max-w-[1350px] mx-auto px-4">
             {/* Mobile Top Bar */}
             <div className="flex items-center justify-between h-14">
@@ -291,70 +292,70 @@ export default function NavbarClient({
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Mobile-only MegaMenu (handles mobile panel) */}
-        <div className="lg:hidden">
-          <MegaMenu
-            megaMenus={menu?.megaMenus}
-            isMobileMenuOpen={isMobileMenuOpen}
-            onMobileMenuToggle={setIsMobileMenuOpen}
-            isInline={false}
-            staticNavItems={staticNavItems}
-            isScrolled={isScrolled}
-          />
-        </div>
-
-        {isCompareOpen && (
-          <CompareModal onClose={() => setIsCompareOpen(false)} />
-        )}
-
-        <LoginPromptModal
-          isOpen={isLoginPromptOpen}
-          onClose={() => setIsLoginPromptOpen(false)}
-        />
-
-        {/* Mobile Search */}
-        <div className={`relative lg:hidden py-3 px-4 transition-colors ${
-          isScrolled 
-            ? "bg-white border-b border-gray-200" 
-            : "bg-[#0a0a0a] border-b border-white/10"
-        }`}>
-          <div className="relative">
-            <div className={`flex items-center rounded-full overflow-hidden ${
-              isScrolled 
-                ? "bg-gray-100 border border-gray-200" 
-                : "bg-white/10 border border-white/30"
-            }`}>
-              <div className={`flex items-center justify-center pl-3 ${
-                isScrolled ? "text-gray-500" : "text-white/70"
+          {/* Mobile Search */}
+          <div className={`py-3 px-4 transition-colors ${
+            isScrolled 
+              ? "bg-white border-t border-gray-100" 
+              : "bg-transparent"
+          }`}>
+            <div className="relative">
+              <div className={`flex items-center rounded-full overflow-hidden ${
+                isScrolled 
+                  ? "bg-gray-100 border border-gray-200" 
+                  : "bg-white/20 border border-white/30"
               }`}>
-                <Search size={16} />
+                <div className={`flex items-center justify-center pl-3 ${
+                  isScrolled ? "text-gray-500" : "text-white/70"
+                }`}>
+                  <Search size={16} />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onFocus={() => query.trim() && setOpen(true)}
+                  className={`w-full h-[40px] px-3 bg-transparent text-[13px] focus:outline-none ${
+                    isScrolled 
+                      ? "text-gray-800 placeholder:text-gray-500" 
+                      : "text-white placeholder:text-white/60"
+                  }`}
+                />
               </div>
-              <input
-                type="text"
-                placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onFocus={() => query.trim() && setOpen(true)}
-                className={`w-full h-[40px] px-3 bg-transparent text-[13px] focus:outline-none ${
-                  isScrolled 
-                    ? "text-gray-800 placeholder:text-gray-500" 
-                    : "text-white placeholder:text-white/60"
-                }`}
-              />
             </div>
           </div>
         </div>
+      </div>
 
-        <SearchDropdown
-          data={results}
-          query={query}
-          setQuery={setQuery}
-          setOpen={setOpen}
-          open={open}
+      {/* Mobile-only MegaMenu (handles mobile panel) */}
+      <div className="lg:hidden">
+        <MegaMenu
+          megaMenus={menu?.megaMenus}
+          isMobileMenuOpen={isMobileMenuOpen}
+          onMobileMenuToggle={setIsMobileMenuOpen}
+          isInline={false}
+          staticNavItems={staticNavItems}
+          isScrolled={isScrolled}
         />
       </div>
+
+      {isCompareOpen && (
+        <CompareModal onClose={() => setIsCompareOpen(false)} />
+      )}
+
+      <LoginPromptModal
+        isOpen={isLoginPromptOpen}
+        onClose={() => setIsLoginPromptOpen(false)}
+      />
+
+      <SearchDropdown
+        data={results}
+        query={query}
+        setQuery={setQuery}
+        setOpen={setOpen}
+        open={open}
+      />
     </>
   )
 }

@@ -16,7 +16,7 @@ interface SliderCarouselProps {
 // The slides prop is kept for API compatibility but is ignored.
 const SliderCarousel = ({ slides }: SliderCarouselProps) => {
   return (
-    <div className="relative w-full overflow-hidden -mt-[72px] pt-[72px]">
+    <div className="relative w-full overflow-hidden">
       <div 
         className="relative w-full h-[500px] md:h-[600px] lg:h-[700px] bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${HERO_BG_IMAGE})` }}
