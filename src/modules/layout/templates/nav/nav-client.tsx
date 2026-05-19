@@ -137,10 +137,13 @@ export default function NavbarClient({
         <div className="hidden lg:block">
           <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
             <div className="flex items-center justify-between h-[72px]">
-              {/* Left: Logo */}
+              {/* Left: Logo - white on dark hero, dark on white scroll */}
               <LocalizedClientLink href="/" className="flex-shrink-0">
                 <img 
-                  src={isScrolled ? "/logo-aglopoulos.png" : "/logo-aglopoulos.png"} 
+                  src={isScrolled 
+                    ? "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/aglopoulos-logo-dark-6zcp8YKLDWmlQ3XxDOW8RYqcWE6LJB.svg" 
+                    : "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/agglopoulos%20racing-white-vMOxPHmoru1Ffq7OA9SrG8Lrt7BxpD.png"
+                  } 
                   alt="Aglopoulos Racing" 
                   className="h-10 w-auto"
                 />
@@ -221,16 +224,13 @@ export default function NavbarClient({
                   }`}>Αγαπημένα</span>
                 </LocalizedClientLink>
 
-                {/* Cart Button - THE ONLY RED ELEMENT */}
+                {/* Cart Button - red with icon and count only */}
                 <LocalizedClientLink 
                   href="/cart" 
-                  className="bg-[#ff0d00] hover:bg-[#e00c00] text-white px-4 py-2 rounded-md flex items-center gap-2 transition-colors"
+                  className="bg-[#ff0d00] hover:bg-[#e00c00] text-white px-3 py-2 rounded-md flex items-center gap-2 transition-colors"
                 >
                   <ShoppingCart size={20} />
-                  <div className="flex flex-col items-start">
-                    <span className="text-[10px] font-bold leading-none">{cartItemsCount}</span>
-                    <span className="text-[12px] font-medium">Καλάθι</span>
-                  </div>
+                  <span className="text-sm font-bold">{cartItemsCount}</span>
                 </LocalizedClientLink>
               </div>
             </div>
@@ -257,7 +257,10 @@ export default function NavbarClient({
                 </Button>
                 <LocalizedClientLink href="/">
                   <img 
-                    src="/logo-aglopoulos.png" 
+                    src={isScrolled 
+                      ? "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/aglopoulos-logo-dark-6zcp8YKLDWmlQ3XxDOW8RYqcWE6LJB.svg" 
+                      : "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/agglopoulos%20racing-white-vMOxPHmoru1Ffq7OA9SrG8Lrt7BxpD.png"
+                    } 
                     alt="Aglopoulos Racing" 
                     className="h-8 w-auto"
                   />
