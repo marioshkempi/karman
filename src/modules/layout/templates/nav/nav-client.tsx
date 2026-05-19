@@ -127,7 +127,7 @@ export default function NavbarClient({
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
             ? "bg-white shadow-md" 
-            : "bg-black/40 backdrop-blur-md border-b border-white/10"
+            : "bg-black/30 backdrop-blur-md"
         }`}
       >
         {/* Top Bar - rendered inside the fixed wrapper */}

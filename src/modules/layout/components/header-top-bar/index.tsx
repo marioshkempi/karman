@@ -20,8 +20,8 @@ const HeaderTopBar = ({ topbarText, isScrolled = false }: HeaderTopBarProps) => 
   return (
     <div className={`w-full transition-colors duration-300 ${
       isScrolled 
-        ? "bg-gray-100 text-gray-800" 
-        : "bg-transparent text-white"
+        ? "bg-transparent text-gray-800 border-b border-gray-200" 
+        : "bg-transparent text-white border-b border-white/10"
     }`}>
       <div className="max-w-[1350px] mx-auto px-6 py-1 flex items-center justify-between">
         {/* Left side - Phone and Social Media Icons */}
