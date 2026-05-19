@@ -36,42 +36,45 @@ const STATIC_TIRES = [
 export default function MichelinPromo() {
   return (
     <section className="w-full bg-white">
-      {/* MICHELIN Promo Banner - with generous top spacing */}
-      <div className="pt-16 lg:pt-20 pb-8 lg:pb-12">
+      {/* MICHELIN Promo Banner - White page background, centered blue banner */}
+      <div className="py-12 lg:py-16">
         <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
-          {/* Banner Container - contained with rounded corners */}
-          <div className="relative w-full overflow-hidden rounded-lg bg-[#0a1628]">
-            {/* Blue background bar - the deep blue section */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[55%] h-[65%] bg-[#0d2d5a] rounded-r-lg" />
+          {/* Blue Banner Card - Clean horizontal banner */}
+          <div className="relative w-full bg-[#0d2d5a] rounded-lg overflow-visible min-h-[280px] lg:min-h-[340px]">
+            {/* Left Side: Text Content */}
+            <div className="absolute left-0 top-0 bottom-0 w-full lg:w-1/2 flex items-center p-6 lg:p-10 xl:p-14 z-10">
+              <div className="max-w-md">
+                <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white tracking-wide mb-4">
+                  MICHELIN
+                </h2>
+                <p className="text-sm lg:text-base text-white/80 mb-6 leading-relaxed">
+                  Tour our collection and use our wheel configurator to find the perfect Michelin tire for your vehicle.
+                </p>
+                <LocalizedClientLink
+                  href="/categories/tires"
+                  className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors rounded"
+                >
+                  LEARN MORE
+                </LocalizedClientLink>
+              </div>
+            </div>
             
-            {/* Content Grid */}
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-[320px] lg:min-h-[380px]">
-              {/* Left: Text Content */}
-              <div className="flex items-center p-8 lg:p-12 xl:p-16">
-                <div className="max-w-sm">
-                  <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white tracking-wide mb-4">
-                    MICHELIN
-                  </h2>
-                  <p className="text-sm lg:text-base text-white/75 mb-6 leading-relaxed">
-                    Tour our collection and use our wheel configurator to find the perfect Michelin tire for your vehicle.
-                  </p>
-                  <LocalizedClientLink
-                    href="/categories/tires"
-                    className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors rounded"
-                  >
-                    LEARN MORE
-                  </LocalizedClientLink>
-                </div>
-              </div>
-              
-              {/* Right: Banner Image with tires and mascot */}
-              <div className="relative flex items-end justify-center lg:justify-end">
-                <img 
-                  src={MICHELIN_BANNER} 
-                  alt="Michelin Tires with Bibendum Mascot" 
-                  className="h-auto w-full max-w-[600px] object-contain object-bottom"
-                />
-              </div>
+            {/* Right Side: Tires + Mascot Image - Large and overlapping */}
+            <div className="hidden lg:block absolute right-0 bottom-0 w-[60%] xl:w-[55%] h-full pointer-events-none">
+              <img 
+                src={MICHELIN_BANNER} 
+                alt="Michelin Tires with Bibendum Mascot" 
+                className="absolute right-0 bottom-0 w-full h-auto max-h-[120%] object-contain object-right-bottom"
+              />
+            </div>
+
+            {/* Mobile: Show banner image below text */}
+            <div className="lg:hidden w-full pt-40">
+              <img 
+                src={MICHELIN_BANNER} 
+                alt="Michelin Tires with Bibendum Mascot" 
+                className="w-full h-auto object-contain"
+              />
             </div>
           </div>
         </div>
@@ -79,12 +82,12 @@ export default function MichelinPromo() {
 
       {/* Classic Tires Product Section */}
       <div className="relative w-full py-12 lg:py-16 overflow-hidden">
-        {/* Faded background image with strong white overlay */}
+        {/* Faded background image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${CLASSIC_TIRES_BG})` }}
         />
-        {/* Strong white overlay - 90% opacity for very subtle background */}
+        {/* Strong white overlay - very subtle background */}
         <div className="absolute inset-0 bg-white/90" />
 
         <div className="relative z-10 max-w-[1350px] mx-auto px-4 lg:px-8">
