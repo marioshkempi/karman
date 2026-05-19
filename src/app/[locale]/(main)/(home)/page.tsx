@@ -86,10 +86,6 @@ export default async function Home(props: Params) {
 
       <MomoPromo />
 
-      <Reassurances page_type="home" />
-
-      <PopularCategories />
-
       <ProductShowCase
         products={products.products}
         region={region}
@@ -97,6 +93,11 @@ export default async function Home(props: Params) {
         viewAllLink="/categories/wheels"
         backgroundImage="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Road-wheels-background-s79ykRLzKirQ1j2jcuA5OH9BPNCOF9.jpg"
       />
+
+      <Reassurances page_type="home" />
+
+      <PopularCategories />
+
       <ProductShowCase
         products={bestSellingProducts}
         region={region}
