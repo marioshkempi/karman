@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, Play } from "lucide-react"
 import { StoreSlide } from "@lib/data/slider"
 import Link from "next/link"
 
@@ -43,21 +43,21 @@ const SliderCarousel = ({ slides }: SliderCarouselProps) => {
         <>
           <button
             onClick={prevSlide}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-black/30 hover:bg-black/50 text-white rounded-full transition-all z-10"
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-all z-10 backdrop-blur-sm border border-white/20"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="w-6 h-6" strokeWidth={2} />
+            <ChevronLeft className="w-5 h-5" strokeWidth={2} />
           </button>
 
           <button
             onClick={nextSlide}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-black/30 hover:bg-black/50 text-white rounded-full transition-all z-10"
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-all z-10 backdrop-blur-sm border border-white/20"
             aria-label="Next slide"
           >
-            <ChevronRight className="w-6 h-6" strokeWidth={2} />
+            <ChevronRight className="w-5 h-5" strokeWidth={2} />
           </button>
 
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
             {slides.map((_, index) => (
               <button
                 key={index}
@@ -141,7 +141,7 @@ const SlideContent = ({ slide }: SlideContentProps) => {
       )}
 
       {/* Dark gradient overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
       {hasOverlay && (
         <div className="absolute inset-0 flex items-center px-6 md:px-16 lg:px-20 pointer-events-none">
@@ -149,13 +149,13 @@ const SlideContent = ({ slide }: SlideContentProps) => {
             className={`flex flex-col items-start text-left max-w-[600px] ${desktopAlignment}`}
           >
             {slide.subtitle && (
-              <span className="text-white text-[12px] md:text-[14px] font-bold uppercase tracking-[0.2em] mb-3">
+              <span className="text-white text-[12px] md:text-[14px] font-bold uppercase tracking-[0.3em] mb-4">
                 {slide.subtitle}
               </span>
             )}
 
             {slide.title && (
-              <h2 className="text-white text-[32px] md:text-[48px] lg:text-[60px] font-bold uppercase leading-[1.1] mb-4 md:mb-6 tracking-tight">
+              <h2 className="text-white text-[32px] md:text-[48px] lg:text-[60px] font-bold uppercase leading-[1.05] mb-4 md:mb-6 tracking-tight">
                 {slide.title}
               </h2>
             )}
@@ -195,8 +195,9 @@ const CTAButton = ({
   isWrapped,
 }: CTAButtonProps) => {
   const buttonContent = (
-    <button className="px-8 py-4 bg-[#1a1a1a]/90 hover:bg-[#1a1a1a] text-white text-[13px] md:text-[14px] font-semibold uppercase tracking-wider transition-all pointer-events-auto border-l-4 border-red-600">
+    <button className="inline-flex items-center gap-3 px-6 py-4 bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white text-[13px] md:text-[14px] font-semibold uppercase tracking-wider transition-all pointer-events-auto border-l-4 border-red-600">
       {text}
+      <Play size={14} className="text-red-500 fill-red-500" />
     </button>
   )
 
