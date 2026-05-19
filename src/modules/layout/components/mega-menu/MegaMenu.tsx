@@ -95,18 +95,18 @@ export default function MegaMenu({
           onMouseEnter={() => setIsCategoriesOpen(true)}
         >
           <button
-            className={`flex items-center gap-2 px-4 py-2 rounded text-[14px] font-medium transition-colors duration-200 ${
+            className={`flex items-center gap-1 py-2 text-sm font-semibold uppercase transition-colors duration-200 ${
               isScrolled
                 ? isCategoriesOpen 
-                  ? "bg-red-600 text-white" 
-                  : "bg-transparent text-gray-800 hover:bg-red-600 hover:text-white"
+                  ? "text-red-600" 
+                  : "text-gray-800 hover:text-red-600"
                 : isCategoriesOpen 
-                  ? "bg-red-600 text-white" 
-                  : "bg-transparent text-white hover:bg-red-600 hover:text-white"
+                  ? "text-red-500" 
+                  : "text-white hover:text-white/80"
             }`}
           >
             <span>ΠΡΟΪΟΝΤΑ</span>
-            <ChevronDown size={16} className={`transition-transform ${isCategoriesOpen ? "rotate-180" : ""}`} />
+            <ChevronDown size={14} className={`transition-transform ${isCategoriesOpen ? "rotate-180" : ""}`} />
           </button>
 
           {/* Vertical Dropdown Menu */}
