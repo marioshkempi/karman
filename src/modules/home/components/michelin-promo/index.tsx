@@ -35,33 +35,42 @@ const STATIC_TIRES = [
 
 export default function MichelinPromo() {
   return (
-    <section className="w-full">
-      {/* MICHELIN Promo Banner */}
-      <div className="relative w-full bg-black">
-        {/* Banner Image */}
-        <div className="relative w-full">
-          <img 
-            src={MICHELIN_BANNER} 
-            alt="Michelin Tires" 
-            className="w-full h-auto object-cover"
-          />
-          
-          {/* Text Overlay - positioned on the left side of the blue area */}
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full max-w-[1350px] mx-auto px-6 lg:px-8">
-              <div className="max-w-md">
-                <h2 className="text-3xl lg:text-4xl font-bold text-white tracking-wide mb-4">
-                  MICHELIN
-                </h2>
-                <p className="text-sm lg:text-base text-white/80 mb-6 leading-relaxed">
-                  Tour our collection and use our wheel configurator to find the perfect MOMO product for your vehicle.
-                </p>
-                <LocalizedClientLink
-                  href="/categories/tires"
-                  className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors"
-                >
-                  LEARN MORE
-                </LocalizedClientLink>
+    <section className="w-full bg-white">
+      {/* MICHELIN Promo Banner - with generous top spacing */}
+      <div className="pt-16 lg:pt-20 pb-8 lg:pb-12">
+        <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
+          {/* Banner Container - contained with rounded corners */}
+          <div className="relative w-full overflow-hidden rounded-lg bg-[#0a1628]">
+            {/* Blue background bar - the deep blue section */}
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[55%] h-[65%] bg-[#0d2d5a] rounded-r-lg" />
+            
+            {/* Content Grid */}
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-[320px] lg:min-h-[380px]">
+              {/* Left: Text Content */}
+              <div className="flex items-center p-8 lg:p-12 xl:p-16">
+                <div className="max-w-sm">
+                  <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white tracking-wide mb-4">
+                    MICHELIN
+                  </h2>
+                  <p className="text-sm lg:text-base text-white/75 mb-6 leading-relaxed">
+                    Tour our collection and use our wheel configurator to find the perfect Michelin tire for your vehicle.
+                  </p>
+                  <LocalizedClientLink
+                    href="/categories/tires"
+                    className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors rounded"
+                  >
+                    LEARN MORE
+                  </LocalizedClientLink>
+                </div>
+              </div>
+              
+              {/* Right: Banner Image with tires and mascot */}
+              <div className="relative flex items-end justify-center lg:justify-end">
+                <img 
+                  src={MICHELIN_BANNER} 
+                  alt="Michelin Tires with Bibendum Mascot" 
+                  className="h-auto w-full max-w-[600px] object-contain object-bottom"
+                />
               </div>
             </div>
           </div>
@@ -72,7 +81,7 @@ export default function MichelinPromo() {
       <div className="relative w-full py-12 lg:py-16 overflow-hidden">
         {/* Faded background image with strong white overlay */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
           style={{ backgroundImage: `url(${CLASSIC_TIRES_BG})` }}
         />
         {/* Strong white overlay - 90% opacity for very subtle background */}
@@ -112,7 +121,7 @@ export default function MichelinPromo() {
                 href="/categories/tires"
                 className="group block"
               >
-                <div className="bg-white rounded-lg p-4 lg:p-6 transition-shadow hover:shadow-lg">
+                <div className="bg-white rounded-lg p-4 lg:p-6 transition-shadow hover:shadow-lg border border-gray-100">
                   {/* Product Image */}
                   <div className="aspect-square mb-4 flex items-center justify-center">
                     <img 
