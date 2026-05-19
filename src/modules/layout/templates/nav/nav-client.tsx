@@ -127,7 +127,7 @@ export default function NavbarClient({
           className={`hidden lg:block sticky top-0 z-50 transition-all duration-300 ${
             isScrolled 
               ? "bg-white shadow-md" 
-              : "bg-[#1a1a1a]/95 backdrop-blur-sm"
+              : "bg-[#2a2a2a]"
           }`}
         >
           <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
@@ -135,9 +135,9 @@ export default function NavbarClient({
               {/* Left: Logo */}
               <LocalizedClientLink href="/" className="flex-shrink-0">
                 <img 
-                  src="/logo-aglopoulos.svg" 
+                  src="/logo-aglopoulos.png" 
                   alt="Aglopoulos Racing" 
-                  className="h-12 w-auto"
+                  className="h-10 w-auto"
                 />
               </LocalizedClientLink>
 
@@ -176,7 +176,7 @@ export default function NavbarClient({
                   <div className={`flex items-center rounded-full overflow-hidden ${
                     isScrolled 
                       ? "bg-gray-100 border border-gray-200" 
-                      : "bg-white/20 border border-white/30"
+                      : "bg-[#4a4a4a] border border-[#5a5a5a]"
                   }`}>
                     <input
                       type="text"
@@ -184,16 +184,16 @@ export default function NavbarClient({
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       onFocus={() => query.trim() && setOpen(true)}
-                      className={`w-[240px] h-[40px] pl-4 pr-2 bg-transparent text-[13px] focus:outline-none ${
+                      className={`w-[260px] h-[42px] pl-4 pr-2 bg-transparent text-[13px] focus:outline-none ${
                         isScrolled 
                           ? "text-gray-800 placeholder:text-gray-500" 
-                          : "text-white placeholder:text-white/70"
+                          : "text-white placeholder:text-gray-400"
                       }`}
                     />
-                    <button className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
+                    <button className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors mr-0.5 ${
                       isScrolled 
-                        ? "bg-gray-200 text-gray-600 hover:bg-gray-300" 
-                        : "bg-white/20 text-white hover:bg-white/30"
+                        ? "bg-gray-300 text-gray-600 hover:bg-gray-400" 
+                        : "bg-[#5a5a5a] text-white hover:bg-[#6a6a6a]"
                     }`}>
                       <Search size={18} />
                     </button>
@@ -240,7 +240,7 @@ export default function NavbarClient({
         <div className={`lg:hidden sticky top-0 z-50 transition-all duration-300 ${
           isScrolled 
             ? "bg-white shadow-md" 
-            : "bg-[#1a1a1a]/95"
+            : "bg-[#2a2a2a]"
         }`}>
           <div className="max-w-[1350px] mx-auto px-4">
             {/* Mobile Top Bar */}
@@ -260,7 +260,7 @@ export default function NavbarClient({
                 </Button>
                 <LocalizedClientLink href="/">
                   <img 
-                    src="/logo-aglopoulos.svg" 
+                    src="/logo-aglopoulos.png" 
                     alt="Aglopoulos Racing" 
                     className="h-8 w-auto"
                   />
@@ -322,7 +322,7 @@ export default function NavbarClient({
         <div className={`relative lg:hidden py-3 px-4 transition-colors ${
           isScrolled 
             ? "bg-white border-b border-gray-200" 
-            : "bg-[#1a1a1a]/95 border-b border-white/10"
+            : "bg-[#2a2a2a] border-b border-white/10"
         }`}>
           <div className="relative">
             <div className={`flex items-center rounded-full overflow-hidden ${
