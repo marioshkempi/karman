@@ -37,37 +37,45 @@ export default async function PopularCategories() {
 
   if (activeSections.length === 0) {
     return (
-      <div className="w-full bg-white mb-8 lg:mb-11">
-        <div className="max-w-[1350px] mx-auto px-4">
-          <h2 className="text-[20px] lg:text-[30px] text-primary font-medium mb-6 lg:mb-8">
-            {t("popularCategories.title")}
-          </h2>
+      <section className="w-full bg-white py-10 lg:py-14">
+        <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
+          {/* Section Header */}
+          <div className="mb-8 lg:mb-10">
+            <h2 className="text-2xl lg:text-3xl text-gray-900 font-bold tracking-tight uppercase">
+              {t("popularCategories.title")}
+            </h2>
+            <div className="w-16 h-1 bg-red-600 mt-3"></div>
+          </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+          {/* Categories Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
             {FALLBACK_CATEGORIES.map((category, index) => (
-              <div key={index} className="relative w-full aspect-[4/3] overflow-hidden rounded-lg group">
+              <div key={index} className="relative w-full aspect-[4/3] overflow-hidden rounded-lg group cursor-pointer">
                 <img
                   src={category.image}
                   alt={category.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                {/* Dark overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 group-hover:from-black/90 transition-all duration-300" />
                 
-                {/* Content inside card */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-start gap-2">
-                  <h3 className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg">
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5">
+                  <h3 className="text-white text-base lg:text-lg font-bold uppercase tracking-wide mb-2">
                     {category.title}
                   </h3>
-                  <span className="inline-block px-4 py-2 bg-white text-gray-800 text-xs lg:text-sm font-medium rounded-full hover:bg-gray-100 transition-colors">
+                  <span className="inline-flex items-center text-xs lg:text-sm text-white/90 font-medium group-hover:text-red-400 transition-colors">
                     {t("product.learnMore")}
+                    <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </span>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 
@@ -78,23 +86,27 @@ export default async function PopularCategories() {
         const hasMoreThanFour = items.length > 4;
 
         return (
-          <div key={section.id} className="w-full bg-white mb-8 lg:mb-11">
-            <div className="max-w-[1350px] mx-auto px-4">
-              <h2 className="text-[20px] lg:text-[30px] text-primary font-medium mb-6 lg:mb-8">
-                {section.title}
-              </h2>
+          <section key={section.id} className="w-full bg-white py-10 lg:py-14">
+            <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
+              {/* Section Header */}
+              <div className="mb-8 lg:mb-10">
+                <h2 className="text-2xl lg:text-3xl text-gray-900 font-bold tracking-tight uppercase">
+                  {section.title}
+                </h2>
+                <div className="w-16 h-1 bg-red-600 mt-3"></div>
+              </div>
 
               {hasMoreThanFour ? (
                 <PopularCategorySlider items={items} ctaText={section.cta_text} />
               ) : (
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
                   {items.map((item) => (
                     <PopularCategoryCard key={item.id} item={item} ctaText={section.cta_text} />
                   ))}
                 </div>
               )}
             </div>
-          </div>
+          </section>
         );
       })}
     </>
@@ -102,33 +114,35 @@ export default async function PopularCategories() {
 }
 
 function PopularCategoryCard({ item, ctaText }: { item: any; ctaText: string }) {
-  // console.log(item);
   const href = item.url || '#';
   const isExternal = href.startsWith('http');
 
   const content = (
-    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg group">
+    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg group cursor-pointer">
       {item.image_url ? (
         <img
           src={item.image_url}
           alt={item.title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
       ) : (
-        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-          <span className="text-gray-400">No Image</span>
+        <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+          <span className="text-gray-500 text-sm">No Image</span>
         </div>
       )}
-      {/* Dark overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 group-hover:from-black/90 transition-all duration-300" />
       
-      {/* Content inside card */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-start gap-2">
-        <h3 className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg">
+      {/* Content */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5">
+        <h3 className="text-white text-base lg:text-lg font-bold uppercase tracking-wide mb-2">
           {item.title}
         </h3>
-        <span className="inline-block px-4 py-2 bg-white text-gray-800 text-xs lg:text-sm font-medium rounded-full hover:bg-gray-100 transition-colors">
+        <span className="inline-flex items-center text-xs lg:text-sm text-white/90 font-medium group-hover:text-red-400 transition-colors">
           {ctaText}
+          <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
         </span>
       </div>
     </div>

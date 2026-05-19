@@ -50,13 +50,14 @@ export default function PopularCategorySlider({ items, ctaText }: PopularCategor
 
   return (
     <div className="relative">
+      {/* Previous Button */}
       {!isMobile && canGoPrev && (
         <button
           onClick={handlePrev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 lg:-translate-x-20 z-10 transition-all text-primary/60 hover:text-primary cursor-pointer"
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-14 z-10 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-lg hover:bg-gray-50 hover:border-red-500 transition-all group"
           aria-label="Previous categories"
         >
-          <ChevronLeft className="w-12 h-12 lg:w-20 lg:h-20" strokeWidth={1} />
+          <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6 text-gray-600 group-hover:text-red-600 transition-colors" strokeWidth={2} />
         </button>
       )}
 
@@ -70,7 +71,7 @@ export default function PopularCategorySlider({ items, ctaText }: PopularCategor
         } : {}}
       >
         <div
-          className={`flex gap-4 lg:gap-6 ${!isMobile ? 'transition-transform duration-500 ease-out' : ''}`}
+          className={`flex gap-4 lg:gap-5 ${!isMobile ? 'transition-transform duration-500 ease-out' : ''}`}
           style={!isMobile ? {
             transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
           } : {}}
@@ -80,7 +81,7 @@ export default function PopularCategorySlider({ items, ctaText }: PopularCategor
               key={item.id}
               className="flex-shrink-0"
               style={!isMobile ? { 
-                width: `calc((100% - ${(slidesPerView - 1) * (slidesPerView === 2 ? 16 : 24)}px) / ${slidesPerView})`
+                width: `calc((100% - ${(slidesPerView - 1) * (slidesPerView === 2 ? 16 : 20)}px) / ${slidesPerView})`
               } : {
                 width: 'calc((100% - 16px) / 2)'
               }}
@@ -91,13 +92,14 @@ export default function PopularCategorySlider({ items, ctaText }: PopularCategor
         </div>
       </div>
 
+      {/* Next Button */}
       {!isMobile && canGoNext && (
         <button
           onClick={handleNext}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 lg:translate-x-20 z-10 transition-all text-primary/60 hover:text-primary cursor-pointer"
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-14 z-10 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-lg hover:bg-gray-50 hover:border-red-500 transition-all group"
           aria-label="Next categories"
         >
-          <ChevronRight className="w-12 h-12 lg:w-20 lg:h-20" strokeWidth={1} />
+          <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6 text-gray-600 group-hover:text-red-600 transition-colors" strokeWidth={2} />
         </button>
       )}
     </div>
@@ -109,28 +111,31 @@ function PopularCategoryCard({ item, ctaText }: { item: StorePopularCategoryItem
   const isExternal = href.startsWith('http')
 
   const content = (
-    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg group">
+    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg group cursor-pointer">
       {item.image_url ? (
         <img
           src={item.image_url}
           alt={item.title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
       ) : (
-        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-          <span className="text-gray-400">No Image</span>
+        <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+          <span className="text-gray-500 text-sm">No Image</span>
         </div>
       )}
-      {/* Dark overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10 group-hover:from-black/90 transition-all duration-300" />
       
-      {/* Content inside card */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-start gap-2">
-        <h3 className="text-white text-lg lg:text-xl font-semibold drop-shadow-lg">
+      {/* Content */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5">
+        <h3 className="text-white text-base lg:text-lg font-bold uppercase tracking-wide mb-2">
           {item.title}
         </h3>
-        <span className="inline-block px-4 py-2 bg-white text-gray-800 text-xs lg:text-sm font-medium rounded-full hover:bg-gray-100 transition-colors">
+        <span className="inline-flex items-center text-xs lg:text-sm text-white/90 font-medium group-hover:text-red-400 transition-colors">
           {ctaText}
+          <svg className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
         </span>
       </div>
     </div>
@@ -150,4 +155,3 @@ function PopularCategoryCard({ item, ctaText }: { item: StorePopularCategoryItem
     </Link>
   )
 }
-

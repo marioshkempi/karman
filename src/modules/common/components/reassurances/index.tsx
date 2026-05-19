@@ -17,7 +17,6 @@ export default async function Reassurances({
   })
 
   if (!reassurances || reassurances.length === 0) {
-    //console.log("No reassurances to display - component will not render")
     return null
   }
 
@@ -41,30 +40,30 @@ export default async function Reassurances({
   }
 
   return (
-    <div className="w-full bg-white py-6 lg:py-8 shadow-sm">
-      <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
-        <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-center lg:gap-8">
+    <div className="w-full bg-white border-b border-gray-200">
+      <div className="max-w-[1350px] mx-auto px-4 lg:px-8 py-5 lg:py-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-center lg:gap-6">
           {reassurances.map((reassurance) => {
             const redirectUrl = handleRedirect(reassurance)
             const content = (
-              <div className="flex flex-row items-center gap-3 p-2 hover:opacity-80 transition-opacity">
+              <div className="flex flex-row items-center gap-4 group">
                 {reassurance.icon_url && (
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center">
                     <Image
                       src={reassurance.icon_url}
                       alt={reassurance.title}
                       width={48}
                       height={48}
-                      className="w-12 h-12 object-contain"
+                      className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                     />
                   </div>
                 )}
                 <div className="flex flex-col">
-                  <h3 className="text-primary text-sm lg:text-base font-semibold">
+                  <h3 className="text-gray-900 text-sm lg:text-[15px] font-semibold tracking-tight">
                     {reassurance.title}
                   </h3>
                   {reassurance.description && (
-                    <p className="text-gray-600 text-xs lg:text-sm">
+                    <p className="text-gray-500 text-xs lg:text-[13px] mt-0.5">
                       {reassurance.description}
                     </p>
                   )}
@@ -72,7 +71,7 @@ export default async function Reassurances({
               </div>
             )
 
-            const wrapperClasses = "flex-1 flex justify-center"
+            const wrapperClasses = "flex-1 flex justify-center lg:justify-start hover:opacity-80 transition-opacity cursor-pointer"
 
             if (redirectUrl) {
               if (
