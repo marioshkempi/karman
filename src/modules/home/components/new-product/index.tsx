@@ -7,20 +7,37 @@ export default async function ProductShowCase({
   products,
   region,
   title,
-  viewAllLink
+  viewAllLink,
+  backgroundImage
 }: {
   products: HttpTypes.StoreProduct[]
   region: HttpTypes.StoreRegion
   title?: string
   viewAllLink?: string
+  backgroundImage?: string
 }) {
   if (!products || products.length === 0) {
     return null
   }
   
   return (
-    <div className="w-full bg-white py-10 lg:py-14">
-      <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
+    <div className="relative w-full py-10 lg:py-14 overflow-hidden">
+      {/* Optional faded background image with white overlay */}
+      {backgroundImage && (
+        <>
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+          {/* Strong white overlay to fade the background */}
+          <div className="absolute inset-0 bg-white/85" />
+        </>
+      )}
+      
+      {/* Default white background if no image */}
+      {!backgroundImage && <div className="absolute inset-0 bg-white" />}
+      
+      <div className="relative z-10 max-w-[1350px] mx-auto px-4 lg:px-8">
         {/* Section Header */}
         <div className="flex items-end justify-between mb-6 lg:mb-8">
           <div>

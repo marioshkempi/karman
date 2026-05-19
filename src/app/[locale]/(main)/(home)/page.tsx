@@ -93,7 +93,9 @@ export default async function Home(props: Params) {
       <ProductShowCase
         products={products.products}
         region={region}
-        title="Νέα Προϊόντα"
+        title="Road Wheels"
+        viewAllLink="/categories/wheels"
+        backgroundImage="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Road-wheels-background-s79ykRLzKirQ1j2jcuA5OH9BPNCOF9.jpg"
       />
       <ProductShowCase
         products={bestSellingProducts}
