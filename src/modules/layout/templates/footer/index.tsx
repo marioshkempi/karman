@@ -1,6 +1,5 @@
 import { listFooterSections } from "@lib/data/footer-links"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import Image from "next/image"
 import FooterAccordionItem from "@modules/layout/components/footer-accordion-item"
 import FooterHardcode from "@modules/layout/components/footer-hardcode"
 import { getSiteSetting } from "@lib/data/site-settings"
@@ -62,11 +61,12 @@ export default async function Footer({ topbarText }: any) {
         <div className="lg:hidden space-y-6">
           <div className="flex items-center mb-6">
             <LocalizedClientLink href="/">
-              <Image
+              <img
                 src={footerLogo}
                 width={235}
                 height={86}
-                alt={"Bio kifisia footer logo"}
+                alt={"Footer logo"}
+                className="w-auto h-auto max-w-[235px]"
               />
             </LocalizedClientLink>
           </div>
@@ -153,11 +153,12 @@ export default async function Footer({ topbarText }: any) {
         <div className="flex">
           <div className="items-center gap-4 mb-4 w-[30%] hidden lg:block">
             <LocalizedClientLink href="/">
-              <Image
+              <img
                 src={footerLogo}
                 width={235}
                 height={86}
-                alt={"Bio kifisia footer logo"}
+                alt={"Footer logo"}
+                className="w-auto h-auto max-w-[235px]"
               />
             </LocalizedClientLink>
           </div>
