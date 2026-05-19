@@ -127,7 +127,7 @@ export default function NavbarClient({
           className={`hidden lg:block sticky top-0 z-50 transition-all duration-300 ${
             isScrolled 
               ? "bg-white shadow-md" 
-              : "bg-[#2a2a2a]"
+              : "bg-[#0a0a0a]"
           }`}
         >
           <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
@@ -141,8 +141,8 @@ export default function NavbarClient({
                 />
               </LocalizedClientLink>
 
-              {/* Center: Navigation Menu */}
-              <div className="flex items-center gap-1">
+              {/* Center: Navigation Menu - flex container with gap-6, text-sm font-semibold uppercase */}
+              <div className="flex items-center gap-6 text-sm font-semibold uppercase">
                 {/* Products Dropdown */}
                 <MegaMenu
                   megaMenus={menu?.megaMenus}
@@ -158,56 +158,34 @@ export default function NavbarClient({
                   <LocalizedClientLink
                     key={index}
                     href={item.href}
-                    className={`px-4 py-2 text-[14px] font-medium transition-colors whitespace-nowrap ${
-                      isScrolled 
-                        ? "text-gray-800 hover:text-gray-600" 
-                        : "text-white hover:text-white/80"
-                    }`}
+                    className="text-white hover:text-white/80 transition-colors whitespace-nowrap"
                   >
                     {item.label}
                   </LocalizedClientLink>
                 ))}
               </div>
 
-              {/* Right: Search, Wishlist, Cart */}
-              <div className="flex items-center gap-4">
-                {/* Search Bar - Pill shaped with grey background */}
+              {/* Right: Search, Icons Area - flex items-center gap-6 */}
+              <div className="flex items-center gap-6">
+                {/* Search Bar - Grey pill exactly as specified */}
                 <div className="relative">
-                  <div className={`flex items-center rounded-full overflow-hidden ${
-                    isScrolled 
-                      ? "bg-gray-100 border border-gray-200" 
-                      : "bg-[#4a4a4a] border border-[#5a5a5a]"
-                  }`}>
+                  <div className="bg-gray-600/50 rounded-full px-4 py-2 flex items-center w-72">
                     <input
                       type="text"
                       placeholder="Αναζήτηση με κωδικό ή λέξη-κλειδί"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       onFocus={() => query.trim() && setOpen(true)}
-                      className={`w-[260px] h-[42px] pl-4 pr-2 bg-transparent text-[13px] focus:outline-none ${
-                        isScrolled 
-                          ? "text-gray-800 placeholder:text-gray-500" 
-                          : "text-white placeholder:text-gray-400"
-                      }`}
+                      className="w-full bg-transparent text-[13px] text-white placeholder:text-gray-400 focus:outline-none"
                     />
-                    <button className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors mr-0.5 ${
-                      isScrolled 
-                        ? "bg-gray-300 text-gray-600 hover:bg-gray-400" 
-                        : "bg-[#5a5a5a] text-white hover:bg-[#6a6a6a]"
-                    }`}>
-                      <Search size={18} />
-                    </button>
+                    <Search size={18} className="text-white ml-2 flex-shrink-0" />
                   </div>
                 </div>
 
-                {/* Wishlist */}
+                {/* Wishlist - White icon, white text */}
                 <LocalizedClientLink
                   href="/account/wishlist"
-                  className={`relative flex flex-col items-center transition-colors ${
-                    isScrolled 
-                      ? "text-gray-800 hover:text-gray-600" 
-                      : "text-white hover:text-white/80"
-                  }`}
+                  className="relative flex flex-col items-center text-white hover:text-white/80 transition-colors"
                 >
                   <div className="relative">
                     <Heart size={24} />
@@ -215,22 +193,19 @@ export default function NavbarClient({
                       {wishlistCount}
                     </span>
                   </div>
-                  <span className={`text-[11px] mt-0.5 ${
-                    isScrolled ? "text-gray-600" : "text-white/80"
-                  }`}>Αγαπημένα</span>
+                  <span className="text-[11px] mt-0.5 text-white/80">Αγαπημένα</span>
                 </LocalizedClientLink>
 
-                {/* Cart Button - Bright Red */}
-                <LocalizedClientLink
-                  href="/cart"
-                  className="relative flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded transition-colors"
-                >
-                  <ShoppingCart size={20} />
-                  <div className="flex flex-col items-start">
-                    <span className="text-[10px] font-bold leading-none">{cartItemsCount}</span>
-                    <span className="text-[12px] font-medium">Καλάθι</span>
-                  </div>
-                </LocalizedClientLink>
+                {/* Cart Button - THE ONLY RED ELEMENT */}
+                <button className="bg-[#ff0d00] text-white px-4 py-2 rounded-md flex flex-col items-center justify-center">
+                  <LocalizedClientLink href="/cart" className="flex items-center gap-2 text-white">
+                    <ShoppingCart size={20} />
+                    <div className="flex flex-col items-start">
+                      <span className="text-[10px] font-bold leading-none">{cartItemsCount}</span>
+                      <span className="text-[12px] font-medium">Καλάθι</span>
+                    </div>
+                  </LocalizedClientLink>
+                </button>
               </div>
             </div>
           </div>
@@ -240,7 +215,7 @@ export default function NavbarClient({
         <div className={`lg:hidden sticky top-0 z-50 transition-all duration-300 ${
           isScrolled 
             ? "bg-white shadow-md" 
-            : "bg-[#2a2a2a]"
+            : "bg-[#0a0a0a]"
         }`}>
           <div className="max-w-[1350px] mx-auto px-4">
             {/* Mobile Top Bar */}
@@ -322,7 +297,7 @@ export default function NavbarClient({
         <div className={`relative lg:hidden py-3 px-4 transition-colors ${
           isScrolled 
             ? "bg-white border-b border-gray-200" 
-            : "bg-[#2a2a2a] border-b border-white/10"
+            : "bg-[#0a0a0a] border-b border-white/10"
         }`}>
           <div className="relative">
             <div className={`flex items-center rounded-full overflow-hidden ${
