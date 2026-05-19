@@ -21,6 +21,7 @@ import {
   getFeaturedProducts,
 } from "@lib/data/featured-products"
 import Reassurances from "@modules/common/components/reassurances"
+import MomoPromo from "@modules/home/components/momo-promo"
 import { newProductsGetProducts } from "@services/typesense/typesenseService"
 import { getPageSeo, toNextMetadata } from "@lib/data/seo"
 import { JsonLd } from "@lib/util/structured-data"
@@ -82,6 +83,8 @@ export default async function Home(props: Params) {
       {seo?.structured_data && <JsonLd data={seo.structured_data} />}
 
       {hasSlider ? <SliderCarousel slides={slider.slides} /> : <Hero />}
+
+      <MomoPromo />
 
       <Reassurances page_type="home" />
 
