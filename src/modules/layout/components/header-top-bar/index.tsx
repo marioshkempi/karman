@@ -13,7 +13,7 @@ const HeaderTopBar = ({ topbarText }: any) => {
   if (!isVisible) return null
 
   return (
-    <div className="w-full bg-black py-1.5">
+    <div className="w-full bg-red-600 py-1.5">
       <div className="max-w-[1350px] mx-auto px-4 flex items-center justify-between">
         {/* Left side - Phone and Social Media Icons */}
         <div className="flex items-center gap-4 text-[13px] text-white">
