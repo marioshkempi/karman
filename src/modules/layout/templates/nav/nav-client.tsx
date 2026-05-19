@@ -1,10 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Heart, Search, Menu, X, ShoppingCart, User, ChevronLeft, ChevronRight, Car } from "lucide-react"
+import { Heart, Search, Menu, X, ShoppingCart } from "lucide-react"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import Logo from "./logo"
 import CartButtonClient from "@modules/layout/components/cart-button-client"
 import { useCompareStore } from "global-states/use-compare"
 import { CompareModal } from "@modules/products/components/compare-modal"
@@ -12,7 +11,6 @@ import { Button } from "@medusajs/ui"
 import { useSearchParams } from "next/navigation"
 import { SearchDropdown } from "@modules/search/dropdown/SearchDropdown"
 import LoginPromptModal from "@modules/layout/components/login-prompt-modal"
-import AccountMenu from "@modules/layout/components/user-account-widget/account-header-widget"
 import MegaMenu from "@modules/layout/components/mega-menu/MegaMenu"
 
 interface NavbarProp {
@@ -66,8 +64,18 @@ export default function NavbarClient({
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<any>(null)
   const [open, setOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const cartItemsCount = cart?.items?.reduce((acc, item) => acc + item.quantity, 0) || 0
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   useEffect(() => {
     const s = searchParams.get("s")
@@ -104,109 +112,156 @@ export default function NavbarClient({
     return () => clearTimeout(timeout)
   }, [query])
 
-  // Static navigation items
+  // Static navigation items matching the design
   const staticNavItems = [
-    { label: "Δημοφιλή προϊόντα", href: "/best-selling" },
-    { label: "Σχετικά με μας", href: "/about" },
-    { label: "Blog", href: "/blog" },
-    { label: "Επικοινωνία", href: "/contact-us" },
+    { label: "ΣΧΕΤΙΚΑ ΜΕ ΜΑΣ", href: "/about" },
+    { label: "ΕΠΙΚΟΙΝΩΝΙΑ", href: "/contact-us" },
+    { label: "ΜΑΡΚΕΣ", href: "/brands" },
   ]
 
   return (
     <>
       <div className="relative">
-        {/* Single Blue Gradient Navigation Bar - Desktop */}
-        <div className="hidden lg:block bg-gradient-to-r from-[#283882] via-[#007BFF] to-[#283882]">
+        {/* Desktop Header */}
+        <div 
+          className={`hidden lg:block sticky top-0 z-50 transition-all duration-300 ${
+            isScrolled 
+              ? "bg-white shadow-md" 
+              : "bg-[#1a1a1a]/95 backdrop-blur-sm"
+          }`}
+        >
           <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
-            <div className="flex items-center justify-between h-[64px]">
-              {/* Left Group: Logo + Navigation Menu */}
-              <div className="flex items-center gap-4">
-                {/* Logo */}
-                <LocalizedClientLink href="/" className="flex-shrink-0">
-                  <img 
-                    src="/logo.png" 
-                    alt="Karman Logo" 
-                    className="h-10 w-auto"
-                  />
-                </LocalizedClientLink>
+            <div className="flex items-center justify-between h-[72px]">
+              {/* Left: Logo */}
+              <LocalizedClientLink href="/" className="flex-shrink-0">
+                <img 
+                  src="/logo-aglopoulos.svg" 
+                  alt="Aglopoulos Racing" 
+                  className="h-12 w-auto"
+                />
+              </LocalizedClientLink>
 
-                {/* MegaMenu Dropdown Trigger + Static Nav Items */}
+              {/* Center: Navigation Menu */}
+              <div className="flex items-center gap-1">
+                {/* Products Dropdown */}
                 <MegaMenu
                   megaMenus={menu?.megaMenus}
                   isMobileMenuOpen={isMobileMenuOpen}
                   onMobileMenuToggle={setIsMobileMenuOpen}
                   isInline={true}
-                  staticNavItems={staticNavItems}
+                  staticNavItems={[]}
+                  isScrolled={isScrolled}
                 />
+                
+                {/* Static Navigation Items */}
+                {staticNavItems.map((item, index) => (
+                  <LocalizedClientLink
+                    key={index}
+                    href={item.href}
+                    className={`px-4 py-2 text-[14px] font-medium transition-colors whitespace-nowrap ${
+                      isScrolled 
+                        ? "text-gray-800 hover:text-gray-600" 
+                        : "text-white hover:text-white/80"
+                    }`}
+                  >
+                    {item.label}
+                  </LocalizedClientLink>
+                ))}
               </div>
 
-              {/* Right Group: Search Bar + Wishlist + Cart */}
-              <div className="flex items-center gap-6">
-                {/* Search Bar */}
+              {/* Right: Search, Wishlist, Cart */}
+              <div className="flex items-center gap-4">
+                {/* Search Bar - Pill shaped with grey background */}
                 <div className="relative">
-                  <div className="flex items-center bg-white rounded-md overflow-hidden">
-                    <div className="flex items-center justify-center pl-3 text-gray-500">
-                      <Search size={18} />
-                    </div>
+                  <div className={`flex items-center rounded-full overflow-hidden ${
+                    isScrolled 
+                      ? "bg-gray-100 border border-gray-200" 
+                      : "bg-white/20 border border-white/30"
+                  }`}>
                     <input
                       type="text"
-                      placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
+                      placeholder="Αναζήτηση με κωδικό ή λέξη-κλειδί"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       onFocus={() => query.trim() && setOpen(true)}
-                      className="w-[240px] h-[40px] px-3 bg-transparent text-gray-800 text-[13px] placeholder:text-gray-500 focus:outline-none"
+                      className={`w-[240px] h-[40px] pl-4 pr-2 bg-transparent text-[13px] focus:outline-none ${
+                        isScrolled 
+                          ? "text-gray-800 placeholder:text-gray-500" 
+                          : "text-white placeholder:text-white/70"
+                      }`}
                     />
+                    <button className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
+                      isScrolled 
+                        ? "bg-gray-200 text-gray-600 hover:bg-gray-300" 
+                        : "bg-white/20 text-white hover:bg-white/30"
+                    }`}>
+                      <Search size={18} />
+                    </button>
                   </div>
                 </div>
 
                 {/* Wishlist */}
                 <LocalizedClientLink
                   href="/account/wishlist"
-                  className="relative flex items-center text-white hover:text-white/80 transition-colors"
+                  className={`relative flex flex-col items-center transition-colors ${
+                    isScrolled 
+                      ? "text-gray-800 hover:text-gray-600" 
+                      : "text-white hover:text-white/80"
+                  }`}
                 >
-                  <Heart size={24} />
-                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-[#5B9AFF] text-white text-[10px] font-bold leading-none">
-                    {wishlistCount}
-                  </span>
+                  <div className="relative">
+                    <Heart size={24} />
+                    <span className="absolute -top-1.5 -right-2 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-red-600 text-white text-[10px] font-bold leading-none">
+                      {wishlistCount}
+                    </span>
+                  </div>
+                  <span className={`text-[11px] mt-0.5 ${
+                    isScrolled ? "text-gray-600" : "text-white/80"
+                  }`}>Αγαπημένα</span>
                 </LocalizedClientLink>
 
-                {/* Cart with circular background */}
+                {/* Cart Button - Bright Red */}
                 <LocalizedClientLink
                   href="/cart"
-                  className="relative flex items-center"
+                  className="relative flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded transition-colors"
                 >
-                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F2F4F8]">
-                    <ShoppingCart size={20} className="text-[#283882]" />
+                  <ShoppingCart size={20} />
+                  <div className="flex flex-col items-start">
+                    <span className="text-[10px] font-bold leading-none">{cartItemsCount}</span>
+                    <span className="text-[12px] font-medium">Καλάθι</span>
                   </div>
-                  <span className="absolute -top-0.5 -right-1 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-bold leading-none">
-                    {cartItemsCount}
-                  </span>
                 </LocalizedClientLink>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Mobile Header - Blue background */}
-        <div className="lg:hidden bg-navblue">
+        {/* Mobile Header */}
+        <div className={`lg:hidden sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled 
+            ? "bg-white shadow-md" 
+            : "bg-[#1a1a1a]/95"
+        }`}>
           <div className="max-w-[1350px] mx-auto px-4">
             {/* Mobile Top Bar */}
             <div className="flex items-center justify-between h-14">
               <div className="flex items-center gap-3">
                 <Button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="p-2 text-white hover:text-white/80 bg-transparent border-none shadow-none"
+                  className={`p-2 bg-transparent border-none shadow-none ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
                 >
                   {isMobileMenuOpen ? (
                     <X size={28} />
                   ) : (
-                    <Menu size={28} className="text-white" />
+                    <Menu size={28} />
                   )}
                 </Button>
                 <LocalizedClientLink href="/">
                   <img 
-                    src="/logo.png" 
-                    alt="Karman Logo" 
+                    src="/logo-aglopoulos.svg" 
+                    alt="Aglopoulos Racing" 
                     className="h-8 w-auto"
                   />
                 </LocalizedClientLink>
@@ -215,22 +270,24 @@ export default function NavbarClient({
               <div className="flex items-center gap-2">
                 <LocalizedClientLink
                   href="/account/wishlist"
-                  className="relative flex items-center p-2 text-white hover:text-white/80"
+                  className={`relative flex items-center p-2 ${
+                    isScrolled ? "text-gray-800" : "text-white"
+                  }`}
                 >
                   <Heart size={22} />
                   {wishlistCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-semibold leading-none">
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-red-600 text-white text-[10px] font-semibold leading-none">
                       {wishlistCount}
                     </span>
                   )}
                 </LocalizedClientLink>
                 <LocalizedClientLink
                   href="/cart"
-                  className="relative flex items-center p-2 text-white hover:text-white/80"
+                  className="relative flex items-center p-2 bg-red-600 rounded text-white"
                 >
                   <ShoppingCart size={22} />
                   {cartItemsCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-semibold leading-none">
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-white text-red-600 text-[10px] font-semibold leading-none">
                       {cartItemsCount}
                     </span>
                   )}
@@ -248,6 +305,7 @@ export default function NavbarClient({
             onMobileMenuToggle={setIsMobileMenuOpen}
             isInline={false}
             staticNavItems={staticNavItems}
+            isScrolled={isScrolled}
           />
         </div>
 
@@ -261,10 +319,20 @@ export default function NavbarClient({
         />
 
         {/* Mobile Search */}
-        <div className="relative lg:hidden py-3 px-4 bg-navblue border-b border-white/10">
+        <div className={`relative lg:hidden py-3 px-4 transition-colors ${
+          isScrolled 
+            ? "bg-white border-b border-gray-200" 
+            : "bg-[#1a1a1a]/95 border-b border-white/10"
+        }`}>
           <div className="relative">
-            <div className="flex items-center bg-white/10 border border-white/30 rounded-md overflow-hidden">
-              <div className="flex items-center justify-center pl-3 text-white/70">
+            <div className={`flex items-center rounded-full overflow-hidden ${
+              isScrolled 
+                ? "bg-gray-100 border border-gray-200" 
+                : "bg-white/10 border border-white/30"
+            }`}>
+              <div className={`flex items-center justify-center pl-3 ${
+                isScrolled ? "text-gray-500" : "text-white/70"
+              }`}>
                 <Search size={16} />
               </div>
               <input
@@ -273,7 +341,11 @@ export default function NavbarClient({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => query.trim() && setOpen(true)}
-                className="w-full h-[40px] px-3 bg-transparent text-white text-[13px] placeholder:text-white/60 focus:outline-none"
+                className={`w-full h-[40px] px-3 bg-transparent text-[13px] focus:outline-none ${
+                  isScrolled 
+                    ? "text-gray-800 placeholder:text-gray-500" 
+                    : "text-white placeholder:text-white/60"
+                }`}
               />
             </div>
           </div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ChevronRight, ChevronLeft, X, Menu, Package } from "lucide-react"
+import { ChevronRight, ChevronLeft, ChevronDown, X, Menu, Package } from "lucide-react"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -43,6 +43,7 @@ interface MegaMenuProps {
   onMobileMenuToggle: (open: boolean) => void
   isInline?: boolean
   staticNavItems?: { label: string; href: string }[]
+  isScrolled?: boolean
 }
 
 // All handles are pre-rewritten by the backend, so just prefix with /
@@ -54,6 +55,7 @@ export default function MegaMenu({
   onMobileMenuToggle,
   isInline = false,
   staticNavItems = [],
+  isScrolled = false,
 }: MegaMenuProps) {
   const pathname = usePathname()
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
@@ -87,20 +89,24 @@ export default function MegaMenu({
         className="flex items-center gap-1"
         onMouseLeave={() => setIsCategoriesOpen(false)}
       >
-        {/* Categories Dropdown Trigger */}
+        {/* Products Dropdown Trigger */}
         <div 
           className="relative"
           onMouseEnter={() => setIsCategoriesOpen(true)}
         >
           <button
-            className={`flex items-center gap-2 px-3 py-2 rounded-md text-[14px] font-medium transition-colors duration-200
-              ${isCategoriesOpen 
-                ? "bg-orange text-white" 
-                : "bg-transparent text-white hover:bg-orange hover:text-white"
-              }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded text-[14px] font-medium transition-colors duration-200 ${
+              isScrolled
+                ? isCategoriesOpen 
+                  ? "bg-red-600 text-white" 
+                  : "bg-transparent text-gray-800 hover:bg-red-600 hover:text-white"
+                : isCategoriesOpen 
+                  ? "bg-red-600 text-white" 
+                  : "bg-transparent text-white hover:bg-red-600 hover:text-white"
+            }`}
           >
-            <Menu size={18} />
-            <span>Κατηγορίες προϊόντων</span>
+            <span>ΠΡΟΪΟΝΤΑ</span>
+            <ChevronDown size={16} className={`transition-transform ${isCategoriesOpen ? "rotate-180" : ""}`} />
           </button>
 
           {/* Vertical Dropdown Menu */}
@@ -136,17 +142,6 @@ export default function MegaMenu({
             </div>
           </div>
         </div>
-
-        {/* Static Navigation Items */}
-        {staticNavItems.map((item, index) => (
-          <Link
-            key={index}
-            href={item.href}
-            className="px-3 py-2 text-[14px] text-white hover:text-white/80 transition-colors whitespace-nowrap"
-          >
-            {item.label}
-          </Link>
-        ))}
       </div>
     )
   }
@@ -178,26 +173,26 @@ export default function MegaMenu({
       >
         {!selectedCategory ? (
           <div className="flex flex-col h-full">
-            <div className="bg-primary flex items-center justify-end px-4 py-4">
+            <div className="bg-[#1a1a1a] flex items-center justify-end px-4 py-4">
               <button onClick={closeMobileMenu} className="text-white">
                 <X size={24} />
               </button>
             </div>
 
-            <div className="flex-1 overflow-auto bg-tertiary">
+            <div className="flex-1 overflow-auto bg-gray-50">
               {megaMenus.map((megaMenu) => (
                 <div
                   key={megaMenu.id}
                   className={`flex items-center ${
                     hasChildren(megaMenu.id)
                       ? "bg-white border-b border-gray-200"
-                      : "bg-tertiary"
+                      : "bg-gray-50"
                   }`}
                 >
                   <LocalizedClientLink
                     href={toHref(megaMenu.handle)}
                     onClick={closeMobileMenu}
-                    className="flex-1 px-6 py-4 text-secondary text-[15px]"
+                    className="flex-1 px-6 py-4 text-gray-800 text-[15px] font-medium"
                   >
                     {megaMenu.title}
                   </LocalizedClientLink>
@@ -207,7 +202,7 @@ export default function MegaMenu({
                       onClick={() => setSelectedCategory(megaMenu.id)}
                       className="px-4 py-4 border-l border-gray-200"
                     >
-                      <ChevronRight size={25} className="text-primary" />
+                      <ChevronRight size={25} className="text-red-600" />
                     </button>
                   )}
                 </div>
@@ -222,7 +217,7 @@ export default function MegaMenu({
                   <Link
                     href={item.href}
                     onClick={closeMobileMenu}
-                    className="flex-1 px-6 py-4 text-secondary text-[15px]"
+                    className="flex-1 px-6 py-4 text-gray-800 text-[15px] font-medium"
                   >
                     {item.label}
                   </Link>
@@ -232,7 +227,7 @@ export default function MegaMenu({
           </div>
         ) : (
           <div className="flex flex-col h-full">
-            <div className="bg-secondary flex items-center justify-between px-4 py-4">
+            <div className="bg-[#1a1a1a] flex items-center justify-between px-4 py-4">
               <div className={"align-middle flex items-center gap-2"}>
                 <button
                   onClick={() => setSelectedCategory(null)}
@@ -259,7 +254,7 @@ export default function MegaMenu({
                   <LocalizedClientLink
                     href={toHref(item.handle)}
                     onClick={closeMobileMenu}
-                    className="flex-1 px-6 py-4 text-secondary text-[15px]"
+                    className="flex-1 px-6 py-4 text-gray-800 text-[15px]"
                   >
                     {item.title}
                   </LocalizedClientLink>
