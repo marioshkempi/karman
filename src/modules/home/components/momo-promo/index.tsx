@@ -108,7 +108,7 @@ export default function MomoPromo() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${ROAD_WHEELS_BG})` }}
         />
-        <div className="absolute inset-0 bg-white/90" />
+        <div className="absolute inset-0 bg-white/75" />
         
         {/* Content */}
         <div className="relative z-10 max-w-[1350px] mx-auto px-4 lg:px-8 py-12 lg:py-16">
