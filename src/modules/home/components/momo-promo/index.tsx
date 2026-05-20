@@ -6,7 +6,7 @@ const WHEEL_1 = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Wheel-1
 const WHEEL_2 = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Wheel-2-1wQGLyXTXcQ0H16BLkTaD13OCG0miG.png"
 const WHEEL_3 = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/NoPath%20-%20Copy%20%286%29-UjtsQZzU2X0GxGOoDmbJ5DGDDj9Jfy.png"
 const WHEEL_4 = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/NoPath%20-%20Copy%20%285%29-RWOu2HUFm5XbSPWSfjTmet9zYb4wEq.png"
-const ROAD_WHEELS_BG = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Road-wheels-background-s79ykRLzKirQ1j2jcuA5OH9BPNCOF9.jpg"
+const ROAD_WHEELS_BG = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Road-wheels-background-YSM8LE2gJoMdOszNwSpVe5QVQSMCOo.jpg"
 
 // Static wheel product data for visual mockup
 const WHEEL_PRODUCTS = [
