@@ -7,8 +7,6 @@ import { getRegion } from "@lib/data/regions"
 import NewsletterSignup from "@modules/home/components/newsletter"
 import IntroSection from "@modules/home/components/intro"
 import BlogBanner from "@modules/home/components/blog-banner"
-import PopularCategories from "@modules/home/components/popular-category"
-import ProductShowCase from "@modules/home/components/new-product"
 import SocialFollowSection from "@modules/home/components/socials"
 import BannerSection from "@modules/common/components/banner-section"
 import { getBannersByHook } from "@lib/data/banner"
@@ -20,7 +18,6 @@ import {
   getAllFeaturedProducts,
   getFeaturedProducts,
 } from "@lib/data/featured-products"
-import Reassurances from "@modules/common/components/reassurances"
 import MomoPromo from "@modules/home/components/momo-promo"
 import MichelinPromo from "@modules/home/components/michelin-promo"
 import SparcoPromo from "@modules/home/components/sparco-promo"
@@ -91,10 +88,6 @@ export default async function Home(props: Params) {
       <MichelinPromo />
 
       <SparcoPromo />
-
-      <Reassurances page_type="home" />
-
-      <PopularCategories />
 
       <ProductShowCase
         products={bestSellingProducts}
