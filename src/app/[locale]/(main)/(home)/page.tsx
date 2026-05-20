@@ -23,6 +23,7 @@ import {
 import Reassurances from "@modules/common/components/reassurances"
 import MomoPromo from "@modules/home/components/momo-promo"
 import MichelinPromo from "@modules/home/components/michelin-promo"
+import SparcoPromo from "@modules/home/components/sparco-promo"
 import { newProductsGetProducts } from "@services/typesense/typesenseService"
 import { getPageSeo, toNextMetadata } from "@lib/data/seo"
 import { JsonLd } from "@lib/util/structured-data"
@@ -88,6 +89,8 @@ export default async function Home(props: Params) {
       <MomoPromo />
 
       <MichelinPromo />
+
+      <SparcoPromo />
 
       <Reassurances page_type="home" />
 
