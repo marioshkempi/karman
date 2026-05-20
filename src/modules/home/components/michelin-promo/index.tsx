@@ -2,8 +2,8 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 // Uploaded assets
-const MICHELIN_BANNER = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Classic-tires-banner-i754tFkviwBBYtJWf6XssJ4PpqW1x6.png"
-const CLASSIC_TIRES_BG = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Classic-tires-background-HQ2IXeGk3JGohfUVYnpZS2lpkRmcgi.jpg"
+const MICHELIN_VISUAL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/michelin-oSlwHk44E04XZg92StCbJNrFprVsnN.png"
+const CLASSIC_TIRES_BG = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Classic-tires-background-iQJsQSjnEkC12oZXd6ZuLylu07Bay2.jpg"
 
 // Static fallback tire products (visual preview only)
 const STATIC_TIRES = [
@@ -37,37 +37,44 @@ export default function MichelinPromo() {
   return (
     <section className="w-full bg-white">
       {/* MICHELIN Promo Banner */}
-      <div className="py-12 lg:py-16">
+      <div className="pt-16 lg:pt-20 pb-8 lg:pb-12">
         <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
-          {/* Blue Banner Card */}
-          <div className="relative w-full bg-[#0d2d5a] rounded-lg overflow-hidden">
-            <div className="flex flex-col lg:flex-row">
-              {/* Left Side: Text Content */}
-              <div className="w-full lg:w-[45%] flex items-center p-8 lg:p-12 xl:p-16">
-                <div className="max-w-md">
-                  <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white tracking-wide mb-4">
-                    MICHELIN
-                  </h2>
-                  <p className="text-sm lg:text-base text-white/80 mb-6 leading-relaxed">
-                    Tour our collection and use our wheel configurator to find the perfect Michelin tire for your vehicle.
-                  </p>
-                  <LocalizedClientLink
-                    href="/categories/tires"
-                    className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors rounded"
-                  >
-                    LEARN MORE
-                  </LocalizedClientLink>
-                </div>
+          {/* Blue Banner Card with overflow for mascot */}
+          <div className="relative w-full bg-[#0d2d5a] rounded-lg overflow-visible min-h-[280px] lg:min-h-[320px]">
+            {/* Left Side: Text Content */}
+            <div className="relative z-10 w-full lg:w-[45%] flex items-center p-8 lg:p-12 xl:p-16 min-h-[280px] lg:min-h-[320px]">
+              <div className="max-w-md">
+                <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white tracking-wide mb-4">
+                  MICHELIN
+                </h2>
+                <p className="text-sm lg:text-base text-white/80 mb-6 leading-relaxed">
+                  Tour our collection and use our wheel configurator to find the perfect Michelin tire for your vehicle.
+                </p>
+                <LocalizedClientLink
+                  href="/categories/tires"
+                  className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors rounded"
+                >
+                  LEARN MORE
+                </LocalizedClientLink>
               </div>
-              
-              {/* Right Side: Tires + Mascot Image */}
-              <div className="w-full lg:w-[55%] flex items-end justify-end">
-                <img 
-                  src={MICHELIN_BANNER} 
-                  alt="Michelin Tires with Bibendum Mascot" 
-                  className="w-full h-auto object-contain"
-                />
-              </div>
+            </div>
+            
+            {/* Right Side: Tires + Mascot Image - positioned to extend above banner */}
+            <div className="hidden lg:block absolute right-0 bottom-0 w-[60%] xl:w-[55%]">
+              <img 
+                src={MICHELIN_VISUAL} 
+                alt="Michelin Tires with Bibendum Mascot" 
+                className="w-full h-auto object-contain translate-y-[-15%]"
+              />
+            </div>
+            
+            {/* Mobile: Tires image inside banner */}
+            <div className="lg:hidden w-full px-4 pb-4">
+              <img 
+                src={MICHELIN_VISUAL} 
+                alt="Michelin Tires with Bibendum Mascot" 
+                className="w-full h-auto object-contain max-h-[200px]"
+              />
             </div>
           </div>
         </div>
@@ -80,8 +87,8 @@ export default function MichelinPromo() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${CLASSIC_TIRES_BG})` }}
         />
-        {/* Strong white overlay */}
-        <div className="absolute inset-0 bg-white/90" />
+        {/* White overlay - reduced to show background */}
+        <div className="absolute inset-0 bg-white/70" />
 
         <div className="relative z-10 max-w-[1350px] mx-auto px-4 lg:px-8">
           {/* Section Header */}
@@ -100,10 +107,10 @@ export default function MichelinPromo() {
             
             {/* Navigation Arrows */}
             <div className="hidden lg:flex items-center gap-2">
-              <button className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-red-500 hover:text-red-500 transition-colors">
+              <button className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition-colors">
                 <ChevronLeft size={20} />
               </button>
-              <button className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-red-500 hover:text-red-500 transition-colors">
+              <button className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition-colors">
                 <ChevronRight size={20} />
               </button>
             </div>
@@ -117,7 +124,7 @@ export default function MichelinPromo() {
                 href="/categories/tires"
                 className="group block"
               >
-                <div className="bg-white rounded-lg p-4 lg:p-6 transition-shadow hover:shadow-lg border border-gray-100">
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 lg:p-6 transition-shadow hover:shadow-lg border border-blue-100">
                   {/* Product Image */}
                   <div className="aspect-square mb-4 flex items-center justify-center">
                     <img 
