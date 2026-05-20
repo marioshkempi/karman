@@ -57,7 +57,7 @@ export default function SocialFollowSection({ socials }: SocialFollowSectionProp
   // const hasDynamicSocials = socials.length > 0;
 
   return (
-    <div className="w-full bg-gray-50 mb-6 lg:py-1">
+    <div className="hidden">
       <div className="max-w-[1350px] mx-auto px-2">
         <div className="flex flex-col items-center gap-4 md:flex-row md:gap-6 md:justify-center">
           <span className="text-secondary text-[22px] lg:text-[22px] font-normal">
