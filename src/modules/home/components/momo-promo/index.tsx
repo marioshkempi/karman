@@ -20,54 +20,76 @@ export default function MomoPromo() {
   return (
     <>
       {/* MOMO Promo Section */}
-      <section className="w-full bg-white pt-8 lg:pt-12">
+      <section className="w-full bg-white pt-12 lg:pt-16 pb-8">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
           
-          {/* Top area: Tagline and MOMO Logo - right aligned */}
-          <div className="flex justify-end mb-4 lg:mb-6">
-            <div className="flex items-center gap-3 md:gap-4">
-              <div className="flex flex-col text-right leading-tight">
-                <span className="text-gray-600 text-[10px] md:text-xs tracking-[0.2em] uppercase">
+          {/* Top-right: Large tagline and MOMO Logo */}
+          <div className="flex justify-end mb-8 lg:mb-12">
+            <div className="flex items-center gap-4 md:gap-6">
+              <div className="flex flex-col items-end leading-tight">
+                <span className="text-gray-800 text-lg md:text-xl lg:text-2xl font-light tracking-wide">
                   DESIGNED FOR
                 </span>
-                <span className="text-gray-900 text-sm md:text-base lg:text-lg font-bold tracking-wide uppercase">
-                  SAFETY<span className="text-gray-600 font-normal">, BUILT</span>
+                <span className="text-gray-900 text-2xl md:text-3xl lg:text-4xl font-black tracking-wide">
+                  SAFETY<span className="text-[#c4a000] font-black">,</span> <span className="font-bold">BUILT</span>
                 </span>
-                <span className="text-gray-600 text-[10px] md:text-xs tracking-[0.2em] uppercase">
-                  FOR <span className="text-gray-900 font-bold">SPEED</span>
+                <span className="text-gray-800 text-lg md:text-xl lg:text-2xl font-light tracking-wide">
+                  FOR <span className="text-[#c4a000] font-black">SPEED</span>
                 </span>
               </div>
               <img 
                 src={MOMO_LOGO} 
                 alt="MOMO" 
-                className="h-14 md:h-16 lg:h-20 w-auto flex-shrink-0"
+                className="h-20 md:h-24 lg:h-28 w-auto flex-shrink-0"
               />
             </div>
           </div>
 
-          {/* Main composition area */}
+          {/* Main composition: Wheels on top, Red card below */}
           <div className="relative">
             
-            {/* Red configurator card - full width band */}
-            <div className="bg-[#b91c1c] rounded-lg overflow-hidden">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between px-6 md:px-10 lg:px-12 py-6 md:py-8 lg:py-10">
+            {/* Wheels composition - centered, positioned above the card */}
+            <div className="relative z-20 flex items-end justify-center -mb-20 md:-mb-28 lg:-mb-36">
+              {/* Left wheel (silver) */}
+              <img 
+                src={WHEEL_3} 
+                alt="MOMO Wheel" 
+                className="w-36 md:w-48 lg:w-64 xl:w-72 h-auto relative z-0 -mr-6 md:-mr-10 lg:-mr-14"
+              />
+              {/* Center wheel (black) - largest */}
+              <img 
+                src={WHEEL_1} 
+                alt="MOMO Wheel" 
+                className="w-48 md:w-64 lg:w-80 xl:w-96 h-auto relative z-20"
+              />
+              {/* Right wheel (machined) */}
+              <img 
+                src={WHEEL_2} 
+                alt="MOMO Wheel" 
+                className="w-36 md:w-48 lg:w-64 xl:w-72 h-auto relative z-10 -ml-6 md:-ml-10 lg:-ml-14"
+              />
+            </div>
+            
+            {/* Red configurator card - below wheels with top padding for wheel overlap */}
+            <div className="relative z-10 bg-[#b91c1c] rounded-lg overflow-hidden">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between px-6 md:px-10 lg:px-16 pt-24 md:pt-32 lg:pt-40 pb-8 md:pb-10 lg:pb-12">
                 
-                {/* Left side: Text content with padding for wheel overlap */}
-                <div className="lg:w-1/2 lg:pl-4 xl:pl-8">
-                  <h2 className="text-white text-xl md:text-2xl lg:text-3xl tracking-wide mb-2">
+                {/* Left side: Text content */}
+                <div className="lg:max-w-md">
+                  <h2 className="text-white text-xl md:text-2xl lg:text-3xl tracking-wide mb-3">
                     <span className="font-black">MOMO</span>{" "}
                     <span className="font-light">WHEEL CONFIGURATOR</span>
                   </h2>
-                  <p className="text-white/80 text-sm md:text-base max-w-md">
+                  <p className="text-white/80 text-sm md:text-base leading-relaxed">
                     Find aluminium rims for your vehicle quickly and easily.
                   </p>
                 </div>
                 
                 {/* Right side: Button */}
-                <div className="mt-6 lg:mt-0 lg:w-1/2 flex justify-start lg:justify-end">
+                <div className="mt-6 lg:mt-0">
                   <LocalizedClientLink 
                     href="/categories/wheels"
-                    className="inline-flex items-center justify-center px-8 md:px-10 py-3 bg-transparent border-2 border-white text-white text-xs md:text-sm font-semibold uppercase tracking-wider hover:bg-white hover:text-[#b91c1c] transition-colors duration-300"
+                    className="inline-flex items-center justify-center px-10 md:px-12 py-3 bg-white text-gray-900 text-xs md:text-sm font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors duration-300"
                   >
                     START NOW
                   </LocalizedClientLink>
@@ -75,35 +97,8 @@ export default function MomoPromo() {
               </div>
             </div>
             
-            {/* Wheels composition - centered, overlapping the red card from above */}
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-[15%] z-10 pointer-events-none">
-              <div className="flex items-end justify-center">
-                {/* Left wheel (silver) */}
-                <img 
-                  src={WHEEL_3} 
-                  alt="MOMO Wheel" 
-                  className="w-32 md:w-44 lg:w-56 xl:w-64 h-auto relative z-0 -mr-4 md:-mr-8 lg:-mr-12"
-                />
-                {/* Center wheel (black) - largest */}
-                <img 
-                  src={WHEEL_1} 
-                  alt="MOMO Wheel" 
-                  className="w-44 md:w-60 lg:w-72 xl:w-80 h-auto relative z-20"
-                />
-                {/* Right wheel (machined) */}
-                <img 
-                  src={WHEEL_2} 
-                  alt="MOMO Wheel" 
-                  className="w-32 md:w-44 lg:w-56 xl:w-64 h-auto relative z-10 -ml-4 md:-ml-8 lg:-ml-12"
-                />
-              </div>
-            </div>
-            
           </div>
         </div>
-        
-        {/* Spacer for wheel overflow */}
-        <div className="h-16 md:h-24 lg:h-32"></div>
       </section>
 
       {/* Road Wheels Section - Static Visual Mockup */}
