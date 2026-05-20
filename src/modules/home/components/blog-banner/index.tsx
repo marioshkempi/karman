@@ -67,7 +67,7 @@ export default function BlogBanner(banner: any) {
           
           {/* Featured Content Card */}
           <div className="bg-[#1a1a1a] rounded-xl p-6 md:p-8 flex flex-col justify-center">
-            <span className="text-gray-400 text-sm mb-3">{FEATURED_BLOG.date}</span>
+            <span className="text-gray-300 text-sm mb-3">{FEATURED_BLOG.date}</span>
             
             <h3 className="text-white text-xl md:text-2xl lg:text-3xl font-bold mb-4 leading-tight">
               {FEATURED_BLOG.title}
@@ -78,14 +78,14 @@ export default function BlogBanner(banner: any) {
               {FEATURED_BLOG.tags.map((tag) => (
                 <span 
                   key={tag}
-                  className="px-3 py-1 text-xs font-medium text-gray-200 border border-gray-500 rounded"
+                  className="px-3 py-1 text-xs font-medium text-white border border-gray-400 rounded"
                 >
                   {tag}
                 </span>
               ))}
             </div>
             
-            <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
+            <p className="text-gray-200 text-sm md:text-base leading-relaxed mb-6">
               {FEATURED_BLOG.description}
             </p>
             
@@ -112,7 +112,7 @@ export default function BlogBanner(banner: any) {
               </div>
               
               {/* Content */}
-              <span className="text-gray-400 text-xs mb-2 block">{blog.date}</span>
+              <span className="text-gray-300 text-xs mb-2 block">{blog.date}</span>
               
               <h4 className="text-white text-sm md:text-base font-bold mb-3 leading-tight group-hover:text-gray-300 transition-colors">
                 {blog.title}
@@ -123,7 +123,7 @@ export default function BlogBanner(banner: any) {
                 {blog.tags.map((tag) => (
                   <span 
                     key={tag}
-                    className="px-2 py-0.5 text-[10px] font-medium text-gray-300 border border-gray-600 rounded"
+                    className="px-2 py-0.5 text-[10px] font-medium text-white border border-gray-500 rounded"
                   >
                     {tag}
                   </span>
