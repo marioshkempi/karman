@@ -18,6 +18,9 @@ import {
   getAllFeaturedProducts,
   getFeaturedProducts,
 } from "@lib/data/featured-products"
+import Reassurances from "@modules/common/components/reassurances"
+import PopularCategories from "@modules/home/components/popular-category"
+import ProductShowCase from "@modules/home/components/new-product"
 import MomoPromo from "@modules/home/components/momo-promo"
 import MichelinPromo from "@modules/home/components/michelin-promo"
 import SparcoPromo from "@modules/home/components/sparco-promo"
@@ -88,6 +91,14 @@ export default async function Home(props: Params) {
       <MichelinPromo />
 
       <SparcoPromo />
+
+      {/* Hidden old sections - kept for safety, not displayed */}
+      <div className="hidden">
+        <Reassurances page_type="home" />
+      </div>
+      <div className="hidden">
+        <PopularCategories />
+      </div>
 
       <ProductShowCase
         products={bestSellingProducts}
