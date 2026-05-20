@@ -2,7 +2,6 @@ import { listFooterSections } from "@lib/data/footer-links"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import FooterAccordionItem from "@modules/layout/components/footer-accordion-item"
 import FooterHardcode from "@modules/layout/components/footer-hardcode"
-import { getSiteSetting } from "@lib/data/site-settings"
 import ContentBlockRenderer from "@modules/common/components/content-block/content-block"
 import { getTranslations } from "next-intl/server"
 import { MapPin, Phone, Mail } from "lucide-react"
@@ -30,12 +29,13 @@ const normalizeUrl = (url: string | null | undefined): string => {
   return `/${trimmedUrl}`
 }
 
+const AGLOPOULOS_LOGO_WHITE = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/agglopoulos%20racing-white-vMOxPHmoru1Ffq7OA9SrG8Lrt7BxpD.png"
+
 export default async function Footer({ topbarText }: any) {
   const t = await getTranslations()
   const { sections } = await listFooterSections()
   const currentYear = new Date().getFullYear()
   const hasDynamicData = sections && sections.length > 0
-  const footerLogo: any = await getSiteSetting("footer_logo")
 
   if (!hasDynamicData) {
     return <FooterHardcode />
@@ -52,10 +52,10 @@ export default async function Footer({ topbarText }: any) {
           <div className="flex items-center mb-6">
             <LocalizedClientLink href="/">
               <img
-                src={footerLogo}
+                src={AGLOPOULOS_LOGO_WHITE}
                 width={200}
                 height={73}
-                alt={"Footer logo"}
+                alt={"Aglopoulos Racing"}
                 className="w-auto h-auto max-w-[200px]"
               />
             </LocalizedClientLink>
@@ -125,10 +125,10 @@ export default async function Footer({ topbarText }: any) {
           <div className="w-[20%]">
             <LocalizedClientLink href="/">
               <img
-                src={footerLogo}
+                src={AGLOPOULOS_LOGO_WHITE}
                 width={200}
                 height={73}
-                alt={"Footer logo"}
+                alt={"Aglopoulos Racing"}
                 className="w-auto h-auto max-w-[200px]"
               />
             </LocalizedClientLink>
