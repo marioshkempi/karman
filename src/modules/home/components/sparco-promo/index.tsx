@@ -6,6 +6,16 @@ const SPARCO_BG_2 = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Spa
 const CUSTOM_EASY_BG = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Custom-easy-iIQHrup3Soa0mNh67r9WUzDkEH063h.jpg"
 const BODY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Rectangle%207082-CvbUmPCmRMB5dNIJ7KvNoeiwiAf6hr.png"
 
+// Brand logos
+const BRAND_LOGOS = [
+  { name: "Sparco", src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Sparco-background-bAU4mGqlgP3mpfq3he2t8m5tSiAtA1.jpg", text: "sparco" },
+  { name: "Michelin", src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Michelin-logo-blue%402x-gYRCeaBRikq36KqLGSzAVzwdbVWjxf.png" },
+  { name: "MOMO", src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Momo-logo-6DdYYsdIGCxK6sXv8FRgIBXSyaD031.png" },
+  { name: "Speedline Corse", src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imgi_1_logo500px%20%281%29-nS7RFVDQu4Ef0qdjU5lObczddH9am6.png" },
+  { name: "Kumho Motorsport", src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Kumho-Motorsport-Logo-2-1-4hln393HCcVkDcxY2m97NIaesM8nwI.png" },
+  { name: "EVOCorse", src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/NoPath%20-%20Copy%20%2816%29-00OFfFfJ4q1aj3eFvyIaCkvyNrRKDX.png" },
+]
+
 export default function SparcoPromo() {
   return (
     <section className="bg-white">
@@ -90,6 +100,51 @@ export default function SparcoPromo() {
                 START NOW
               </LocalizedClientLink>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Brand Logos Strip */}
+      <div className="bg-white py-8 md:py-12 border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-center gap-8 md:gap-12 lg:gap-16 flex-wrap">
+            {/* Sparco text logo */}
+            <span className="text-[#1a3a6e] font-bold text-xl md:text-2xl tracking-wider">sparco</span>
+            
+            {/* Michelin */}
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Michelin-logo-blue%402x-gYRCeaBRikq36KqLGSzAVzwdbVWjxf.png" 
+              alt="Michelin" 
+              className="h-8 md:h-10 w-auto object-contain"
+            />
+            
+            {/* MOMO */}
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Momo-logo-6DdYYsdIGCxK6sXv8FRgIBXSyaD031.png" 
+              alt="MOMO" 
+              className="h-10 md:h-12 w-auto object-contain"
+            />
+            
+            {/* Speedline Corse */}
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imgi_1_logo500px%20%281%29-nS7RFVDQu4Ef0qdjU5lObczddH9am6.png" 
+              alt="Speedline Corse" 
+              className="h-6 md:h-8 w-auto object-contain"
+            />
+            
+            {/* Kumho Motorsport */}
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Kumho-Motorsport-Logo-2-1-4hln393HCcVkDcxY2m97NIaesM8nwI.png" 
+              alt="Kumho Motorsport" 
+              className="h-6 md:h-8 w-auto object-contain"
+            />
+            
+            {/* EVOCorse */}
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/NoPath%20-%20Copy%20%2816%29-00OFfFfJ4q1aj3eFvyIaCkvyNrRKDX.png" 
+              alt="EVOCorse" 
+              className="h-5 md:h-6 w-auto object-contain"
+            />
           </div>
         </div>
       </div>
