@@ -116,7 +116,10 @@ export default async function Home(props: Params) {
       {/*{shouldShowBanners ? (*/}
       {/*  <BannerSection banners={banners} />*/}
       {/*) : (*/}
-      <IntroSection />
+      {/* Hidden old IntroSection - replaced by SparcoPromo */}
+      <div className="hidden">
+        <IntroSection />
+      </div>
       {/*)}*/}
       <SocialFollowSection socials={socials} />
     </>
