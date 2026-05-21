@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { StoreSlide } from "@lib/data/slider"
 import Link from "next/link"
@@ -21,34 +22,7 @@ const SliderCarousel = ({ slides }: SliderCarouselProps) => {
     return () => clearInterval(interval)
   }, [currentIndex, slides.length])
 
-  // If no slides, show static KARMAN hero
-  if (!slides.length) {
-    return (
-      <div className="relative w-full h-[400px] md:h-[600px] overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/images/hero/car-hero.jpg')" }}
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white px-4">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 italic leading-tight">
-              Φροντίδα & στυλ για κάθε<br />σας διαδρομή
-            </h1>
-            <p className="text-base md:text-lg lg:text-xl mb-6 opacity-90 max-w-2xl mx-auto">
-              Προϊόντα που αναδεικνύουν την άνεση και την<br />προσωπικότητα του αυτοκινήτου σας
-            </p>
-            <Link 
-              href="/store"
-              className="inline-block px-8 py-3 bg-white text-gray-900 font-semibold rounded-full hover:bg-gray-100 transition-colors"
-            >
-              Όλα τα προϊόντα
-            </Link>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  if (!slides.length) return null
 
   return (
     <div className="relative w-full overflow-hidden mb-10 md:mb-20">
@@ -122,40 +96,102 @@ const SlideWrapper = ({ handle, children }: SlideWrapperProps) => {
   )
 }
 
+const DESKTOP_ALIGNMENT: Record<string, string> = {
+  left: "md:text-left md:items-start md:mr-auto md:ml-0",
+  center: "md:text-center md:items-center md:mx-auto",
+  right: "md:text-right md:items-end md:ml-auto md:mr-0",
+}
+
 interface SlideContentProps {
   slide: StoreSlide
 }
 
 const SlideContent = ({ slide }: SlideContentProps) => {
-  return (
-    <div 
-      className="relative w-full h-[400px] md:h-[600px]"
-      style={{ 
-        backgroundImage: `url('/images/hero/car-hero.jpg')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}
-    >
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/40" />
+  const textColor = slide.text_color || "#FFFFFF"
+  const hasOverlay =
+    slide.title || slide.subtitle || slide.description || slide.cta_text
+  const desktopAlignment =
+    DESKTOP_ALIGNMENT[slide.text_alignment] || DESKTOP_ALIGNMENT.right
 
-      {/* Hero content overlay - KARMAN style */}
-      <div className="absolute inset-0 flex items-center justify-center z-10">
-        <div className="text-center text-white px-4">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 italic leading-tight">
-            Φροντίδα & στυλ για κάθε<br />σας διαδρομή
-          </h1>
-          <p className="text-base md:text-lg lg:text-xl mb-6 opacity-90 max-w-2xl mx-auto">
-            Προϊόντα που αναδεικνύουν την άνεση και την<br />προσωπικότητα του αυτοκινήτου σας
-          </p>
-          <Link 
-            href="/store"
-            className="inline-block px-8 py-3 bg-white text-gray-900 font-semibold rounded-full hover:bg-gray-100 transition-colors"
+  return (
+    <div className="relative w-full h-[300px] md:h-[500px] md:max-h-[650px]">
+      {slide.mobile_image_url ? (
+        <>
+          <Image
+            src={slide.image_url}
+            alt={slide.title || "Slide"}
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-auto hidden md:block"
+            priority
+          />
+          <Image
+            src={slide.mobile_image_url}
+            alt={slide.title || "Slide"}
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-full object-cover md:hidden"
+            priority
+          />
+        </>
+      ) : (
+        <Image
+          src={slide.image_url}
+          alt={slide.title || "Slide"}
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-full h-auto"
+          priority
+        />
+      )}
+
+      {hasOverlay && (
+        <div className="absolute inset-0 flex items-center px-6 md:px-16 pointer-events-none">
+          <div
+            className={`flex flex-col items-start text-left md:ml-auto md:items-end md:text-right ${desktopAlignment}`}
           >
-            Όλα τα προϊόντα
-          </Link>
+            {slide.title && (
+              <h2
+                className="text-2xl md:text-5xl lg:text-6xl font-bold mb-2 md:mb-4"
+                style={{ color: textColor }}
+              >
+                {slide.title}
+              </h2>
+            )}
+
+            {slide.subtitle && (
+              <p
+                className="text-sm md:text-base font-medium mb-2 opacity-90"
+                style={{ color: textColor }}
+              >
+                {slide.subtitle}
+              </p>
+            )}
+
+            {slide.description && (
+              <p
+                className="text-sm md:text-lg max-w-2xl mb-4 md:mb-6 opacity-90"
+                style={{ color: textColor }}
+              >
+                {slide.description}
+              </p>
+            )}
+
+            {slide.cta_text && (
+              <CTAButton
+                text={slide.cta_text}
+                url={slide.cta_url}
+                style={slide.cta_style}
+                textColor={textColor}
+                isWrapped={Boolean(slide.handle)}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
