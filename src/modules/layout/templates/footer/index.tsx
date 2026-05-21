@@ -57,9 +57,9 @@ const KARMAN_INFO = [
 ]
 
 const SOCIAL_LINKS = [
-  { icon: "/images/socials/x-white.png", href: "https://x.com", alt: "X" },
-  { icon: "/images/socials/facebook-white.png", href: "https://facebook.com", alt: "Facebook" },
-  { icon: "/images/socials/instagram-white.png", href: "https://instagram.com", alt: "Instagram" },
+  { icon: "/images/socials/x-white.png", href: "https://x.com/biokifisia?lang=el", alt: "X" },
+  { icon: "/images/socials/facebook-white.png", href: "https://www.facebook.com/bio.kifisia", alt: "Facebook" },
+  { icon: "/images/socials/instagram-white.png", href: "https://www.instagram.com/biokifisia_eshop/?hl=el", alt: "Instagram" },
 ]
 
 export default async function Footer({ topbarText }: any) {
