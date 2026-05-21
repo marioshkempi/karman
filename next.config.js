@@ -51,6 +51,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "bio-kifisia.gr",
       },
+      {
+        protocol: "https",
+        hostname: "medusa-ecom-sme.nbg1.your-objectstorage.com",
+      },
     ],
   },
 }
