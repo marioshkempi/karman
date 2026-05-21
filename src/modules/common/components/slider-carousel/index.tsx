@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { StoreSlide } from "@lib/data/slider"
 import Link from "next/link"
@@ -123,27 +122,11 @@ const SlideWrapper = ({ handle, children }: SlideWrapperProps) => {
   )
 }
 
-const DESKTOP_ALIGNMENT: Record<string, string> = {
-  left: "md:text-left md:items-start md:mr-auto md:ml-0",
-  center: "md:text-center md:items-center md:mx-auto",
-  right: "md:text-right md:items-end md:ml-auto md:mr-0",
-}
-
 interface SlideContentProps {
   slide: StoreSlide
 }
 
 const SlideContent = ({ slide }: SlideContentProps) => {
-  const textColor = slide.text_color || "#FFFFFF"
-  const hasOverlay =
-    slide.title || slide.subtitle || slide.description || slide.cta_text
-  const desktopAlignment =
-    DESKTOP_ALIGNMENT[slide.text_alignment] || DESKTOP_ALIGNMENT.right
-
-  // Use local fallback image if slide.image_url fails or is empty
-  const heroImageUrl = slide.image_url || "/images/hero/car-hero.jpg"
-  const mobileImageUrl = slide.mobile_image_url || heroImageUrl
-
   return (
     <div 
       className="relative w-full h-[400px] md:h-[600px]"
@@ -155,45 +138,6 @@ const SlideContent = ({ slide }: SlideContentProps) => {
     >
       {/* Dark overlay for text readability */}
       <div className="absolute inset-0 bg-black/40" />
-      
-      {slide.mobile_image_url ? (
-        <>
-          <Image
-            src={heroImageUrl}
-            alt={slide.title || "Slide"}
-            fill
-            className="object-cover hidden md:block"
-            priority
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.style.display = 'none'
-            }}
-          />
-          <Image
-            src={mobileImageUrl}
-            alt={slide.title || "Slide"}
-            fill
-            className="object-cover md:hidden"
-            priority
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.style.display = 'none'
-            }}
-          />
-        </>
-      ) : (
-        <Image
-          src={heroImageUrl}
-          alt={slide.title || "Slide"}
-          fill
-          className="object-cover"
-          priority
-          onError={(e) => {
-            const target = e.target as HTMLImageElement
-            target.style.display = 'none'
-          }}
-        />
-      )}
 
       {/* Hero content overlay - KARMAN style */}
       <div className="absolute inset-0 flex items-center justify-center z-10">
