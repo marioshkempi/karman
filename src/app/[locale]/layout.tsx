@@ -12,6 +12,14 @@ import { TrackingNoscript, TrackingScripts } from "@modules/tracking"
 import { TooltipProvider } from "@medusajs/ui"
 import { SkroutzAnalytics } from "@modules/tracking/skroutz-analytics/skroutz-analytics"
 import { CaptchaProvider } from "@modules/captcha/captcha-context"
+import { Manrope } from "next/font/google"
+
+const manrope = Manrope({
+  subsets: ["latin", "greek"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
+  display: "swap",
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   let faviconUrl: any = "/favicon.ico"
@@ -46,10 +54,10 @@ export default async function RootLayout({
   const captchaConfig = await getCaptchaConfig()
 
   return (
-    <html lang={locale} data-mode="light">
+    <html lang={locale} data-mode="light" className={manrope.variable}>
       <head />
 
-      <body>
+      <body className={manrope.className}>
         <NextIntlClientProvider>
           <CaptchaProvider config={captchaConfig}>
             <TrackingNoscript />

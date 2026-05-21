@@ -78,7 +78,7 @@ module.exports = {
         "3xl": "2rem",
       },
       fontFamily: {
-        sans: ["'Noto Sans'", "sans-serif"],
+        sans: ["var(--font-manrope)", "Manrope", "sans-serif"],
       },
       keyframes: {
         ring: {
