@@ -154,54 +154,43 @@ export default function MegaMenu({
   // Mobile-only rendering (non-inline mode)
   return (
     <>
-      {/* Mobile Menu Overlay */}
-      <div
-        onClick={closeMobileMenu}
-        className={`
-          fixed inset-0 z-[100] bg-black
-          transition-opacity duration-300
-          ${
-            isMobileMenuOpen
-              ? "opacity-50 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
-          }
-        `}
-      />
-
-      {/* Mobile Menu Panel - Opens from RIGHT */}
+      {/* Mobile Menu Panel - Opens from LEFT, full screen */}
       <div
         className={`
-          fixed inset-y-0 right-0 w-[320px] max-w-[85vw] z-[101] bg-white shadow-2xl overflow-y-auto
+          fixed inset-0 w-screen h-screen z-[101] bg-white overflow-y-auto
           transform transition-transform duration-300 ease-in-out
-          ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}
+          ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
         {!selectedCategory ? (
           <div className="flex flex-col h-full">
-            {/* Top Row - 57px height with language selector and close button */}
-            <div className="h-[57px] flex items-center justify-between px-4 border-b border-gray-200 bg-white">
+            {/* Top Row - 57px height with blue gradient */}
+            <div 
+              className="h-[57px] flex items-center justify-between px-4 flex-shrink-0"
+              style={{ background: "linear-gradient(90deg, #283B82 0%, #007BFF 50%, #283B82 100%)" }}
+            >
               {/* Language Selector */}
-              <button className="flex items-center gap-1 text-[14px] text-gray-700">
+              <button className="flex items-center gap-1 text-[14px] text-white">
                 <span>Ελληνικά</span>
-                <ChevronRight size={16} className="rotate-90 text-gray-400" />
+                <ChevronRight size={16} className="rotate-90 text-white/70" />
               </button>
               
               {/* Close Button */}
               <button 
                 onClick={closeMobileMenu} 
-                className="flex items-center gap-2 text-[14px] text-gray-700"
+                className="flex items-center gap-2 text-[14px] text-white"
               >
                 <span>Κλείσιμο</span>
                 <X size={20} />
               </button>
             </div>
 
-            {/* Category List - 60px per row */}
+            {/* Category List - 57px per row */}
             <div className="flex-1 overflow-auto">
               {megaMenus.map((megaMenu) => (
                 <div
                   key={megaMenu.id}
-                  className="h-[60px] flex items-center border-b border-gray-100 bg-white"
+                  className="h-[57px] flex items-center border-b border-[#E5E7EB] bg-white"
                 >
                   <LocalizedClientLink
                     href={toHref(megaMenu.handle)}
@@ -220,7 +209,7 @@ export default function MegaMenu({
                   {hasChildren(megaMenu.id) && (
                     <button
                       onClick={() => setSelectedCategory(megaMenu.id)}
-                      className="h-full px-4 border-l border-gray-100"
+                      className="h-full px-4 border-l border-[#E5E7EB]"
                     >
                       <ChevronRight size={20} className="text-gray-400" />
                     </button>
@@ -234,7 +223,7 @@ export default function MegaMenu({
                 <LocalizedClientLink
                   href="/account"
                   onClick={closeMobileMenu}
-                  className="h-[69px] flex items-center gap-3 px-4 border-b border-gray-200"
+                  className="h-[69px] flex items-center gap-3 px-4 border-b border-[#E5E7EB]"
                 >
                   <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1E3A5F]">
                     <Package size={20} className="text-white" />
@@ -246,7 +235,7 @@ export default function MegaMenu({
                 <LocalizedClientLink
                   href="/compare"
                   onClick={closeMobileMenu}
-                  className="h-[69px] flex items-center gap-3 px-4 border-b border-gray-200"
+                  className="h-[69px] flex items-center gap-3 px-4 border-b border-[#E5E7EB]"
                 >
                   <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#1E3A5F]">
                     <Package size={20} className="text-white" />
@@ -270,10 +259,8 @@ export default function MegaMenu({
 
             {/* Bottom Info Block - Blue gradient background */}
             <div 
-              className="py-6 px-5"
-              style={{
-                background: "linear-gradient(135deg, #1E3A5F 0%, #2563EB 100%)"
-              }}
+              className="py-6 px-5 flex-shrink-0"
+              style={{ background: "linear-gradient(90deg, #283B82 0%, #007BFF 50%, #283B82 100%)" }}
             >
               {/* Address */}
               <div className="flex items-start gap-3 mb-4">
@@ -315,7 +302,10 @@ export default function MegaMenu({
         ) : (
           /* Subcategory View */
           <div className="flex flex-col h-full">
-            <div className="h-[57px] flex items-center justify-between px-4 bg-[#1E3A5F]">
+            <div 
+              className="h-[57px] flex items-center justify-between px-4 flex-shrink-0"
+              style={{ background: "linear-gradient(90deg, #283B82 0%, #007BFF 50%, #283B82 100%)" }}
+            >
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setSelectedCategory(null)}
@@ -336,7 +326,7 @@ export default function MegaMenu({
               {getMenuItemsForCategory(selectedCategory).map((item) => (
                 <div
                   key={item.id}
-                  className="h-[60px] flex items-center border-b border-gray-100"
+                  className="h-[57px] flex items-center border-b border-[#E5E7EB]"
                 >
                   <LocalizedClientLink
                     href={toHref(item.handle)}
