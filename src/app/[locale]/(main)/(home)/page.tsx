@@ -22,6 +22,7 @@ import {
   getFeaturedProducts,
 } from "@lib/data/featured-products"
 import Reassurances from "@modules/common/components/reassurances"
+import HomepagePromoBanners from "@modules/home/components/homepage-promo-banners"
 import { newProductsGetProducts } from "@services/typesense/typesenseService"
 import { getPageSeo, toNextMetadata } from "@lib/data/seo"
 import { JsonLd } from "@lib/util/structured-data"
@@ -116,6 +117,9 @@ export default async function Home(props: Params) {
           />
         </div>
       </section>
+
+      {/* Homepage Promo Banners Section */}
+      <HomepagePromoBanners />
       
       {banners.length > 0 && <BlogBanner banner={banners[0]} />}
 
