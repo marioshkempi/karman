@@ -13,7 +13,7 @@ const HeaderTopBar = ({ topbarText }: any) => {
   if (!isVisible) return null
 
   return (
-    <div className="w-full bg-[#F5F5F5] border-b border-gray-200 py-2">
+    <div className="hidden lg:block w-full bg-[#F5F5F5] border-b border-gray-200 py-2">
       <div className="max-w-[1350px] mx-auto px-4 flex items-center justify-between">
         {/* Left side - Phone and Email */}
         <div className="flex items-center gap-6 text-[13px] text-secondary">

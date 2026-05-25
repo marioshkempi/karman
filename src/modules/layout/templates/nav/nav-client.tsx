@@ -187,8 +187,11 @@ export default function NavbarClient({
           </div>
         </div>
 
-        {/* Mobile Header - Blue background */}
-        <div className="lg:hidden bg-navblue">
+        {/* Mobile Header - Blue gradient background */}
+        <div 
+          className="lg:hidden"
+          style={{ background: "linear-gradient(90deg, #283B82 0%, #007BFF 50%, #283B82 100%)" }}
+        >
           <div className="px-3">
             {/* Mobile Top Bar - 56px height */}
             <div className="flex items-center justify-between h-14">
@@ -246,7 +249,10 @@ export default function NavbarClient({
         </div>
 
         {/* Mobile Search Bar - Below top bar, 40px height */}
-        <div className="lg:hidden bg-navblue px-3 pb-2">
+        <div 
+          className="lg:hidden px-3 pb-2"
+          style={{ background: "linear-gradient(90deg, #283B82 0%, #007BFF 50%, #283B82 100%)" }}
+        >
           <div className="relative h-10">
             <div className="flex items-center h-full bg-white rounded-md overflow-hidden">
               <div className="flex items-center justify-center pl-3 text-gray-400">
