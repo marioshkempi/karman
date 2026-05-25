@@ -189,53 +189,77 @@ export default function NavbarClient({
 
         {/* Mobile Header - Blue background */}
         <div className="lg:hidden bg-navblue">
-          <div className="max-w-[1350px] mx-auto px-4">
-            {/* Mobile Top Bar */}
+          <div className="px-3">
+            {/* Mobile Top Bar - 56px height */}
             <div className="flex items-center justify-between h-14">
+              {/* Left: Hamburger + Logo */}
               <div className="flex items-center gap-3">
-                <Button
+                <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="p-2 text-white hover:text-white/80 bg-transparent border-none shadow-none"
+                  className="w-10 h-10 flex items-center justify-center text-white"
+                  aria-label="Toggle menu"
                 >
-                  {isMobileMenuOpen ? (
-                    <X size={28} />
-                  ) : (
-                    <Menu size={28} className="text-white" />
-                  )}
-                </Button>
+                  <Menu size={24} className="text-white" />
+                </button>
                 <LocalizedClientLink href="/">
                   <img 
                     src="/logo.png" 
                     alt="Karman Logo" 
-                    className="h-8 w-auto"
+                    className="h-8 w-auto max-w-[110px]"
                   />
                 </LocalizedClientLink>
               </div>
 
-              <div className="flex items-center gap-2">
+              {/* Right: Account + Wishlist + Cart */}
+              <div className="flex items-center gap-3">
+                <LocalizedClientLink
+                  href="/account"
+                  className="w-10 h-10 flex items-center justify-center text-white"
+                >
+                  <User size={22} />
+                </LocalizedClientLink>
                 <LocalizedClientLink
                   href="/account/wishlist"
-                  className="relative flex items-center p-2 text-white hover:text-white/80"
+                  className="relative w-10 h-10 flex items-center justify-center text-white"
                 >
                   <Heart size={22} />
                   {wishlistCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-semibold leading-none">
+                    <span className="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-[#5B9AFF] text-white text-[10px] font-semibold leading-none">
                       {wishlistCount}
                     </span>
                   )}
                 </LocalizedClientLink>
                 <LocalizedClientLink
                   href="/cart"
-                  className="relative flex items-center p-2 text-white hover:text-white/80"
+                  className="relative w-10 h-10 flex items-center justify-center text-white"
                 >
                   <ShoppingCart size={22} />
                   {cartItemsCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-semibold leading-none">
+                    <span className="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-[#5B9AFF] text-white text-[10px] font-semibold leading-none">
                       {cartItemsCount}
                     </span>
                   )}
                 </LocalizedClientLink>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Search Bar - Below top bar, 40px height */}
+        <div className="lg:hidden bg-navblue px-3 pb-2">
+          <div className="relative h-10">
+            <div className="flex items-center h-full bg-white rounded-md overflow-hidden">
+              <div className="flex items-center justify-center pl-3 text-gray-400">
+                <Search size={18} />
+              </div>
+              <input
+                type="text"
+                placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onFocus={() => query.trim() && setOpen(true)}
+                className="w-full h-full px-3 bg-transparent text-gray-800 text-[13px] placeholder:text-gray-400 focus:outline-none"
+              />
             </div>
           </div>
         </div>
@@ -259,25 +283,6 @@ export default function NavbarClient({
           isOpen={isLoginPromptOpen}
           onClose={() => setIsLoginPromptOpen(false)}
         />
-
-        {/* Mobile Search */}
-        <div className="relative lg:hidden py-3 px-4 bg-navblue border-b border-white/10">
-          <div className="relative">
-            <div className="flex items-center bg-white/10 border border-white/30 rounded-md overflow-hidden">
-              <div className="flex items-center justify-center pl-3 text-white/70">
-                <Search size={16} />
-              </div>
-              <input
-                type="text"
-                placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onFocus={() => query.trim() && setOpen(true)}
-                className="w-full h-[40px] px-3 bg-transparent text-white text-[13px] placeholder:text-white/60 focus:outline-none"
-              />
-            </div>
-          </div>
-        </div>
 
         <SearchDropdown
           data={results}
