@@ -90,10 +90,10 @@ export default async function Footer({ topbarText }: any) {
             <LocalizedClientLink href="/">
               <Image
                 src="/images/karman-footer-logo.png"
-                width={200}
-                height={80}
+                width={160}
+                height={64}
                 alt="KARMAN logo"
-                className="h-auto"
+                className="h-auto w-[160px]"
               />
             </LocalizedClientLink>
           </div>
