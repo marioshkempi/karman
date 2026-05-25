@@ -6,16 +6,12 @@ import Hero from "@modules/home/components/hero"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 import NewsletterSignup from "@modules/home/components/newsletter"
-import IntroSection from "@modules/home/components/intro"
-import BlogBanner from "@modules/home/components/blog-banner"
 import PopularCategories from "@modules/home/components/popular-category"
 import ProductShowCase from "@modules/home/components/new-product"
-import SocialFollowSection from "@modules/home/components/socials"
 import BannerSection from "@modules/common/components/banner-section"
 import { getBannersByHook } from "@lib/data/banner"
 import { getSlider } from "@lib/data/slider"
 import SliderCarousel from "@modules/common/components/slider-carousel"
-import { listSocials } from "@lib/data/socials"
 import { getTopBestSellers } from "@lib/data/analytics"
 import {
   getAllFeaturedProducts,
@@ -59,8 +55,6 @@ export default async function Home(props: Params) {
   const { slider } = await getSlider("home")
 
   const hasSlider = slider && slider.slides.length > 0
-
-  const { socials } = await listSocials()
 
   if (!region) {
     return null
@@ -106,7 +100,7 @@ export default async function Home(props: Params) {
       />
       
       {/* Category Strip Visual Section */}
-      <section className="w-full bg-[#F1F5F9] py-8">
+      <section className="w-full bg-white py-8">
         <div className="max-w-[1280px] mx-auto px-4">
           <Image
             src="/images/category-strip.png"
@@ -120,16 +114,8 @@ export default async function Home(props: Params) {
 
       {/* Homepage Promo Banners Section */}
       <HomepagePromoBanners />
-      
-      {banners.length > 0 && <BlogBanner banner={banners[0]} />}
 
       <NewsletterSignup />
-      {/*{shouldShowBanners ? (*/}
-      {/*  <BannerSection banners={banners} />*/}
-      {/*) : (*/}
-      <IntroSection />
-      {/*)}*/}
-      <SocialFollowSection socials={socials} />
     </>
   )
 }
