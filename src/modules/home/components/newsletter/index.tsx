@@ -39,9 +39,9 @@ export default function NewsletterSignup() {
   }
 
   return (
-    <div className="bg-white py-8 px-4">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="bg-[#1a2744] rounded-2xl px-6 py-6 lg:px-12 lg:py-8">
+    <div className="bg-[#F1F5F9] py-8 px-4">
+      <div className="max-w-[1282px] mx-auto">
+        <div className="bg-[#112F82] rounded-[99px] px-6 py-6 lg:px-12 lg:h-[108px] flex items-center">
           {success && <Alert type="success" message={success} className="mb-4" />}
           {error && <Alert type="danger" message={error} className="mb-4" />}
 
@@ -93,7 +93,7 @@ export default function NewsletterSignup() {
                 <button
                   type="submit"
                   disabled={loading || !agreed || !email.trim()}
-                  className="px-8 py-3 bg-white text-[#1a2744] font-semibold rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-8 py-3 bg-white text-[#112F82] font-semibold rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? "Εγγραφή..." : "Εγγραφή"}
                 </button>

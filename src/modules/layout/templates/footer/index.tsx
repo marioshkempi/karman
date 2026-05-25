@@ -57,9 +57,9 @@ const KARMAN_INFO = [
 ]
 
 const SOCIAL_LINKS = [
-  { icon: "/images/socials/x-white.png", href: "https://x.com/biokifisia?lang=el", alt: "X" },
-  { icon: "/images/socials/facebook-white.png", href: "https://www.facebook.com/bio.kifisia", alt: "Facebook" },
-  { icon: "/images/socials/instagram-white.png", href: "https://www.instagram.com/biokifisia_eshop/?hl=el", alt: "Instagram" },
+  { icon: "/images/socials/x-black.png", href: "https://x.com/biokifisia?lang=el", alt: "X" },
+  { icon: "/images/socials/facebook-black.png", href: "https://www.facebook.com/bio.kifisia", alt: "Facebook" },
+  { icon: "/images/socials/instagram-black.png", href: "https://www.instagram.com/biokifisia_eshop/?hl=el", alt: "Instagram" },
 ]
 
 export default async function Footer({ topbarText }: any) {
@@ -71,14 +71,17 @@ export default async function Footer({ topbarText }: any) {
 
   // Always render KARMAN-style footer
   return (
-    <footer className="relative bg-[#0a1628] text-white overflow-hidden">
-      {/* Blue gradient overlay effect */}
-      <div 
-        className="absolute inset-0 opacity-30"
-        style={{
-          background: "radial-gradient(ellipse at 30% 50%, rgba(30, 64, 175, 0.4) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(30, 64, 175, 0.3) 0%, transparent 40%)"
-        }}
-      />
+    <footer 
+      className="relative text-white overflow-hidden"
+      style={{
+        backgroundImage: "url('/images/footer-bg.webp')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Blue overlay for readability */}
+      <div className="absolute inset-0 bg-[#112F82]/85" />
       
       <div className="relative z-10 max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         {/* Mobile accordion */}
@@ -100,7 +103,7 @@ export default async function Footer({ topbarText }: any) {
           </p>
           
           {/* Social icons mobile */}
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-4">
             {SOCIAL_LINKS.map((social) => (
               <a
                 key={social.alt}
@@ -118,6 +121,17 @@ export default async function Footer({ topbarText }: any) {
                 />
               </a>
             ))}
+          </div>
+
+          {/* Payment icons mobile */}
+          <div className="mb-6">
+            <Image
+              src="/images/payment-cards.png"
+              width={160}
+              height={28}
+              alt="Payment methods: Mastercard, VISA, PayPal, Skrill"
+              className="h-auto"
+            />
           </div>
 
           <div className="space-y-2">
@@ -212,12 +226,14 @@ export default async function Footer({ topbarText }: any) {
               ))}
             </div>
 
-            {/* Payment icons placeholder */}
-            <div className="flex items-center gap-2 bg-white rounded-lg px-3 py-2 w-fit">
-              <span className="text-[#1a1f71] font-bold text-xs">VISA</span>
-              <span className="text-[#003087] font-bold text-xs">PayPal</span>
-              <span className="text-[#6c1d5f] font-bold text-xs">Skrill</span>
-            </div>
+            {/* Payment icons */}
+            <Image
+              src="/images/payment-cards.png"
+              width={180}
+              height={32}
+              alt="Payment methods: Mastercard, VISA, PayPal, Skrill"
+              className="h-auto"
+            />
           </div>
 
           {/* Column 2: Contact */}
