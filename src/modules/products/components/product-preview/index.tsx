@@ -104,9 +104,9 @@ export default function ProductPreview({
 
   return (
     <>
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden h-full flex flex-col">
-        {/* Image Container */}
-        <div className="relative aspect-square bg-gray-50 rounded-t-lg overflow-hidden">
+      <div className="bg-white h-full flex flex-col">
+        {/* Image Container - border only here */}
+        <div className="relative aspect-square bg-white rounded-lg border border-[#E5E7EB] overflow-hidden">
           <LocalizedClientLink href={`/${product.handle}`} className="block h-full">
             <ProductFlags
               isOutOfStock={isOutOfStock}
@@ -136,8 +136,8 @@ export default function ProductPreview({
           </div>
         </div>
 
-        {/* Content */}
-        <div className="p-3 flex flex-col flex-grow">
+        {/* Content - no border */}
+        <div className="pt-3 flex flex-col flex-grow">
           {/* Rating Row */}
           <div className="flex items-center gap-1.5 mb-2">
             <div className="flex items-center">

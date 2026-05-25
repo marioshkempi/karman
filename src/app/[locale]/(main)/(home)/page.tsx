@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import Image from "next/image"
 
 import FeaturedProducts from "@modules/home/components/featured-products"
 import Hero from "@modules/home/components/hero"
@@ -102,6 +103,20 @@ export default async function Home(props: Params) {
         region={region}
         title="Featured"
       />
+      
+      {/* Category Strip Visual Section */}
+      <section className="w-full bg-[#1A1A1A] py-8">
+        <div className="max-w-[1350px] mx-auto px-4">
+          <Image
+            src="/images/category-strip.png"
+            alt="Product Categories"
+            width={1280}
+            height={200}
+            className="w-full h-auto"
+          />
+        </div>
+      </section>
+      
       {banners.length > 0 && <BlogBanner banner={banners[0]} />}
 
       <NewsletterSignup />
