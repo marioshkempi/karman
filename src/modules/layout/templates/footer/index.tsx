@@ -80,8 +80,8 @@ export default async function Footer({ topbarText }: any) {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Blue overlay for readability */}
-      <div className="absolute inset-0 bg-[#112F82]/85" />
+      {/* Blue overlay for readability - reduced opacity to show background image */}
+      <div className="absolute inset-0 bg-[#112F82]/50" />
       
       <div className="relative z-10 max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         {/* Mobile accordion */}

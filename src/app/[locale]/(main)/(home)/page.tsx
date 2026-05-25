@@ -106,13 +106,13 @@ export default async function Home(props: Params) {
       />
       
       {/* Category Strip Visual Section */}
-      <section className="w-full bg-[#1A1A1A] py-8">
-        <div className="max-w-[1350px] mx-auto px-4">
+      <section className="w-full bg-[#F1F5F9] py-8">
+        <div className="max-w-[1280px] mx-auto px-4">
           <Image
             src="/images/category-strip.png"
             alt="Product Categories"
             width={1280}
-            height={200}
+            height={212}
             className="w-full h-auto"
           />
         </div>
