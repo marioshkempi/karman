@@ -49,17 +49,13 @@ export default async function PopularCategories() {
     return (
       <div className="w-full bg-white mb-8 lg:mb-11">
         <div className="max-w-[1350px] mx-auto px-3 lg:px-4">
-          <h2 className="text-[20px] lg:text-[30px] text-primary font-medium mb-4 lg:mb-8">
-            {t("popularCategories.title")}
-          </h2>
-
           {/* Mobile: 1 column stacked, Desktop: 5 column grid */}
           <div className="flex flex-col gap-3 lg:grid lg:grid-cols-5 lg:gap-4">
             {FALLBACK_CATEGORIES.map((category, index) => (
               <div key={index} className="relative w-full h-[180px] lg:h-[281px] overflow-hidden rounded-lg group">
                 <img
                   src={category.image}
-                  alt={category.title}
+                  alt=""
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 {/* Dark overlay */}
@@ -97,10 +93,6 @@ export default async function PopularCategories() {
         return (
           <div key={section.id} className="w-full bg-white mb-8 lg:mb-11">
             <div className="max-w-[1350px] mx-auto px-3 lg:px-4">
-              <h2 className="text-[20px] lg:text-[30px] text-primary font-medium mb-4 lg:mb-8">
-                {section.title}
-              </h2>
-
               {hasMoreThanFour ? (
                 <PopularCategorySlider items={items} ctaText={section.cta_text} />
               ) : (
@@ -127,7 +119,7 @@ function PopularCategoryCard({ item, ctaText }: { item: any; ctaText: string }) 
       {item.image_url ? (
         <img
           src={item.image_url}
-          alt={item.title}
+          alt=""
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
       ) : (
