@@ -1,128 +1,162 @@
-"use client"
-
 import Image from "next/image"
+import { PromoBanner } from "@modules/home/components/promo-banner"
 
-const PROMO_CARDS = [
-  {
-    id: 1,
-    label: "ΠΡΟΣΤΑΣΙΑ",
-    title: "Λιπαντικά",
-    description: "Κορυφαία λιπαντικά για μέγιστη προστασία και...",
-    image: "/images/promo/lipantika.jpg",
-    href: "/el/categories/lipantika",
-  },
-  {
-    id: 2,
-    label: "ΠΡΟΣΤΑΣΙΑ",
-    title: "Αρωματικά",
-    description: "Απολαύστε φρεσκάδα σε κάθε διαδρομή με premium...",
-    image: "/images/promo/aromatika.jpg",
-    href: "/el/categories/aromatika",
-  },
-  {
-    id: 3,
-    label: "ΠΡΟΣΤΑΣΙΑ",
-    title: "Καθαρισμός & Περιποίηση",
-    description: "Προϊόντα καθαρισμού για αστραφτερό αυτοκίνητο μέσ...",
-    image: "/images/promo/katharismos.jpg",
-    href: "/el/categories/katharismos-peripoiisi",
-  },
-  {
-    id: 4,
-    label: "ΠΡΟΣΤΑΣΙΑ",
-    title: "Αξεσουάρ",
-    description: "Πρακτικά αξεσουάρ που αναβαθμίζουν την εμπειρία...",
-    image: "/images/promo/aksesoyar.jpg",
-    href: "/el/categories/aksesoyar",
-  },
-  {
-    id: 5,
-    label: "ΠΡΟΣΤΑΣΙΑ",
-    title: "Πρόσθετα κινητήρα",
-    description: "Ενισχύστε την απόδοση με εξειδικευμένα πρόσθετα...",
-    image: "/images/promo/prostheta-kinitera.jpg",
-    href: "/el/categories/prostheta-kinitera",
-  },
+// Brand logos data
+const BRANDS = [
+  { name: "ISUZU", logo: "/images/brands/isuzu.png" },
+  { name: "PORSCHE", logo: "/images/brands/porsche.png" },
+  { name: "DACIA", logo: "/images/brands/dacia.png" },
+  { name: "PEUGEOT", logo: "/images/brands/peugeot.png" },
+  { name: "HONDA", logo: "/images/brands/honda.png" },
+  { name: "TESLA", logo: "/images/brands/tesla.png" },
 ]
 
-export default function HomepagePromoBanners() {
+// Banner data - hardcoded/static
+const BANNERS = {
+  lighting: {
+    subtitle: "ΥΨΗΛΗ ΑΠΟΔΟΣΗ",
+    title: "Φωτισμός",
+    description: "Φωτίστε τη διαδρομή σας: Εξειδικευμένες λύσεις φωτισμού για ασφάλεια και στυλ που ξεχωρίζει στον δρόμο.",
+    ctaText: "Αγόρασε τώρα",
+    ctaHref: "/store?category=lighting",
+    image: "/images/banners/lighting-banner.png",
+  },
+  wipers: {
+    subtitle: "ΑΕΡΟΔΥΝΑΜΙΚΟΣ ΣΧΕΔΙΑΣΜΟΣ",
+    title: "Υαλοκαθαριστήρες",
+    description: "Επιλέξτε κορυφαίους υαλοκαθαριστήρες για αθόρυβη λειτουργία και μέγιστη απόδοση ακόμη και στις πιο έντονες βροχοπτώσεις.",
+    ctaText: "Αγόρασε τώρα",
+    ctaHref: "/store?category=wipers",
+    image: "/images/banners/wipers-banner.png",
+  },
+  karmanStore: {
+    title: "KARMAN STORE",
+    description: "Στο Karman Store αναβαθμίζουμε κάθε σας διαδρομή, προσφέροντας κορυφαία αξεσουάρ και προϊόντα φροντίδας που συνδυάζουν το προσωπικό στυλ με την απόλυτη άνεση και προστασία του αυτοκινήτου σας.",
+    ctaText: "Μάθετε περισσότερα",
+    ctaHref: "/about",
+    image: "/images/banners/karman-store-banner.png",
+  },
+}
+
+// Small image cards - static images only
+const SMALL_CARDS = [
+  { image: "/images/banners/store-shelf-1.png", alt: "Automotive products" },
+  { image: "/images/banners/store-shelf-2.png", alt: "Car parts store" },
+  { image: "/images/banners/store-shelf-3.png", alt: "Automotive chemicals" },
+  { image: "/images/banners/store-shelf-1.png", alt: "Store products" },
+]
+
+export const HomepagePromoBanners = () => {
   return (
-    <section className="w-full bg-white py-6 lg:py-10">
-      <div className="max-w-[1280px] mx-auto px-4">
-        {/* Desktop: 5 cards in a row */}
-        <div className="hidden lg:grid lg:grid-cols-5 gap-4">
-          {PROMO_CARDS.map((card) => (
-            <a
-              key={card.id}
-              href={card.href}
-              className="relative w-full h-[281px] rounded-lg overflow-hidden group"
-            >
-              {/* Background Image */}
-              <Image
-                src={card.image}
-                alt={card.title}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              {/* Dark Overlay */}
-              <div className="absolute inset-0 bg-black/40" />
-              
-              {/* Content */}
-              <div className="absolute inset-0 p-5 flex flex-col justify-end">
-                <span className="text-white/70 text-[12px] font-medium tracking-wide mb-1">
-                  {card.label}
-                </span>
-                <h3 className="text-white text-[30px] font-extrabold leading-tight mb-2" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                  {card.title}
-                </h3>
-                <p className="text-white/70 text-[14px] leading-snug mb-4 line-clamp-2">
-                  {card.description}
-                </p>
-                <span className="inline-flex items-center justify-center w-fit px-5 py-2.5 border border-white text-white text-[14px] font-semibold rounded-full hover:bg-white hover:text-gray-900 transition-colors">
-                  Αγόρασε τώρα
-                </span>
-              </div>
-            </a>
+    <section className="w-full bg-[#F1F5F9] py-8 md:py-12">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-6">
+        {/* Brands Row - placeholder text for now */}
+        <div className="hidden md:flex items-center justify-between mb-8 px-4">
+          {BRANDS.map((brand) => (
+            <span key={brand.name} className="font-extrabold text-sm text-gray-400 tracking-wider">
+              {brand.name}
+            </span>
           ))}
         </div>
 
-        {/* Mobile: 1 card per row */}
-        <div className="flex flex-col gap-3 lg:hidden">
-          {PROMO_CARDS.map((card) => (
-            <a
-              key={card.id}
-              href={card.href}
-              className="relative w-full h-[180px] rounded-lg overflow-hidden group"
-            >
-              {/* Background Image */}
-              <Image
-                src={card.image}
-                alt={card.title}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              {/* Dark Overlay */}
-              <div className="absolute inset-0 bg-black/40" />
-              
-              {/* Content */}
-              <div className="absolute inset-0 p-4 flex flex-col justify-end">
-                <span className="text-white/70 text-[10px] font-medium tracking-wide mb-1">
-                  {card.label}
-                </span>
-                <h3 className="text-white text-[22px] font-extrabold leading-tight mb-1" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                  {card.title}
-                </h3>
-                <p className="text-white/70 text-[12px] leading-snug mb-3 line-clamp-2">
-                  {card.description}
-                </p>
-                <span className="inline-flex items-center justify-center w-fit px-4 py-2 border border-white text-white text-[12px] font-semibold rounded-full">
-                  Αγόρασε τώρα
-                </span>
+        {/* Desktop Layout */}
+        <div className="hidden md:block">
+          {/* Top Row - 2 banners side by side */}
+          <div className="flex gap-6 mb-6">
+            {/* Lighting Banner */}
+            <PromoBanner
+              {...BANNERS.lighting}
+              containerClassName="w-[624px] h-[270px]"
+              buttonClassName="bg-white text-gray-900 hover:bg-gray-100"
+              overlayClassName="bg-black/50"
+            />
+            
+            {/* Wipers Banner */}
+            <PromoBanner
+              {...BANNERS.wipers}
+              containerClassName="w-[624px] h-[270px]"
+              buttonClassName="bg-white text-gray-900 hover:bg-gray-100"
+              overlayClassName="bg-gradient-to-r from-black/60 to-transparent"
+            />
+          </div>
+
+          {/* Bottom Layout */}
+          <div className="flex gap-6">
+            {/* Left Large Banner - KARMAN STORE */}
+            <PromoBanner
+              {...BANNERS.karmanStore}
+              containerClassName="w-[624px] h-[588px]"
+              buttonClassName="bg-[#007BFF] text-white hover:bg-[#0069d9]"
+              overlayClassName="bg-black/40"
+            />
+
+            {/* Right Side - 2x2 Grid of Small Cards */}
+            <div className="grid grid-cols-2 gap-6">
+              {SMALL_CARDS.map((card, index) => (
+                <div
+                  key={index}
+                  className="relative w-[296px] h-[277px] rounded-lg overflow-hidden"
+                >
+                  <Image
+                    src={card.image}
+                    alt={card.alt}
+                    fill
+                    className="object-cover"
+                    sizes="296px"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="md:hidden flex flex-col gap-3">
+          {/* Lighting Banner */}
+          <PromoBanner
+            {...BANNERS.lighting}
+            containerClassName="w-full h-[250px]"
+            buttonClassName="bg-white text-gray-900 hover:bg-gray-100"
+            overlayClassName="bg-black/50"
+          />
+          
+          {/* Wipers Banner */}
+          <PromoBanner
+            {...BANNERS.wipers}
+            containerClassName="w-full h-[250px]"
+            buttonClassName="bg-white text-gray-900 hover:bg-gray-100"
+            overlayClassName="bg-gradient-to-r from-black/60 to-transparent"
+          />
+          
+          {/* KARMAN STORE Banner */}
+          <PromoBanner
+            {...BANNERS.karmanStore}
+            containerClassName="w-full h-[306px]"
+            buttonClassName="bg-[#007BFF] text-white hover:bg-[#0069d9]"
+            overlayClassName="bg-black/40"
+          />
+
+          {/* Small Cards - 2 column grid */}
+          <div className="grid grid-cols-2 gap-2">
+            {SMALL_CARDS.map((card, index) => (
+              <div
+                key={index}
+                className="relative w-full aspect-square max-h-[175px] rounded-lg overflow-hidden"
+              >
+                <Image
+                  src={card.image}
+                  alt={card.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 50vw, 186px"
+                />
               </div>
-            </a>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
   )
 }
+
+export default HomepagePromoBanners
