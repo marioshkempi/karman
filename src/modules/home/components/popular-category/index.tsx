@@ -104,7 +104,7 @@ export default async function PopularCategories() {
               {hasMoreThanFour ? (
                 <PopularCategorySlider items={items} ctaText={section.cta_text} />
               ) : (
-                <div className="flex flex-col gap-2 lg:grid lg:grid-cols-4 lg:gap-6">
+                <div className="flex flex-col gap-3 lg:grid lg:grid-cols-5 lg:gap-4">
                   {items.map((item) => (
                     <PopularCategoryCard key={item.id} item={item} ctaText={section.cta_text} />
                   ))}
@@ -119,12 +119,11 @@ export default async function PopularCategories() {
 }
 
 function PopularCategoryCard({ item, ctaText }: { item: any; ctaText: string }) {
-  // console.log(item);
   const href = item.url || '#';
   const isExternal = href.startsWith('http');
 
   const content = (
-    <div className="relative w-full h-[160px] lg:h-auto lg:aspect-[4/3] overflow-hidden rounded-lg group">
+    <div className="relative w-full h-[180px] lg:h-[281px] overflow-hidden rounded-lg group">
       {item.image_url ? (
         <img
           src={item.image_url}
@@ -141,12 +140,15 @@ function PopularCategoryCard({ item, ctaText }: { item: any; ctaText: string }) 
       
       {/* Content inside card */}
       <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-start gap-2">
-        <h3 className="text-white text-[20px] lg:text-xl font-extrabold drop-shadow-lg" style={{ fontFamily: 'Manrope, sans-serif' }}>
+        <span className="text-white/70 text-[12px] font-medium uppercase tracking-wide">
+          ΠΡΟΣΤΑΣΙΑ
+        </span>
+        <h3 className="text-white text-[22px] lg:text-[26px] font-extrabold leading-tight drop-shadow-lg" style={{ fontFamily: 'Manrope, sans-serif' }}>
           {item.title}
         </h3>
-        <span className="inline-block px-4 py-2 bg-white text-gray-800 text-[12px] lg:text-sm font-extrabold rounded-full hover:bg-gray-100 transition-colors" style={{ fontFamily: 'Manrope, sans-serif' }}>
+        <button className="mt-1 px-5 py-2 border border-white text-white text-[13px] font-semibold rounded-full bg-transparent hover:bg-white hover:text-gray-800 transition-colors">
           {ctaText}
-        </span>
+        </button>
       </div>
     </div>
   );
