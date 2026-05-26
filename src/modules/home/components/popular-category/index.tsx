@@ -6,23 +6,33 @@ import { getTranslations } from 'next-intl/server';
 
 const FALLBACK_CATEGORIES = [
   {
-    title: 'Περιποίηση Σώματος',
-    image: '/images/category/img1.png',
+    title: 'Λιπαντικά',
+    description: 'Κορυφαία λιπαντικά για μέγιστη προστασία και απόδοση του κινητήρα.',
+    image: '/images/promo/lipantika.jpg',
     url: '#'
   },
   {
-    title: 'Περιποίηση Προσώπου',
-    image: '/images/category/img2.png',
+    title: 'Αρωματικά',
+    description: 'Απολαύστε φρεσκάδα σε κάθε διαδρομή με premium αρώματα.',
+    image: '/images/promo/aromatika.jpg',
     url: '#'
   },
   {
-    title: 'Μαμά - Παιδί',
-    image: '/images/category/img3.png',
+    title: 'Καθαρισμός & Περιποίηση',
+    description: 'Προϊόντα καθαρισμού για αστραφτερό αυτοκίνητο μέσα-έξω.',
+    image: '/images/promo/katharismos.jpg',
     url: '#'
   },
   {
-    title: 'Άθληση - Δίαιτα',
-    image: '/images/category/img4.png',
+    title: 'Αξεσουάρ',
+    description: 'Πρακτικά αξεσουάρ που αναβαθμίζουν την εμπειρία οδήγησης.',
+    image: '/images/promo/aksesoyar.jpg',
+    url: '#'
+  },
+  {
+    title: 'Πρόσθετα κινητήρα',
+    description: 'Ενισχύστε την απόδοση με εξειδικευμένα πρόσθετα κινητήρα.',
+    image: '/images/promo/prostheta.jpg',
     url: '#'
   }
 ];
@@ -43,10 +53,10 @@ export default async function PopularCategories() {
             {t("popularCategories.title")}
           </h2>
 
-          {/* Mobile: 1 column stacked, Desktop: 4 column grid */}
-          <div className="flex flex-col gap-2 lg:grid lg:grid-cols-4 lg:gap-6">
+          {/* Mobile: 1 column stacked, Desktop: 5 column grid */}
+          <div className="flex flex-col gap-3 lg:grid lg:grid-cols-5 lg:gap-4">
             {FALLBACK_CATEGORIES.map((category, index) => (
-              <div key={index} className="relative w-full h-[160px] lg:h-auto lg:aspect-[4/3] overflow-hidden rounded-lg group">
+              <div key={index} className="relative w-full h-[180px] lg:h-[281px] overflow-hidden rounded-lg group">
                 <img
                   src={category.image}
                   alt={category.title}
@@ -57,12 +67,18 @@ export default async function PopularCategories() {
                 
                 {/* Content inside card */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-start gap-2">
-                  <h3 className="text-white text-[20px] lg:text-xl font-extrabold drop-shadow-lg" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  <span className="text-white/70 text-[12px] font-medium uppercase tracking-wide">
+                    ΠΡΟΣΤΑΣΙΑ
+                  </span>
+                  <h3 className="text-white text-[22px] lg:text-[26px] font-extrabold leading-tight drop-shadow-lg" style={{ fontFamily: 'Manrope, sans-serif' }}>
                     {category.title}
                   </h3>
-                  <span className="inline-block px-4 py-2 bg-white text-gray-800 text-[12px] lg:text-sm font-extrabold rounded-full hover:bg-gray-100 transition-colors" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                    {t("product.learnMore")}
-                  </span>
+                  <p className="text-white/70 text-[13px] leading-snug line-clamp-2">
+                    {category.description}
+                  </p>
+                  <button className="mt-1 px-5 py-2 border border-white text-white text-[13px] font-semibold rounded-full bg-transparent hover:bg-white hover:text-gray-800 transition-colors">
+                    Αγόρασε τώρα
+                  </button>
                 </div>
               </div>
             ))}
