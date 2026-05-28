@@ -40,7 +40,7 @@ export default async function Reassurances({
   }
 
   return (
-    <div className="w-full bg-white py-4 lg:py-8 border-b border-gray-100">
+    <div className="w-full bg-white py-4 lg:py-8">
       <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
         {/* Mobile: horizontal scroll row */}
         <div className="flex lg:hidden overflow-x-auto gap-4 pb-2 -mx-4 px-4 scrollbar-hide">
