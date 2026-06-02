@@ -24,27 +24,36 @@ const CartTemplate = async ({
   const t = await getTranslations()
 
   return (
-    <div className="py-12 pt-3">
-      <div className="content-container" data-testid="cart-container">
-        <Breadcrumb lastLabel={t("common.cart")} />
+    <div className="bg-white min-h-screen">
+      <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 py-6" data-testid="cart-container">
+        {/* Breadcrumb */}
+        <div className="mb-4">
+          <Breadcrumb lastLabel={t("common.cart")} />
+        </div>
+
+        {/* Page Title */}
+        <h1 className="text-[24px] lg:text-[32px] font-bold text-[#1E3A5F] mb-6">
+          {t("cart.shoppingCart")}
+        </h1>
+
         {banners && banners.length > 0 && (
-          <div className="my-6">
+          <div className="mb-6">
             <BannerSection banners={banners} />
           </div>
         )}
+
         {cart?.items?.length ? (
-          <div className="grid grid-cols-1 small:grid-cols-[1fr_360px] gap-x-8 mb-5 md:mb-0">
-            <div className="flex flex-col bg-white py-6 gap-y-6 pt-3">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+            {/* Left: Cart Items */}
+            <div className="flex-1">
               <ItemsTemplate cart={cart} />
             </div>
-            <div className="relative">
-              <div className="flex flex-col gap-y-8 sticky top-12 md:pt-[63px]">
+
+            {/* Right: Summary */}
+            <div className="w-full lg:w-[380px] flex-shrink-0">
+              <div className="lg:sticky lg:top-6">
                 {cart && cart.region && (
-                  <>
-                    <div className="bg-white">
-                      <Summary cart={cart as any} customer={customer} />
-                    </div>
-                  </>
+                  <Summary cart={cart as any} customer={customer} />
                 )}
               </div>
             </div>
@@ -54,8 +63,11 @@ const CartTemplate = async ({
             <EmptyCartMessage />
           </div>
         )}
+
         {countryCode && (
-          <Reassurances language={countryCode} page_type="cart" />
+          <div className="mt-8">
+            <Reassurances language={countryCode} page_type="cart" />
+          </div>
         )}
       </div>
     </div>

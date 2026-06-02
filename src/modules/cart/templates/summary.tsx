@@ -8,6 +8,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import { HttpTypes } from "@medusajs/types"
 import { getCookie } from "@lib/util/cookies"
 import { useTranslations } from "next-intl"
+import { ArrowRight, Tag } from "lucide-react"
 
 type SummaryProps = {
   cart: HttpTypes.StoreCart & {
@@ -20,9 +21,6 @@ function getCheckoutStep(
   cart: HttpTypes.StoreCart,
   customer: HttpTypes.StoreCustomer | null
 ) {
-  // if (!customer) {
-  //   return "personal"
-  // }
   if (!customer) {
     const guestFirstName = getCookie("guest_first_name")
     const guestLastName = getCookie("guest_last_name")
@@ -46,17 +44,27 @@ const Summary = ({ cart, customer }: SummaryProps) => {
   const t = useTranslations()
 
   return (
-    <div className="flex flex-col gap-y-4 border-2 border-primary rounded-md p-4">
+    <div className="bg-white rounded-lg border border-gray-200 p-4 lg:p-6">
+      {/* Totals */}
       <CartTotals totals={cart} />
-      <DiscountCode cart={cart} />
-      <LocalizedClientLink
-        href={"/checkout?step=" + step}
-        data-testid="checkout-button"
-      >
-        <button className="w-full h-12 bg-primary hover:bg-secondary text-white uppercase font-medium text-sm tracking-wide">
-          {t("cart.completeCheckout")}
-        </button>
-      </LocalizedClientLink>
+
+      {/* Promo Code */}
+      <div className="mt-4 pt-4 border-t border-gray-100">
+        <DiscountCode cart={cart} />
+      </div>
+
+      {/* Checkout Button */}
+      <div className="mt-4">
+        <LocalizedClientLink
+          href={"/checkout?step=" + step}
+          data-testid="checkout-button"
+        >
+          <button className="w-full h-12 bg-[#FF8C00] hover:bg-[#F97316] text-white font-semibold text-[15px] rounded-full flex items-center justify-center gap-2 transition-colors">
+            {t("cart.goToCheckout")}
+            <ArrowRight className="w-5 h-5" />
+          </button>
+        </LocalizedClientLink>
+      </div>
     </div>
   )
 }
