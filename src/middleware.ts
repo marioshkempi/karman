@@ -27,51 +27,74 @@ const localeMapCache = {
   localesUpdated: Date.now(),
 }
 
+function getDefaultRegionMap(): Map<string, HttpTypes.StoreRegion> {
+  const defaultMap = new Map<string, HttpTypes.StoreRegion>()
+  // Fallback region for Greece when Medusa backend is unreachable
+  const fallbackRegion: HttpTypes.StoreRegion = {
+    id: "fallback-region",
+    name: "Greece",
+    currency_code: "eur",
+    countries: [{ iso_2: "gr", name: "Greece", display_name: "Greece" }],
+  } as HttpTypes.StoreRegion
+  defaultMap.set("gr", fallbackRegion)
+  return defaultMap
+}
+
 async function getRegionMap(cacheId: string) {
   const { regionMap, regionMapUpdated } = regionMapCache
 
   if (!BACKEND_URL) {
-    throw new Error(
-      "Middleware.ts: Error fetching regions. Did you set up regions in your Medusa Admin and define a MEDUSA_BACKEND_URL environment variable?"
-    )
+    if (process.env.NODE_ENV === "development") {
+      console.error("Middleware.ts: MEDUSA_BACKEND_URL not set, using fallback region")
+    }
+    return getDefaultRegionMap()
   }
 
   if (
     !regionMap.keys().next().value ||
     regionMapUpdated < Date.now() - 3600 * 1000
   ) {
-    const { regions } = await fetch(`${BACKEND_URL}/store/regions`, {
-      headers: {
-        "x-publishable-api-key": PUBLISHABLE_API_KEY!,
-      },
-      next: {
-        revalidate: 3600,
-        tags: [`regions-${cacheId}`],
-      },
-      cache: "force-cache",
-    }).then(async (response) => {
-      const json = await response.json()
+    try {
+      const { regions } = await fetch(`${BACKEND_URL}/store/regions`, {
+        headers: {
+          "x-publishable-api-key": PUBLISHABLE_API_KEY!,
+        },
+        next: {
+          revalidate: 3600,
+          tags: [`regions-${cacheId}`],
+        },
+        cache: "force-cache",
+      }).then(async (response) => {
+        const json = await response.json()
 
-      if (!response.ok) {
-        throw new Error(json.message)
+        if (!response.ok) {
+          throw new Error(json.message)
+        }
+
+        return json
+      })
+
+      if (!regions?.length) {
+        if (process.env.NODE_ENV === "development") {
+          console.error("No regions found from Medusa, using fallback region")
+        }
+        return getDefaultRegionMap()
       }
 
-      return json
-    })
-
-    if (!regions?.length) {
-      throw new Error(
-        "No regions found. Please set up regions in your Medusa Admin."
-      )
-    }
-
-    regions.forEach((region: HttpTypes.StoreRegion) => {
-      region.countries?.forEach((c) => {
-        regionMapCache.regionMap.set(c.iso_2 ?? "", region)
+      regions.forEach((region: HttpTypes.StoreRegion) => {
+        region.countries?.forEach((c) => {
+          regionMapCache.regionMap.set(c.iso_2 ?? "", region)
+        })
       })
-    })
 
-    regionMapCache.regionMapUpdated = Date.now()
+      regionMapCache.regionMapUpdated = Date.now()
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("Error fetching regions from Medusa:", error)
+      }
+      // Return fallback region map to prevent middleware crash
+      return getDefaultRegionMap()
+    }
   }
 
   return regionMapCache.regionMap
