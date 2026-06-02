@@ -37,7 +37,8 @@ const KARMAN_CONTACT = {
   phones: "2311263836, 6936800257,\n6930571431",
 }
 
-const KARMAN_CATEGORIES = [
+// Fallback categories if no dynamic data
+const FALLBACK_CATEGORIES = [
   { label: "Εξωτερικό αυτοκινήτου", href: "/exoteriko-aftokinitou" },
   { label: "Εσωτερικό αυτοκινήτου", href: "/esoteriko-aftokinitou" },
   { label: "Καθαρισμός περιποίηση", href: "/katharismos-peripoiisi" },
@@ -47,7 +48,8 @@ const KARMAN_CATEGORIES = [
   { label: "Διάφορα", href: "/diafora" },
 ]
 
-const KARMAN_INFO = [
+// Fallback info if no dynamic data
+const FALLBACK_INFO = [
   { label: "Τρόποι παράδοσης", href: "/tropoi-paradosis" },
   { label: "Όροι χρήσης", href: "/oroi-xrisis" },
   { label: "Σχετικά με εμάς", href: "/sxetika-me-emas" },
@@ -68,6 +70,25 @@ export default async function Footer({ topbarText }: any) {
   const currentYear = new Date().getFullYear()
   const hasDynamicData = sections && sections.length > 0
   const footerLogo: any = await getSiteSetting("footer_logo")
+
+  // Extract dynamic sections by title, falling back to static data
+  const categoriesSection = sections?.find(s => s.title === "Κατηγορίες")
+  const infoSection = sections?.find(s => s.title === "Πληροφορίες")
+  
+  // Build dynamic links arrays from API data or use fallbacks
+  const categoryLinks = categoriesSection?.links?.length 
+    ? categoriesSection.links.map(link => ({ 
+        label: link.label, 
+        href: normalizeUrl(link.url) 
+      }))
+    : FALLBACK_CATEGORIES
+  
+  const infoLinks = infoSection?.links?.length 
+    ? infoSection.links.map(link => ({ 
+        label: link.label, 
+        href: normalizeUrl(link.url) 
+      }))
+    : FALLBACK_INFO
 
   // Always render KARMAN-style footer
   return (
@@ -138,14 +159,14 @@ export default async function Footer({ topbarText }: any) {
             <FooterAccordionItem title="Επικοινωνία">
               <div className="space-y-3 text-sm text-white/80">
                 <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <span className="whitespace-pre-line">{KARMAN_CONTACT.address}</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   <a href={`mailto:${KARMAN_CONTACT.email}`} className="hover:text-white transition-colors">
@@ -153,7 +174,7 @@ export default async function Footer({ topbarText }: any) {
                   </a>
                 </div>
                 <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <span className="whitespace-pre-line">{KARMAN_CONTACT.phones}</span>
@@ -163,7 +184,7 @@ export default async function Footer({ topbarText }: any) {
 
             <FooterAccordionItem title="Κατηγορίες">
               <ul className="space-y-2 text-sm text-white/80">
-                {KARMAN_CATEGORIES.map((cat) => (
+                {categoryLinks.map((cat) => (
                   <li key={cat.href}>
                     <LocalizedClientLink href={cat.href} className="hover:text-white transition-colors">
                       {cat.label}
@@ -175,7 +196,7 @@ export default async function Footer({ topbarText }: any) {
 
             <FooterAccordionItem title="Πληροφορίες">
               <ul className="space-y-2 text-sm text-white/80">
-                {KARMAN_INFO.map((info) => (
+                {infoLinks.map((info) => (
                   <li key={info.href}>
                     <LocalizedClientLink href={info.href} className="hover:text-white transition-colors">
                       {info.label}
@@ -241,14 +262,14 @@ export default async function Footer({ topbarText }: any) {
             <h3 className="text-lg font-semibold text-white">Επικοινωνία</h3>
             <div className="space-y-4 text-sm text-white/80">
               <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <span className="whitespace-pre-line">{KARMAN_CONTACT.address}</span>
               </div>
               <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <a href={`mailto:${KARMAN_CONTACT.email}`} className="hover:text-white transition-colors">
@@ -256,7 +277,7 @@ export default async function Footer({ topbarText }: any) {
                 </a>
               </div>
               <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5 mt-0.5 flex-shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 <span className="whitespace-pre-line">{KARMAN_CONTACT.phones}</span>
@@ -268,7 +289,7 @@ export default async function Footer({ topbarText }: any) {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">Κατηγορίες</h3>
             <ul className="space-y-2 text-sm text-white/80">
-              {KARMAN_CATEGORIES.map((cat) => (
+              {categoryLinks.map((cat) => (
                 <li key={cat.href}>
                   <LocalizedClientLink href={cat.href} className="hover:text-white transition-colors">
                     {cat.label}
@@ -282,7 +303,7 @@ export default async function Footer({ topbarText }: any) {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-white">Πληροφορίες</h3>
             <ul className="space-y-2 text-sm text-white/80">
-              {KARMAN_INFO.map((info) => (
+              {infoLinks.map((info) => (
                 <li key={info.href}>
                   <LocalizedClientLink href={info.href} className="hover:text-white transition-colors">
                     {info.label}
