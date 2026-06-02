@@ -48,7 +48,7 @@ export default function ProductView({
 
   return (
     <ul
-      className="grid grid-cols-2 w-full lg:grid-cols-4 gap-x-3 gap-y-8"
+      className="grid grid-cols-2 w-full lg:grid-cols-3 gap-x-4 gap-y-6"
       data-testid="products-list"
     >
       {products.map((p) => (

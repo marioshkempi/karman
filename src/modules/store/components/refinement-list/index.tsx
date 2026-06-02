@@ -238,7 +238,7 @@ const RefinementList = ({ facets = [], count }: RefinementListProps) => {
 
   return (
     <>
-      <aside className="hidden lg:block lg:w-64 lg:flex-shrink-0 lg:mt-[4%]">
+      <aside className="hidden lg:block lg:w-[260px] lg:flex-shrink-0">
         <div className="sticky top-6 relative">
           {hasFilters && (
             <button
@@ -249,7 +249,7 @@ const RefinementList = ({ facets = [], count }: RefinementListProps) => {
               {t("store.clearFilters")}
             </button>
           )}
-          <div className="w-full max-w-[290px]">{facetBlocks}</div>
+          <div className="w-full max-w-[260px]">{facetBlocks}</div>
         </div>
       </aside>
 
