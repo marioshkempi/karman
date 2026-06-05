@@ -207,7 +207,7 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
       clearTimeout(debounceTimerRef.current!)
     }
   }, [productExternalId, variantExternalId, quantity])
-  // console.log("cubikPrice", cubikPrice)
+
   // ── Quantity discount tiers — per product, non-blocking ─────────────────────
   useEffect(() => {
     if (!productExternalId) {
@@ -352,7 +352,7 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
   // ── Add to cart button (shared between desktop & mobile) ────────────────────
   const addToCartButton = (textSize: string) => (
     <button
-      className={`flex-1 bg-[#007BFF] py-3 sm:py-2 rounded-[5px] text-white ${textSize} hover:bg-[#F97316] disabled:opacity-50 transition-colors`}
+      className={`flex-1 bg-[#007BFF] py-3 rounded-md text-white font-medium ${textSize} hover:bg-[#F97316] disabled:opacity-50 transition-colors`}
       onClick={handleAddToCart}
       disabled={!stockStatus.inStock || !selectedVariant || isAdding}
     >
@@ -398,24 +398,38 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
   return (
     <>
       <div
-        className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6 z-[9] relative"
+        className="bg-white"
         ref={targetRef}
       >
-        {error && <Alert type="danger" title="Error!" message={error} />}
+        {/* Main Product Section */}
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
+          {error && <Alert type="danger" title="Error!" message={error} />}
 
-        <div>
-          <Breadcrumb
-            showEllipsis={false}
-            ellipsisPosition={1}
-            tree={breadcrumbTree}
-            categories={
-              breadcrumbTree.length === 0 ? product.categories : undefined
-            }
-            lastLabel={product.title}
-          />
+          {/* Breadcrumb */}
+          <div className="mb-4">
+            <Breadcrumb
+              showEllipsis={false}
+              ellipsisPosition={1}
+              tree={breadcrumbTree}
+              categories={
+                breadcrumbTree.length === 0 ? product.categories : undefined
+              }
+              lastLabel={product.title}
+            />
+          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 mt-4">
-            <div className="relative">
+          {/* Product Title - Desktop only (above columns) */}
+          <div className="hidden lg:block mb-4">
+            <h1 className="text-[22px] font-bold text-[#1e3a5f]">
+              {product.title}
+            </h1>
+            <ProductVariantInfo variant={selectedVariant} />
+          </div>
+
+          {/* Two Column Layout */}
+          <div className="flex flex-col lg:flex-row lg:gap-10">
+            {/* Left Column - Image Gallery */}
+            <div className="lg:w-[55%] relative mb-6 lg:mb-0">
               <ProductFlags
                 isOutOfStock={isOutOfStock}
                 isNewProduct={isNew}
@@ -424,52 +438,38 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
               <ImageGallery images={images} productTitle={product.title} />
             </div>
 
-            <div className="space-y-3 lg:space-y-4">
-              <div>
-                <div className="flex flex-col md:flex-row items-start justify-between gap-3 mb-1">
-                  <h1 className="text-[18px] lg:text-[24px] font-bold text-primary2 leading-tight">
-                    {product.title}
-                  </h1>
-                  {product.brand?.image_url &&
-                    product.brand.image_url.length > 0 && (
-                      <div className="flex-shrink-0 border border-lightgray">
-                        <LocalizedClientLink
-                          href={`/brands/${product.brand.handle}`}
-                        >
-                          <Image
-                            src={product.brand.image_url}
-                            alt="Brand Logo"
-                            width={100}
-                            height={50}
-                            className="object-contain p-1"
-                          />
-                        </LocalizedClientLink>
-                      </div>
-                    )}
-                </div>
-
+            {/* Right Column - Product Info */}
+            <div className="lg:w-[45%]">
+              {/* Mobile Title */}
+              <div className="lg:hidden mb-3">
+                <h1 className="text-[18px] font-bold text-[#1e3a5f]">
+                  {product.title}
+                </h1>
                 <ProductVariantInfo variant={selectedVariant} />
+              </div>
 
-                {product.subtitle && (
-                  <p className="text-secondary text-sm lg:text-base mt-2">
-                    {product.subtitle}
-                  </p>
-                )}
+              {/* Short description */}
+              {product.subtitle && (
+                <p className="text-gray-600 text-sm mb-4">
+                  {product.subtitle}
+                </p>
+              )}
 
-                <div className="mt-3">
-                  <ProductPrice
-                    product={product}
-                    variant={selectedVariant}
-                    cubikPrice={cubikPrice}
-                  />
-                </div>
-
-                <QuantityDiscountBadges
-                  discounts={quantityDiscounts}
-                  currentQuantity={quantity}
+              {/* Price */}
+              <div className="mb-4">
+                <ProductPrice
+                  product={product}
+                  variant={selectedVariant}
+                  cubikPrice={cubikPrice}
                 />
               </div>
 
+              <QuantityDiscountBadges
+                discounts={quantityDiscounts}
+                currentQuantity={quantity}
+              />
+
+              {/* Product Options */}
               <ProductOptions
                 options={product.options || []}
                 selectedOptions={options}
@@ -484,7 +484,8 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
                 position="before_add_to_cart"
               />
 
-              <div className="hidden sm:flex items-center gap-3">
+              {/* Quantity + Add to Cart - Desktop */}
+              <div className="hidden sm:flex items-center gap-3 mt-4 mb-4">
                 <QuantitySelector
                   quantity={quantity}
                   onIncrement={incrementQuantity}
@@ -495,29 +496,22 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
                   disabled={isAdding || !stockStatus.inStock}
                   size="desktop"
                 />
-                {addToCartButton("text-[18px]")}
+                {addToCartButton("text-base")}
               </div>
 
-              <div className="flex flex-row items-center gap-4 pt-2">
+              {/* Wishlist & Compare */}
+              <div className="flex items-center gap-6 py-3 border-b border-gray-100">
                 <WishlistButton
                   variantId={selectedVariant?.id}
                   onLoginRequired={() => setShowLoginModal(true)}
                 />
                 <button
                   onClick={handleCompareToggle}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
                 >
-                  <Repeat size={18} className="w-[18px] h-[18px] text-gray-500" />
-                  <span
-                    className={`text-[14px] ${
-                      isInCompare
-                        ? "text-primary font-semibold"
-                        : "text-gray-600"
-                    }`}
-                  >
-                    {isInCompare
-                      ? t("product.inCompare")
-                      : t("product.compare")}
+                  <Repeat size={18} />
+                  <span className="text-sm">
+                    {isInCompare ? t("product.inCompare") : t("product.compare")}
                   </span>
                 </button>
               </div>
@@ -527,46 +521,79 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
                 position="after_add_to_cart"
               />
 
-              <PaymentShowcase />
+              {/* Payment & Reassurance Info */}
+              <div className="mt-4">
+                <PaymentShowcase />
+              </div>
+
+              {/* Category & Brand Info */}
+              <div className="mt-4 pt-4 border-t border-gray-100 space-y-2 text-sm">
+                {product.categories && product.categories.length > 0 && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500">Κατηγορία:</span>
+                    <LocalizedClientLink
+                      href={`/${product.categories[0].handle}`}
+                      className="text-[#007BFF] hover:underline"
+                    >
+                      {product.categories[0].name}
+                    </LocalizedClientLink>
+                  </div>
+                )}
+                {product.brand && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500">Brand:</span>
+                    <LocalizedClientLink
+                      href={`/brands/${product.brand.handle}`}
+                      className="text-[#007BFF] hover:underline"
+                    >
+                      {product.brand.name}
+                    </LocalizedClientLink>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
+        </div>
 
-          <div className="mt-8 lg:mt-10">
+        {/* Product Meta Tabs - Full Width */}
+        <div className="border-t border-gray-100">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
             <ProductMeta
               product={product}
               productTabAttachments={productTabAttachmentsNode}
             />
           </div>
+        </div>
 
-          {sidebarBanners && sidebarBanners.length > 0 && (
-            <div className="mt-8">
-              <BannerSection banners={sidebarBanners} />
-            </div>
-          )}
+        {/* Sidebar Banners */}
+        {sidebarBanners && sidebarBanners.length > 0 && (
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <BannerSection banners={sidebarBanners} />
+          </div>
+        )}
 
-          {/* Mobile sticky bar */}
-          <div
-            className={`
-              fixed bottom-0 left-0 right-0
-              bg-white border-t border-gray-200 p-3 shadow-lg
-              sm:hidden z-50
-              transition-transform duration-300 ease-in-out
-              ${isVisible ? "translate-y-0" : "translate-y-full"}
-            `}
-          >
-            <div className="flex items-center gap-3 max-w-7xl mx-auto">
-              <QuantitySelector
-                quantity={quantity}
-                onIncrement={incrementQuantity}
-                onDecrement={decrementQuantity}
-                maxQuantity={stockQuantity}
-                manageInventory={selectedVariant?.manage_inventory ?? true}
-                allowBackorder={selectedVariant?.allow_backorder ?? false}
-                disabled={isAdding || !stockStatus.inStock}
-                size="mobile"
-              />
-              {addToCartButton("text-[16px]")}
-            </div>
+        {/* Mobile Sticky Add to Cart Bar */}
+        <div
+          className={`
+            fixed bottom-0 left-0 right-0
+            bg-white border-t border-gray-200 p-3 shadow-lg
+            sm:hidden z-50
+            transition-transform duration-300 ease-in-out
+            ${isVisible ? "translate-y-0" : "translate-y-full"}
+          `}
+        >
+          <div className="flex items-center gap-3 max-w-7xl mx-auto">
+            <QuantitySelector
+              quantity={quantity}
+              onIncrement={incrementQuantity}
+              onDecrement={decrementQuantity}
+              maxQuantity={stockQuantity}
+              manageInventory={selectedVariant?.manage_inventory ?? true}
+              allowBackorder={selectedVariant?.allow_backorder ?? false}
+              disabled={isAdding || !stockStatus.inStock}
+              size="mobile"
+            />
+            {addToCartButton("text-base")}
           </div>
         </div>
       </div>
