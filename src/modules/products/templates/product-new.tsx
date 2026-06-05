@@ -398,7 +398,7 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
   return (
     <>
       <div
-        className="max-w-[1350px] mx-auto px-3 sm:px-3 lg:px-6 md:py-4 sm:py-3 sm:pb-6 z-[9] relative"
+        className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6 z-[9] relative"
         ref={targetRef}
       >
         {error && <Alert type="danger" title="Error!" message={error} />}
@@ -414,7 +414,7 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
             lastLabel={product.title}
           />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 mt-4">
             <div className="relative">
               <ProductFlags
                 isOutOfStock={isOutOfStock}
@@ -424,10 +424,10 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
               <ImageGallery images={images} productTitle={product.title} />
             </div>
 
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-3 lg:space-y-4">
               <div>
-                <div className="flex flex-col md:flex-row items-start justify-between gap-4 mb-2">
-                  <h1 className="text-[20px] lg:text-[26px] font-bold text-primary2 leading-tight lg:max-w-[100%]">
+                <div className="flex flex-col md:flex-row items-start justify-between gap-3 mb-1">
+                  <h1 className="text-[18px] lg:text-[24px] font-bold text-primary2 leading-tight">
                     {product.title}
                   </h1>
                   {product.brand?.image_url &&
@@ -439,9 +439,9 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
                           <Image
                             src={product.brand.image_url}
                             alt="Brand Logo"
-                            width={120}
-                            height={60}
-                            className="object-contain p-2 py-0"
+                            width={100}
+                            height={50}
+                            className="object-contain p-1"
                           />
                         </LocalizedClientLink>
                       </div>
@@ -451,16 +451,18 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
                 <ProductVariantInfo variant={selectedVariant} />
 
                 {product.subtitle && (
-                  <p className="text-secondary text-base lg:text-lg mt-3">
+                  <p className="text-secondary text-sm lg:text-base mt-2">
                     {product.subtitle}
                   </p>
                 )}
 
-                <ProductPrice
-                  product={product}
-                  variant={selectedVariant}
-                  cubikPrice={cubikPrice}
-                />
+                <div className="mt-3">
+                  <ProductPrice
+                    product={product}
+                    variant={selectedVariant}
+                    cubikPrice={cubikPrice}
+                  />
+                </div>
 
                 <QuantityDiscountBadges
                   discounts={quantityDiscounts}
@@ -482,7 +484,7 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
                 position="before_add_to_cart"
               />
 
-              <div className="mt-1 hidden sm:flex items-center gap-4">
+              <div className="hidden sm:flex items-center gap-3">
                 <QuantitySelector
                   quantity={quantity}
                   onIncrement={incrementQuantity}
@@ -493,10 +495,10 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
                   disabled={isAdding || !stockStatus.inStock}
                   size="desktop"
                 />
-                {addToCartButton("text-[22px]")}
+                {addToCartButton("text-[18px]")}
               </div>
 
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 mb-4">
+              <div className="flex flex-row items-center gap-4 pt-2">
                 <WishlistButton
                   variantId={selectedVariant?.id}
                   onLoginRequired={() => setShowLoginModal(true)}
@@ -505,12 +507,12 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
                   onClick={handleCompareToggle}
                   className="flex items-center gap-2"
                 >
-                  <Repeat size={20} className="w-5 h-5 text-primary" />
+                  <Repeat size={18} className="w-[18px] h-[18px] text-gray-500" />
                   <span
-                    className={`text-[18px] ${
+                    className={`text-[14px] ${
                       isInCompare
                         ? "text-primary font-semibold"
-                        : "text-secondary"
+                        : "text-gray-600"
                     }`}
                   >
                     {isInCompare
@@ -526,11 +528,14 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
               />
 
               <PaymentShowcase />
-              <ProductMeta
-                product={product}
-                productTabAttachments={productTabAttachmentsNode}
-              />
             </div>
+          </div>
+
+          <div className="mt-8 lg:mt-10">
+            <ProductMeta
+              product={product}
+              productTabAttachments={productTabAttachmentsNode}
+            />
           </div>
 
           {sidebarBanners && sidebarBanners.length > 0 && (
@@ -543,7 +548,7 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
           <div
             className={`
               fixed bottom-0 left-0 right-0
-              bg-quaternary border-t border-gray-200 p-3 shadow-lg
+              bg-white border-t border-gray-200 p-3 shadow-lg
               sm:hidden z-50
               transition-transform duration-300 ease-in-out
               ${isVisible ? "translate-y-0" : "translate-y-full"}
@@ -560,7 +565,7 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
                 disabled={isAdding || !stockStatus.inStock}
                 size="mobile"
               />
-              {addToCartButton("text-[18px]")}
+              {addToCartButton("text-[16px]")}
             </div>
           </div>
         </div>
