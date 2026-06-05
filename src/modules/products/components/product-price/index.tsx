@@ -112,7 +112,7 @@ export default function ProductPrice({
       <div className="flex items-center gap-3">
         <span
           className={clx(
-            "text-3xl font-bold transition-transform duration-300",
+            "text-3xl font-bold transition-transform duration-300 text-[#16a34a]",
             { "scale-[1.03]": cubikApplied || hasDiscount }
           )}
           data-testid="product-price"
@@ -122,7 +122,7 @@ export default function ProductPrice({
         </span>
         {hasDiscount && (
           <span
-            className="opacity-60 text-base font-medium text-gray-500 line-through !text-[22px]"
+            className="opacity-60 text-base font-medium text-gray-400 line-through !text-[22px]"
             data-testid="original-price"
           >
             {originalPriceFormatted}

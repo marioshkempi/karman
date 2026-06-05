@@ -1,26 +1,24 @@
 import { Metadata } from "next"
+import Image from "next/image"
 
 import FeaturedProducts from "@modules/home/components/featured-products"
 import Hero from "@modules/home/components/hero"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 import NewsletterSignup from "@modules/home/components/newsletter"
-import IntroSection from "@modules/home/components/intro"
-import BlogBanner from "@modules/home/components/blog-banner"
 import PopularCategories from "@modules/home/components/popular-category"
 import ProductShowCase from "@modules/home/components/new-product"
-import SocialFollowSection from "@modules/home/components/socials"
 import BannerSection from "@modules/common/components/banner-section"
 import { getBannersByHook } from "@lib/data/banner"
 import { getSlider } from "@lib/data/slider"
 import SliderCarousel from "@modules/common/components/slider-carousel"
-import { listSocials } from "@lib/data/socials"
 import { getTopBestSellers } from "@lib/data/analytics"
 import {
   getAllFeaturedProducts,
   getFeaturedProducts,
 } from "@lib/data/featured-products"
 import Reassurances from "@modules/common/components/reassurances"
+import HomepagePromoBanners from "@modules/home/components/homepage-promo-banners"
 import { newProductsGetProducts } from "@services/typesense/typesenseService"
 import { getPageSeo, toNextMetadata } from "@lib/data/seo"
 import { JsonLd } from "@lib/util/structured-data"
@@ -58,8 +56,6 @@ export default async function Home(props: Params) {
 
   const hasSlider = slider && slider.slides.length > 0
 
-  const { socials } = await listSocials()
-
   if (!region) {
     return null
   }
@@ -83,6 +79,8 @@ export default async function Home(props: Params) {
 
       {hasSlider ? <SliderCarousel slides={slider.slides} /> : <Hero />}
 
+      <Reassurances page_type="home" />
+
       <PopularCategories />
 
       <ProductShowCase
@@ -100,16 +98,24 @@ export default async function Home(props: Params) {
         region={region}
         title="Featured"
       />
-      {banners.length > 0 && <BlogBanner banner={banners[0]} />}
+      
+      {/* Category Strip Visual Section */}
+      <section className="w-full bg-white py-8">
+        <div className="max-w-[1280px] mx-auto px-4">
+          <Image
+            src="/images/category-strip.png"
+            alt="Product Categories"
+            width={1280}
+            height={212}
+            className="w-full h-auto"
+          />
+        </div>
+      </section>
+
+      {/* Homepage Promo Banners Section */}
+      <HomepagePromoBanners />
 
       <NewsletterSignup />
-      {/*{shouldShowBanners ? (*/}
-      {/*  <BannerSection banners={banners} />*/}
-      {/*) : (*/}
-      <IntroSection />
-      {/*)}*/}
-      <SocialFollowSection socials={socials} />
-      <Reassurances page_type="home" />
     </>
   )
 }

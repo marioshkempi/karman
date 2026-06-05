@@ -44,12 +44,11 @@ export default function PreviewPrice({
   })
 
   return (
-    <div className="flex flex-col text-ui-fg-base text-center">
-      <div className={clx("flex items-center justify-center gap-3", className)}>
+    <div className="flex flex-col">
+      <div className={clx("flex items-center gap-2", className)}>
         <span
           className={clx(
-            "font-sans txt-medium text-black text-[16px] lg:text-[18px] font-semibold transition-all duration-300",
-            { "scale-[1.03]": cubikApplied },
+            "font-semibold text-[#00A676] text-lg",
             priceClassName
           )}
           data-testid="product-price"
@@ -60,7 +59,7 @@ export default function PreviewPrice({
         {showOriginal && (
           <span
             className={clx(
-              "line-through opacity-60 font-sans txt-medium text-black text-[10px] lg:text-[16px] font-semibold transition-all duration-300 animate-[fadeIn_0.25s_ease-out]",
+              "line-through text-[#9CA3AF] text-sm",
               originalPriceClassName
             )}
             data-testid="original-product-price"

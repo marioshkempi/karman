@@ -238,7 +238,7 @@ const RefinementList = ({ facets = [], count }: RefinementListProps) => {
 
   return (
     <>
-      <aside className="hidden lg:block lg:w-64 lg:flex-shrink-0 lg:mt-[4%]">
+      <aside className="hidden lg:block lg:w-[260px] lg:flex-shrink-0">
         <div className="sticky top-6 relative">
           {hasFilters && (
             <button
@@ -249,40 +249,48 @@ const RefinementList = ({ facets = [], count }: RefinementListProps) => {
               {t("store.clearFilters")}
             </button>
           )}
-          <div className="w-full max-w-[290px]">{facetBlocks}</div>
+          <div className="w-full max-w-[260px]">{facetBlocks}</div>
         </div>
       </aside>
 
+      {/* Mobile Filter Overlay */}
       <div
-        className={`fixed top-0 left-0 w-full h-full bg-white z-30 transform transition-transform duration-300 ease-in-out lg:hidden ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300 ${
+          mobileOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
+        onClick={() => setMobileOpen(false)}
+      />
+
+      {/* Mobile Filter Drawer */}
+      <div
+        className={`fixed bottom-0 left-0 right-0 bg-white z-50 rounded-t-[20px] transform transition-transform duration-300 ease-in-out lg:hidden ${
+          mobileOpen ? "translate-y-0" : "translate-y-full"
+        }`}
+        style={{ maxHeight: "90vh" }}
       >
-        <div className="flex justify-between p-4 border-b border-gray-200 items-center bg-primary">
-          <h4 className="text-white">{t("store.filters")}</h4>
+        {/* Header */}
+        <div className="flex justify-between items-center px-4 py-4 border-b border-gray-200">
+          <h4 className="text-[18px] font-semibold text-gray-900">Φίλτρα</h4>
           <button
-            className="text-white text-2xl font-bold"
+            className="w-8 h-8 flex items-center justify-center text-gray-500"
             onClick={() => setMobileOpen(false)}
           >
             <X />
           </button>
         </div>
 
-        <div className="p-4 overflow-y-auto h-full">{facetBlocks}</div>
+        {/* Filter Content */}
+        <div className="px-4 py-2 overflow-y-auto" style={{ maxHeight: "calc(90vh - 140px)" }}>
+          {facetBlocks}
+        </div>
 
-        <div className="fixed bottom-0 left-0 w-full p-4 bg-white border-t border-gray-200 flex gap-2">
+        {/* Sticky Apply Button */}
+        <div className="px-4 py-4 bg-white border-t border-gray-100">
           <button
-            className="flex-1 bg-tertiary text-gray-700 py-3 rounded-lg font-medium text-sm px-1"
-            onClick={() => clearFilters()}
-          >
-            Καθαρισμός φίλτρων
-          </button>
-
-          <button
-            className="flex-1 bg-primary text-white py-3 rounded-lg font-medium text-sm px-1"
+            className="w-full bg-black text-white py-3.5 rounded-full font-medium text-[15px]"
             onClick={() => setMobileOpen(false)}
           >
-            {t("store.viewResults", { count })}
+            Apply Filter
           </button>
         </div>
       </div>

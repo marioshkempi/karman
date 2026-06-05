@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Heart, Search, Menu, X, Repeat } from "lucide-react"
+import { Heart, Search, Menu, X, ShoppingCart, User, ChevronLeft, ChevronRight, Car } from "lucide-react"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Logo from "./logo"
@@ -64,8 +64,10 @@ export default function NavbarClient({
   const [mounted, setMounted] = useState(false)
   const [compareCount, setCompareCount] = useState<number>(0)
   const [query, setQuery] = useState("")
-  const [results, setResults] = useState<any>(null) //useState<any[]>([])
+  const [results, setResults] = useState<any>(null)
   const [open, setOpen] = useState(false)
+
+  const cartItemsCount = cart?.items?.reduce((acc, item) => acc + item.quantity, 0) || 0
 
   useEffect(() => {
     const s = searchParams.get("s")
@@ -84,6 +86,7 @@ export default function NavbarClient({
     setMounted(true)
     setCompareCount(getCompareCount())
   }, [getCompareCount])
+
   useEffect(() => {
     if (!query.trim()) {
       setResults(null)
@@ -101,104 +104,182 @@ export default function NavbarClient({
     return () => clearTimeout(timeout)
   }, [query])
 
+  // Static navigation items
+  const staticNavItems = [
+    { label: "Δημοφιλή προϊόντα", href: "/best-selling" },
+    { label: "Σχετικά με μας", href: "/about" },
+    { label: "Blog", href: "/blog" },
+    { label: "Επικοινωνία", href: "/contact-us" },
+  ]
+
   return (
     <>
       <div className="relative">
-        <nav className="bg-white mt-3">
-          <div className="max-w-[1350px] mx-auto px-0 lg:px-8">
-            {/* Mobile Top Bar */}
-            <div className="flex lg:hidden items-center justify-between h-16">
-              <div className="flex items-center gap-2">
-                <Button
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="p-2 text-gray-600 hover:text-gray-900 bg-transparent border-none shadow-none"
+        {/* Single Blue Gradient Navigation Bar - Desktop */}
+        <div className="hidden lg:block bg-gradient-to-r from-[#283882] via-[#007BFF] to-[#283882]">
+          <div className="max-w-[1350px] mx-auto px-4 lg:px-6">
+            <div className="flex items-center justify-between h-[64px]">
+              {/* Left Group: Logo + Navigation Menu */}
+              <div className="flex items-center gap-4">
+                {/* Logo */}
+                <LocalizedClientLink href="/" className="flex-shrink-0">
+                  <img 
+                    src="/logo.png" 
+                    alt="Karman Logo" 
+                    className="h-10 w-auto"
+                  />
+                </LocalizedClientLink>
+
+                {/* MegaMenu Dropdown Trigger + Static Nav Items */}
+                <MegaMenu
+                  megaMenus={menu?.megaMenus}
+                  isMobileMenuOpen={isMobileMenuOpen}
+                  onMobileMenuToggle={setIsMobileMenuOpen}
+                  isInline={true}
+                  staticNavItems={staticNavItems}
+                />
+              </div>
+
+              {/* Right Group: Search Bar + Wishlist + Cart */}
+              <div className="flex items-center gap-6">
+                {/* Search Bar */}
+                <div className="relative">
+                  <div className="flex items-center bg-white rounded-md overflow-hidden">
+                    <div className="flex items-center justify-center pl-3 text-gray-500">
+                      <Search size={18} />
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      onFocus={() => query.trim() && setOpen(true)}
+                      className="w-[240px] h-[40px] px-3 bg-transparent text-gray-800 text-[13px] placeholder:text-gray-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Wishlist */}
+                <LocalizedClientLink
+                  href="/account/wishlist"
+                  className="relative flex items-center text-white hover:text-white/80 transition-colors"
                 >
-                  {isMobileMenuOpen ? (
-                    <X size={28} />
-                  ) : (
-                    <Menu size={40} className="text-menubg" />
-                  )}
-                </Button>
+                  <Heart size={24} />
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-[#5B9AFF] text-white text-[10px] font-bold leading-none">
+                    {wishlistCount}
+                  </span>
+                </LocalizedClientLink>
+
+                {/* Cart with circular background */}
+                <LocalizedClientLink
+                  href="/cart"
+                  className="relative flex items-center"
+                >
+                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[#F2F4F8]">
+                    <ShoppingCart size={20} className="text-[#283882]" />
+                  </div>
+                  <span className="absolute -top-0.5 -right-1 min-w-[18px] h-[18px] px-0.5 flex items-center justify-center rounded-full bg-orange text-white text-[10px] font-bold leading-none">
+                    {cartItemsCount}
+                  </span>
+                </LocalizedClientLink>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Header - Blue gradient background */}
+        <div 
+          className="lg:hidden"
+          style={{ background: "linear-gradient(90deg, #283B82 0%, #007BFF 50%, #283B82 100%)" }}
+        >
+          <div className="px-3">
+            {/* Mobile Top Bar - 56px height */}
+            <div className="flex items-center justify-between h-14">
+              {/* Left: Hamburger + Logo */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="w-10 h-10 flex items-center justify-center text-white"
+                  aria-label="Toggle menu"
+                >
+                  <Menu size={24} className="text-white" />
+                </button>
                 <LocalizedClientLink href="/">
-                  <Logo
-                    width={35}
-                    height={35}
-                    src={headerLogo}
-                    classNameImage={"w-[142px]"}
+                  <img 
+                    src="/logo.png" 
+                    alt="Karman Logo" 
+                    className="h-8 w-auto max-w-[110px]"
                   />
                 </LocalizedClientLink>
               </div>
 
-              <div className="flex items-center gap-3 lg:gap-2">
-                <AccountMenu customer={customer} />
+              {/* Right: Account + Wishlist + Cart */}
+              <div className="flex items-center gap-3">
+                <LocalizedClientLink
+                  href="/account"
+                  className="w-10 h-10 flex items-center justify-center text-white"
+                >
+                  <User size={22} />
+                </LocalizedClientLink>
                 <LocalizedClientLink
                   href="/account/wishlist"
-                  className="relative flex items-center p-2 text-quinary hover:opacity-80"
+                  className="relative w-10 h-10 flex items-center justify-center text-white"
                 >
                   <Heart size={22} />
                   {wishlistCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-primary text-white text-[11px] font-semibold leading-none">
+                    <span className="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-[#5B9AFF] text-white text-[10px] font-semibold leading-none">
                       {wishlistCount}
                     </span>
                   )}
                 </LocalizedClientLink>
-                <CartButtonClient cart={cart} />
-              </div>
-            </div>
-
-            {/* Desktop Top Bar */}
-            <div className="hidden lg:flex items-start justify-between h-20 gap-4">
-              <div className="flex items-center flex-shrink-0">
-                <LocalizedClientLink href="/">
-                  <Logo width={50} height={50} src={headerLogo} />
-                </LocalizedClientLink>
-              </div>
-
-              <div className="flex items-start space-x-3 pt-2">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Ψάξε στον κατάλογό μας"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onFocus={() => query.trim() && setOpen(true)}
-                    className="w-[390px] h-[35px] pl-4 pr-12 border-2 border-primary rounded-[20.61px] text-sm placeholder:text-primary placeholder:text-[12px] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
-                  />
-                  <Search
-                    size={20}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-primary"
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <AccountMenu customer={customer} />
-                  <LocalizedClientLink
-                    href="/account/wishlist"
-                    className="flex items-center gap-1 p-2 text-quinary hover:opacity-80 transition-opacity duration-200"
-                  >
-                    <Heart size={22} />
-                    <span className="text-[14px]">({wishlistCount})</span>
-                  </LocalizedClientLink>
-                  <button
-                    onClick={() => setIsCompareOpen(true)}
-                    className="flex items-center gap-1 p-2 text-quinary hover:opacity-80"
-                  >
-                    <Repeat size={20} />
-                    <span className="text-[14px]">
-                      ({mounted ? compareCount : 0})
+                <LocalizedClientLink
+                  href="/cart"
+                  className="relative w-10 h-10 flex items-center justify-center text-white"
+                >
+                  <ShoppingCart size={22} />
+                  {cartItemsCount > 0 && (
+                    <span className="absolute top-0 right-0 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-[#5B9AFF] text-white text-[10px] font-semibold leading-none">
+                      {cartItemsCount}
                     </span>
-                  </button>
-                  <CartButtonClient cart={cart} />
-                </div>
+                  )}
+                </LocalizedClientLink>
               </div>
             </div>
           </div>
-        </nav>
+        </div>
 
-        <MegaMenu
-          megaMenus={menu?.megaMenus}
-          isMobileMenuOpen={isMobileMenuOpen}
-          onMobileMenuToggle={setIsMobileMenuOpen}
-        />
+        {/* Mobile Search Bar - Below top bar, 40px height */}
+        <div 
+          className="lg:hidden px-3 pb-2"
+          style={{ background: "linear-gradient(90deg, #283B82 0%, #007BFF 50%, #283B82 100%)" }}
+        >
+          <div className="relative h-10">
+            <div className="flex items-center h-full bg-white rounded-md overflow-hidden">
+              <div className="flex items-center justify-center pl-3 text-gray-400">
+                <Search size={18} />
+              </div>
+              <input
+                type="text"
+                placeholder="Αναζήτηση με κωδικό ή λέξη κλειδί"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onFocus={() => query.trim() && setOpen(true)}
+                className="w-full h-full px-3 bg-transparent text-gray-800 text-[13px] placeholder:text-gray-400 focus:outline-none"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile-only MegaMenu (handles mobile panel) */}
+        <div className="lg:hidden">
+          <MegaMenu
+            megaMenus={menu?.megaMenus}
+            isMobileMenuOpen={isMobileMenuOpen}
+            onMobileMenuToggle={setIsMobileMenuOpen}
+            isInline={false}
+            staticNavItems={staticNavItems}
+          />
+        </div>
 
         {isCompareOpen && (
           <CompareModal onClose={() => setIsCompareOpen(false)} />
@@ -208,22 +289,6 @@ export default function NavbarClient({
           isOpen={isLoginPromptOpen}
           onClose={() => setIsLoginPromptOpen(false)}
         />
-
-        {/* Mobile Search */}
-        <div className="relative lg:hidden py-2 mx-3 pb-3">
-          <input
-            type="text"
-            placeholder="Ψάξε στον κατάλογό μας"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onFocus={() => query.trim() && setOpen(true)}
-            className="h-[35px] pl-4 pr-12 border-2 border-primary rounded-[20.61px] text-sm placeholder:text-primary placeholder:text-[12px] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 w-full"
-          />
-          <Search
-            size={20}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-primary"
-          />
-        </div>
 
         <SearchDropdown
           data={results}

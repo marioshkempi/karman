@@ -172,22 +172,22 @@ const ProductMeta: React.FC<ProductMetaProps> = ({
   return (
     <div className="mt-6">
       {/* Mobile: Accordion */}
-      <div className="md:hidden space-y-4">
+      <div className="md:hidden space-y-3">
         {tabs.map((tab) => (
-          <div key={tab} className="border border-gray-200">
+          <div key={tab} className="border border-gray-200 rounded-lg overflow-hidden">
             <button
               onClick={() => toggleAccordion(tab)}
-              className={`w-full flex justify-between items-center px-4 py-3 text-[18px] font-medium transition-all duration-200 ${
+              className={`w-full flex justify-between items-center px-4 py-3 text-[16px] font-medium transition-all duration-200 ${
                 openAccordion === tab
-                  ? "bg-secondary text-white"
-                  : "text-primary2"
+                  ? "bg-[#1e3a5f] text-white"
+                  : "bg-white text-[#1e3a5f]"
               }`}
             >
               {TAB_LABELS[tab]}
-              <span>{openAccordion === tab ? "−" : "+"}</span>
+              <span className="text-lg">{openAccordion === tab ? "−" : "+"}</span>
             </button>
             {openAccordion === tab && (
-              <div className="px-4 pb-4 pt-4 text-secondary text-[14px]">
+              <div className="px-4 pb-4 pt-4 text-secondary text-[14px] bg-white">
                 {renderTabContent(tab, "mobile")}
               </div>
             )}
@@ -202,10 +202,10 @@ const ProductMeta: React.FC<ProductMetaProps> = ({
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-shrink-0 py-2 px-4 text-[20px] font-medium ${tabWidth} ${
+              className={`flex-shrink-0 py-3 px-6 text-[16px] font-medium transition-colors ${tabWidth} ${
                 activeTab === tab
-                  ? "text-primary2 border-b-2 border-primary"
-                  : "text-lightgray"
+                  ? "text-[#1e3a5f] border-b-2 border-[#007BFF]"
+                  : "text-gray-400 hover:text-gray-600"
               }`}
             >
               {TAB_LABELS[tab]}

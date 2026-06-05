@@ -17,7 +17,6 @@ export default async function Reassurances({
   })
 
   if (!reassurances || reassurances.length === 0) {
-    //console.log("No reassurances to display - component will not render")
     return null
   }
 
@@ -41,30 +40,31 @@ export default async function Reassurances({
   }
 
   return (
-    <div className="w-full bg-white mb-6 lg:mb-8">
-      <div className="max-w-[1350px] mx-auto px-0 lg:px-8">
-        <div className="flex flex-col gap-1 lg:flex-row lg:flex-wrap lg:justify-center lg:gap-6">
+    <div className="w-full bg-white py-4 lg:py-8">
+      <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
+        {/* Mobile: horizontal scroll row */}
+        <div className="flex lg:hidden overflow-x-auto gap-4 pb-2 -mx-4 px-4 scrollbar-hide">
           {reassurances.map((reassurance) => {
             const redirectUrl = handleRedirect(reassurance)
             const content = (
-              <div className="flex flex-row items-center gap-4 p-3 hover:opacity-80 transition-opacity w-full lg:flex-col lg:items-center lg:text-center lg:gap-0 lg:p-4">
+              <div className="flex flex-row items-center gap-2 p-2 min-w-[140px] hover:opacity-80 transition-opacity">
                 {reassurance.icon_url && (
-                  <div className="flex-shrink-0 lg:mb-4">
+                  <div className="flex-shrink-0">
                     <Image
                       src={reassurance.icon_url}
                       alt={reassurance.title}
-                      width={64}
-                      height={64}
-                      className="lg:w-16 lg:h-16 object-contain"
+                      width={36}
+                      height={36}
+                      className="w-9 h-9 object-contain"
                     />
                   </div>
                 )}
-                <div className="flex flex-col lg:items-center">
-                  <h3 className="text-primary text-[20px] lg:text-base font-medium mb-1 lg:mb-2">
+                <div className="flex flex-col">
+                  <h3 className="text-[#283882] text-xs font-semibold whitespace-nowrap">
                     {reassurance.title}
                   </h3>
                   {reassurance.description && (
-                    <p className="text-secondary text-[16px] lg:text-sm">
+                    <p className="text-gray-500 text-[10px] whitespace-nowrap">
                       {reassurance.description}
                     </p>
                   )}
@@ -72,8 +72,73 @@ export default async function Reassurances({
               </div>
             )
 
-            const wrapperClasses =
-              "w-full lg:w-[calc(25%-1.125rem)] xl:w-[calc(25%-1.5rem)] flex justify-center lg:max-w-[300px]"
+            if (redirectUrl) {
+              if (
+                reassurance.redirect_type === "url" &&
+                redirectUrl.startsWith("http")
+              ) {
+                return (
+                  <a
+                    key={reassurance.id}
+                    href={redirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0"
+                  >
+                    {content}
+                  </a>
+                )
+              }
+              return (
+                <LocalizedClientLink
+                  key={reassurance.id}
+                  href={redirectUrl}
+                  className="flex-shrink-0"
+                >
+                  {content}
+                </LocalizedClientLink>
+              )
+            }
+
+            return (
+              <div key={reassurance.id} className="flex-shrink-0">
+                {content}
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Desktop: flex row layout */}
+        <div className="hidden lg:flex lg:flex-row lg:justify-between lg:items-center lg:gap-8">
+          {reassurances.map((reassurance) => {
+            const redirectUrl = handleRedirect(reassurance)
+            const content = (
+              <div className="flex flex-row items-center gap-4 p-2 hover:opacity-80 transition-opacity">
+                {reassurance.icon_url && (
+                  <div className="flex-shrink-0">
+                    <Image
+                      src={reassurance.icon_url}
+                      alt={reassurance.title}
+                      width={56}
+                      height={56}
+                      className="w-14 h-14 object-contain"
+                    />
+                  </div>
+                )}
+                <div className="flex flex-col">
+                  <h3 className="text-[#283882] text-base font-semibold">
+                    {reassurance.title}
+                  </h3>
+                  {reassurance.description && (
+                    <p className="text-gray-500 text-sm">
+                      {reassurance.description}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )
+
+            const wrapperClasses = "flex-1 flex justify-center"
 
             if (redirectUrl) {
               if (

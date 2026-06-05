@@ -9,10 +9,6 @@ import {
 import ProductDetailView from "@modules/products/templates/product-new"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
 import { Suspense } from "react"
-import RelatedProducts from "@modules/products/components/related-products"
-import Reassurances from "@modules/common/components/reassurances"
-import SocialFollowSection from "@modules/home/components/socials"
-import { listSocials } from "@lib/data/socials"
 import { HttpTypes } from "@medusajs/types"
 import { getBannersByHook } from "@lib/data/banner"
 import BannerSection from "@modules/common/components/banner-section"
@@ -41,7 +37,6 @@ export default async function ProductView({ product, region, searchParams, isNew
       })
     : null
 
-  const { socials } = await listSocials()
   const { banners: relatedBanners } = await getBannersByHook("product-related")
   const { banners: sidebarBanners } = await getBannersByHook("product-sidebar")
   const tracking = await getTrackingSettings()
@@ -70,11 +65,6 @@ export default async function ProductView({ product, region, searchParams, isNew
       <Suspense fallback={<SkeletonRelatedProducts />}>
         {/*<RelatedProducts product={fullProduct} />*/}
       </Suspense>
-
-      <div className="mt-10">
-        <Reassurances page_type="product" />
-      </div>
-      <SocialFollowSection socials={socials} />
     </>
   )
 }

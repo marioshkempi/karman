@@ -29,8 +29,8 @@ const ProductFlags: React.FC<ProductFlagsProps> = ({
 
   if (isOutOfStock) {
     return (
-      <div className="absolute top-3 left-3 z-10">
-        <div className="bg-secondary text-white text-xs font-medium px-3 py-1.5 rounded">
+      <div className="absolute top-2 left-2 z-10">
+        <div className="bg-gray-500 text-white text-xs font-semibold px-2.5 py-1 rounded">
           Χωρίς Απόθεμα
         </div>
       </div>
@@ -38,17 +38,15 @@ const ProductFlags: React.FC<ProductFlagsProps> = ({
   }
 
   return (
-    <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
-      {hasSale && (
-        <div className="bg-secondary text-white text-xs font-semibold px-3 py-1.5 rounded-full animate-[fadeIn_0.25s_ease-out]">
-          {percent !== null && percent !== 0 && (
-            <span className="opacity-90">-{percent}%</span>
-          )}
+    <div className="absolute top-2 left-2 z-10 flex flex-col gap-1.5">
+      {hasSale && percent !== null && percent !== 0 && (
+        <div className="bg-[#FF8C00] text-white text-xs font-semibold px-2.5 py-1 rounded">
+          {percent}%
         </div>
       )}
 
       {isNewProduct && (
-        <div className="bg-tertiary text-white text-xs font-medium px-3 py-1.5 rounded-full animate-[fadeIn_0.25s_ease-out] text-center">
+        <div className="bg-[#00A676] text-white text-xs font-semibold px-2.5 py-1 rounded">
           NEW
         </div>
       )}

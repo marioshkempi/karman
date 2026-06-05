@@ -22,26 +22,40 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true, // allows any image URL (no optimization)
-
-    // remotePatterns: [
-    //   {
-    //     protocol: "http",
-    //     hostname: "localhost",
-    //   },
-    //   {
-    //     protocol: "https",
-    //     hostname: "medusa-public-images.s3.eu-west-1.amazonaws.com",
-    //   },
-    //   {
-    //     protocol: "https",
-    //     hostname: "medusa-server-testing.s3.amazonaws.com",
-    //   },
-    //   {
-    //     protocol: "https",
-    //     hostname: "medusa-server-testing.s3.us-east-1.amazonaws.com",
-    //   },
-    // ],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-public-images.s3.eu-west-1.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.us-east-1.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "syn-medusa-js-bucket.s3.us-east-1.amazonaws.com",
+      },
+      {
+        protocol: "http",
+        hostname: "178.105.190.89",
+      },
+      {
+        protocol: "https",
+        hostname: "bio-kifisia.gr",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-ecom-sme.nbg1.your-objectstorage.com",
+      },
+    ],
   },
 }
 

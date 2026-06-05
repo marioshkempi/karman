@@ -77,16 +77,15 @@ export function renderFacet({
       blocks.push(
         <div
           key={`options-group-${groupName}`}
-          className="mb-4 rounded-lg overflow-auto"
+          className="mb-4 bg-white"
         >
           <button
             type="button"
             onClick={() => toggleAccordion(accordionKey)}
             className="
             w-full flex justify-between items-center
-            px-2 py-3
-            text-[15px] font-bold uppercase tracking-wider
-            bg-primary text-white
+            py-3 border-b border-gray-200
+            text-[14px] font-semibold text-gray-900
             transition-colors duration-200
           "
           >
@@ -94,7 +93,7 @@ export function renderFacet({
             <ChevronDown
               size={16}
               className={`
-              transition-transform duration-300 ease-in-out
+              text-gray-500 transition-transform duration-300 ease-in-out
               ${openFacets[accordionKey] ? "rotate-180" : "rotate-0"}
             `}
             />
@@ -111,7 +110,7 @@ export function renderFacet({
             }
           `}
           >
-            <div className="px-1 py-3 bg-white">
+            <div className="py-3 bg-white">
               {isColorGroup ? (
                 <div className="flex flex-wrap gap-x-4 gap-y-3">
                   {options.map((option: any, idx: number) => {
@@ -242,11 +241,11 @@ export function renderFacet({
 
     Object.entries(groups).forEach(([groupName, options]) => {
       blocks.push(
-        <div key={`features-group-${groupName}`} className="mb-4">
-          <div className="bg-primary text-white px-4 py-2 text-[17px] font-bold uppercase rounded-lg">
+        <div key={`features-group-${groupName}`} className="mb-4 bg-white">
+          <div className="py-3 border-b border-gray-200 text-[14px] font-semibold text-gray-900">
             {groupName}
           </div>
-          <div className="px-1 py-3 space-y-2">
+          <div className="py-3 space-y-2">
             {options.map((option: any, idx: number) => {
               const isChecked = searchParams
                 .getAll(facet.key)
@@ -282,15 +281,14 @@ export function renderFacet({
   }
 
   return (
-    <div key={`facet-${facet.key}`} className="mb-4 rounded-lg overflow-auto">
+    <div key={`facet-${facet.key}`} className="mb-4 bg-white">
       <button
         type="button"
         onClick={() => toggleAccordion(facet.key)}
         className="
           w-full flex justify-between items-center
-          px-2 py-3
-          text-[15px] font-bold uppercase tracking-wider
-          bg-primary text-white
+          py-3 border-b border-gray-200
+          text-[14px] font-semibold text-gray-900
           transition-colors duration-200
         "
       >
@@ -298,7 +296,7 @@ export function renderFacet({
         <ChevronDown
           size={16}
           className={`
-            transition-transform duration-300 ease-in-out
+            text-gray-500 transition-transform duration-300 ease-in-out
             ${openFacets[facet.key] ? "rotate-180" : "rotate-0"}
           `}
         />
@@ -315,7 +313,7 @@ export function renderFacet({
           }
         `}
       >
-        <div className="px-1 py-3 space-y-2 bg-white">
+        <div className="py-3 space-y-2 bg-white">
           {facet.items.map((option: any, idx: number) => {
             const value = option.value
             const count = option.count

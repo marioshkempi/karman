@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useMemo, useState } from "react"
+import React, { useState } from "react"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import PreviewPrice from "./price"
@@ -12,6 +12,7 @@ import { useTracking } from "@lib/hooks/use-tracking"
 import WishlistButton from "@modules/products/components/wishlist-button"
 import LoginPromptModal from "@modules/layout/components/login-prompt-modal"
 import { useTranslations } from "next-intl"
+import { Star, ShoppingCart } from "lucide-react"
 
 export default function ProductPreview({
   product,
@@ -65,7 +66,9 @@ export default function ProductPreview({
   const variantCount = product.variants?.length ?? 0
   const selectedVariant = product.variants?.[0]
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     if (!selectedVariant?.id || isAdding) return
 
     try {
@@ -94,125 +97,107 @@ export default function ProductPreview({
       setIsAdding(false)
     }
   }
-  // console.log("product", product)
+
+  // Get rating data
+  const rating = product.rating ?? product.average_rating ?? 4.0
+  const reviewCount = product.review_count ?? product.reviews_count ?? 3
+
   return (
     <>
-      <div className={cn(separatedButtonOnMobile ? "flex flex-col" : "")}>
-        <div className="border border-darkGray ">
-          <div className="overflow-hidden">
-            <div className="relative aspect-square bg-gray-50">
-              <LocalizedClientLink
-                href={`/${product.handle}`}
-                className="block"
-              >
-                <ProductFlags
-                  isOutOfStock={isOutOfStock}
-                  isNewProduct={isNew}
-                  cubikPrice={discount}
-                />
-                <Image
-                  src={
-                    product.thumbnail ||
-                    product.images?.[0]?.url ||
-                    "/placeholder-image.jpg"
-                  }
-                  alt={product.title}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-              </LocalizedClientLink>
-              <div className="absolute top-2 right-2 z-10">
-                <WishlistButton
-                  variantId={selectedVariant?.id}
-                  showLabel={false}
-                  onLoginRequired={() => setShowLoginModal(true)}
-                />
-              </div>
-            </div>
-            <LocalizedClientLink href={`/${product.handle}`} className="block">
-              <div className="p-2 md:p-4 text-center h-[140px] lg:h-[180px] flex flex-col justify-between">
-                <div>
-                  <h3 className="text-black font-bold text-[12px] lg:text-base mb-2 min-h-[1.5em] lg:min-h-[3em]">
-                    {product.title.length > 50
-                      ? `${product.title.slice(0, 50)}...`
-                      : product.title}
-                  </h3>
+      <div className="bg-white h-full flex flex-col">
+        {/* Image Container - border only here */}
+        <div className="relative aspect-square bg-white rounded-lg border border-[#E5E7EB] overflow-hidden">
+          <LocalizedClientLink href={`/${product.handle}`} className="block h-full">
+            <ProductFlags
+              isOutOfStock={isOutOfStock}
+              isNewProduct={isNew}
+              cubikPrice={discount}
+            />
+            <Image
+              src={
+                product.thumbnail ||
+                product.images?.[0]?.url ||
+                "/placeholder-image.jpg"
+              }
+              alt={product.title}
+              fill
+              className="object-contain p-2"
+              sizes="(max-width: 768px) 50vw, 25vw"
+            />
+          </LocalizedClientLink>
+          
+          {/* Wishlist Button - Top Right */}
+          <div className="absolute top-2 right-2 z-10">
+            <WishlistButton
+              variantId={selectedVariant?.id}
+              showLabel={false}
+              onLoginRequired={() => setShowLoginModal(true)}
+            />
+          </div>
+        </div>
 
-                  {(product.subtitle || product.description) && (
-                    <p className="text-[#777777] text-[11px] lg:text-sm mb-1.5 line-clamp-2 font-normal prod-list-desc">
-                      {(product.subtitle || product.description)!
-                        .replace(/<[^>]*>/g, "")
-                        .replace(/&nbsp;/gi, " ")
-                        .replace(/&amp;/gi, "&")
-                        .replace(/&lt;/gi, "<")
-                        .replace(/&gt;/gi, ">")
-                        .replace(/&quot;/gi, '"')
-                        .replace(/&#039;/gi, "'")
-                        .replace(/^[""\s]+|[""\s]+$/g, "")
-                        .trim()}
-                    </p>
+        {/* Content - no border */}
+        <div className="pt-3 flex flex-col flex-grow">
+          {/* Rating Row */}
+          <div className="flex items-center gap-1.5 mb-2">
+            <div className="flex items-center">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={cn(
+                    "w-3.5 h-3.5",
+                    i < Math.round(rating)
+                      ? "fill-yellow-400 text-yellow-400"
+                      : "fill-gray-200 text-gray-200"
                   )}
-                </div>
-
-                <PreviewPrice
-                  originalPrice={product.price}
-                  cubikPrice={discount}
-                  currency={product.currency}
                 />
-              </div>
-            </LocalizedClientLink>
+              ))}
+            </div>
+            <span className="text-sm font-medium text-gray-700">{rating.toFixed(2)}</span>
+            <span className="text-sm text-gray-400">({reviewCount})</span>
           </div>
 
-          <div
-            className={cn(
-              "border-t border-darkGray rounded-b-[5px]",
-              separatedButtonOnMobile ? "hidden lg:block" : ""
-            )}
-          >
-            {isOutOfStock ? (
-              <LocalizedClientLink href={`/${product.handle}`}>
-                <div className="w-full py-3 text-center text-gray-500 text-sm bg-white">
-                  {t("product.learnMore")}
-                </div>
-              </LocalizedClientLink>
-            ) : variantCount === 1 ? (
+          {/* Product Title */}
+          <LocalizedClientLink href={`/${product.handle}`} className="block flex-grow">
+            <h3 className="text-gray-900 font-medium text-sm leading-tight mb-3 line-clamp-2 min-h-[2.5rem]">
+              {product.title}
+            </h3>
+          </LocalizedClientLink>
+
+          {/* Price and Cart Button Row */}
+          <div className="flex items-center justify-between mt-auto">
+            <PreviewPrice
+              originalPrice={product.price}
+              cubikPrice={discount}
+              currency={product.currency}
+            />
+            
+            {/* Cart Button */}
+            {!isOutOfStock && variantCount === 1 && (
               <button
                 onClick={handleAddToCart}
                 disabled={isAdding}
-                className="w-full py-3 text-center text-sm font-medium hover:bg-primary hover:text-white transition disabled:opacity-50"
+                className={cn(
+                  "w-10 h-10 rounded-md flex items-center justify-center transition-colors",
+                  isAdding 
+                    ? "bg-[#1A2B3C]" 
+                    : "bg-[#007BFF] hover:bg-[#1A2B3C]"
+                )}
               >
-                {isAdding ? t("product.adding") : t("product.buy")}
+                <ShoppingCart className="w-5 h-5 text-white" />
               </button>
-            ) : (
+            )}
+            
+            {/* Learn More for multiple variants or out of stock */}
+            {(isOutOfStock || variantCount > 1) && (
               <LocalizedClientLink href={`/${product.handle}`}>
-                <div className="w-full py-3 text-center text-sm font-medium bg-white text-gray-500">
-                  {t("product.learnMore")}
-                </div>
+                <button className="w-10 h-10 rounded-md flex items-center justify-center bg-gray-200 hover:bg-gray-300 transition-colors">
+                  <ShoppingCart className="w-5 h-5 text-gray-600" />
+                </button>
               </LocalizedClientLink>
             )}
           </div>
         </div>
-
-        {separatedButtonOnMobile && (
-          <div className="mt-2 lg:hidden">
-            {isOutOfStock || variantCount > 1 ? (
-              <LocalizedClientLink href={`/${product.handle}`}>
-                <button className="w-full py-2 px-4 border border-primary text-gray-700 text-xs rounded-[5px]">
-                  {t("product.learnMore")}
-                </button>
-              </LocalizedClientLink>
-            ) : (
-              <button
-                onClick={handleAddToCart}
-                disabled={isAdding}
-                className="w-full py-2 px-4 border border-primary text-gray-700 text-xs rounded-[5px] disabled:opacity-50"
-              >
-                {isAdding ? t("product.adding") : t("product.buy")}
-              </button>
-            )}
-          </div>
-        )}
       </div>
 
       <LoginPromptModal

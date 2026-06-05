@@ -27,6 +27,7 @@ type BreadcrumbProps = {
   ellipsisPosition?: number
   homeLabel?: string
   lastLabel?: string
+  lightMode?: boolean
 
   /** Backward compatible (Medusa categories) */
   categories?: HttpTypes.StoreProductCategory[] | null
@@ -45,6 +46,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
   ellipsisPosition = 1,
   homeLabel = "Αρχική",
   lastLabel,
+  lightMode = false,
   categories,
   tree,
 }) => {
@@ -94,6 +96,9 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
     return breadcrumbItems
   }, [tree, categories, lastLabel, pathname, homeLabel])
 
+  const textColor = lightMode ? "text-white" : "text-primary"
+  const separatorColor = lightMode ? "text-white/70" : "text-primary"
+
   /* ======================================================
     Render breadcrumb items with ellipsis
   ====================================================== */
@@ -111,10 +116,10 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
         result.push(
           <React.Fragment key={`ellipsis-${index}`}>
             <li className="inline-flex items-center">
-              <MoreHorizontal className="w-4 h-4 text-gray-400" />
+              <MoreHorizontal className={`w-4 h-4 ${lightMode ? "text-white/70" : "text-gray-400"}`} />
             </li>
             <li className="inline-flex items-center">
-              <span className="mx-2 text-primary">/</span>
+              <span className={`mx-2 ${separatorColor}`}>/</span>
             </li>
           </React.Fragment>
         )
@@ -125,13 +130,13 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
         <React.Fragment key={`${item.href}-${index}`}>
           <li className="inline-flex items-center">
             {item.isCurrentPage ? (
-              <span className="font-medium text-primary whitespace-nowrap">
+              <span className={`font-medium ${textColor} whitespace-nowrap`}>
                 {item.label}
               </span>
             ) : (
               <LocalizedClientLink
                 href={item.href}
-                className="text-primary hover:opacity-80 whitespace-nowrap"
+                className={`${textColor} hover:opacity-80 whitespace-nowrap`}
               >
                 {item.label}
               </LocalizedClientLink>
@@ -140,7 +145,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
 
           {index < items.length - 1 && (
             <li className="inline-flex items-center">
-              <span className="mx-2 text-primary">/</span>
+              <span className={`mx-2 ${separatorColor}`}>/</span>
             </li>
           )}
         </React.Fragment>
@@ -148,7 +153,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({
     })
 
     return result
-  }, [items, showEllipsis, ellipsisPosition])
+  }, [items, showEllipsis, ellipsisPosition, textColor, separatorColor, lightMode])
 
   if (items.length === 0) return null
 

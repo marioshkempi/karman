@@ -7,7 +7,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("")
-  const [agreed, setAgreed] = useState(false) // New state for terms checkbox
+  const [agreed, setAgreed] = useState(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -39,62 +39,131 @@ export default function NewsletterSignup() {
   }
 
   return (
-    <div className="bg-lightyellow py-12 lg:py-16 px-4">
-      <div className="max-w-[1350px] mx-auto">
-        <h2 className="text-[25px] lg:text-[35px] text-secondary font-normal mb-6 lg:mb-8">
-          Γραφτείτε στο Newsletter μας
-        </h2>
+    <div className="bg-[#F1F5F9] py-6 md:py-8 px-4">
+      <div className="max-w-[1282px] mx-auto">
+        {/* Desktop: pill shape */}
+        <div className="hidden lg:block bg-[#112F82] rounded-[99px] px-12 h-[108px]">
+          <div className="h-full flex items-center">
+            {success && <Alert type="success" message={success} className="mb-4" />}
+            {error && <Alert type="danger" message={error} className="mb-4" />}
 
-        {success && <Alert type="success" message={success} className="mb-6" />}
-        {error && <Alert type="danger" message={error} className="mb-6" />}
+            <form onSubmit={handleSubmit} className="w-full">
+              <div className="flex items-center justify-between gap-6">
+                {/* Left side - Title and checkbox */}
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-white text-2xl font-semibold">
+                    Εγγραφείτε στο newsletter της Karman!
+                  </h2>
+                  <label className="flex items-center gap-2 text-sm text-white/80 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={agreed}
+                      onChange={(e) => setAgreed(e.target.checked)}
+                      className="w-4 h-4 rounded border-white/30 bg-transparent"
+                    />
+                    <span>
+                      Συμφωνώ με τους{" "}
+                      <LocalizedClientLink
+                        href={"/3-oroi-xrisis"}
+                        className="underline text-[#4a9eff] hover:text-white"
+                      >
+                        Όρους & Προϋποθέσεις
+                      </LocalizedClientLink>
+                      {" "}και την{" "}
+                      <LocalizedClientLink
+                        href={"/prosopika-dedomena"}
+                        className="underline text-[#4a9eff] hover:text-white"
+                      >
+                        Πολιτική Απορρήτου & Cookies
+                      </LocalizedClientLink>
+                      .
+                    </span>
+                  </label>
+                </div>
 
-        <form onSubmit={handleSubmit} className="mb-6 lg:mb-8">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-row gap-2 sm:gap-4">
-              <input
-                type="email"
-                placeholder="Η διεύθυνση email σας"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading}
-                className="flex-1 min-w-0 px-3 sm:px-4 py-2 bg-white border-2 border-primary placeholder-primary text-primary focus:outline-none focus:border-primary rounded text-sm sm:text-base disabled:opacity-50"
-              />
-              <button
-                type="submit"
-                disabled={loading || !agreed || !email.trim()} // Disabled if not agreed or email empty
-                className="px-8 lg:px-16 py-2 bg-white text-secondary border-secondary border text-[12px] sm:text-[14px] lg:text-[22px] font-semibold rounded hover:bg-primary whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary hover:text-white transition-colors"
-              >
-                {loading ? "Εγγραφή..." : "Εγγραφή"}
-              </button>
-            </div>
+                {/* Right side - Email input and button */}
+                <div className="flex gap-3 min-w-[450px]">
+                  <input
+                    type="email"
+                    placeholder="Το email σας"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={loading}
+                    className="flex-1 px-5 py-3 bg-white/10 border border-white/20 rounded-full text-white placeholder-white/60 focus:outline-none focus:border-white/40 disabled:opacity-50"
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading || !agreed || !email.trim()}
+                    className="px-8 py-3 bg-white text-[#112F82] font-semibold rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? "Εγγραφή..." : "Εγγραφή"}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
 
-            {/* Terms & Conditions Checkbox */}
-            <label className="flex items-center gap-2 text-sm sm:text-base text-secondary cursor-pointer">
+        {/* Mobile: compact vertical layout matching Screenshot_371 */}
+        <div className="lg:hidden bg-[#112F82] rounded-2xl px-5 py-5">
+          {success && <Alert type="success" message={success} className="mb-3" />}
+          {error && <Alert type="danger" message={error} className="mb-3" />}
+
+          <form onSubmit={handleSubmit}>
+            {/* Title */}
+            <h2 className="text-white text-lg font-semibold mb-3 text-center">
+              Εγγραφείτε στο newsletter της Karman!
+            </h2>
+
+            {/* Checkbox */}
+            <label className="flex items-start gap-2 text-xs text-white/80 cursor-pointer mb-4">
               <input
                 type="checkbox"
                 checked={agreed}
                 onChange={(e) => setAgreed(e.target.checked)}
-                className="w-4 h-4"
+                className="w-4 h-4 mt-0.5 rounded border-white/30 bg-transparent flex-shrink-0"
               />
-              Συμφωνώ με τους{" "}
-              <LocalizedClientLink
-                href={"/3-oroi-xrisis"}
-                className="underline"
-              >
-                Όρους και Προϋποθέσεις
-              </LocalizedClientLink>
+              <span>
+                Συμφωνώ με τους{" "}
+                <LocalizedClientLink
+                  href={"/3-oroi-xrisis"}
+                  className="underline text-[#4a9eff]"
+                >
+                  Όρους & Προϋποθέσεις
+                </LocalizedClientLink>
+                {" "}και την{" "}
+                <LocalizedClientLink
+                  href={"/prosopika-dedomena"}
+                  className="underline text-[#4a9eff]"
+                >
+                  Πολιτική Απορρήτου & Cookies
+                </LocalizedClientLink>
+                .
+              </span>
             </label>
-          </div>
-        </form>
 
-        <p className="text-[14px] lg:text-[20px] text-secondary max-w-5xl">
-          Μπορείτε να ακυρώσετε την εγγραφή σας στο ενημερωτικό δελτίο
-          οποτεδήποτε.
-          <br />
-          Για να δείτε πώς, ανατρέξτε στα στοιχεία επικοινωνίας στην Ανακοίνωση
-          Νομικού Περιεχομένου.
-        </p>
+            {/* Email input and button - side by side */}
+            <div className="flex gap-2">
+              <input
+                type="email"
+                placeholder="Το email σας"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={loading}
+                className="flex-1 min-w-0 px-4 py-2.5 bg-white/10 border border-white/20 rounded-full text-white text-sm placeholder-white/60 focus:outline-none focus:border-white/40 disabled:opacity-50"
+              />
+              <button
+                type="submit"
+                disabled={loading || !agreed || !email.trim()}
+                className="px-5 py-2.5 bg-white text-[#112F82] font-semibold text-sm rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? "..." : "Εγγραφή"}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   )

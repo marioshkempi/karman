@@ -8,6 +8,38 @@ const requiredEnvs = [
 ]
 
 function checkEnvVariables() {
+  // Load env files if they exist (for Vercel Sandbox environment)
+  try {
+    const fs = require('fs')
+    const path = require('path')
+    const envPaths = [
+      '/vercel/share/.env.project',
+      '/vercel/share/.env.snowflake',
+      path.join(process.cwd(), '.env.local'),
+      path.join(process.cwd(), '.env')
+    ]
+    
+    envPaths.forEach(envPath => {
+      if (fs.existsSync(envPath)) {
+        const envContent = fs.readFileSync(envPath, 'utf8')
+        envContent.split('\n').forEach(line => {
+          const trimmed = line.trim()
+          if (trimmed && !trimmed.startsWith('#')) {
+            const [key, ...valueParts] = trimmed.split('=')
+            if (key && valueParts.length > 0) {
+              const value = valueParts.join('=').replace(/^["']|["']$/g, '')
+              if (!process.env[key]) {
+                process.env[key] = value
+              }
+            }
+          }
+        })
+      }
+    })
+  } catch (e) {
+    // Silently continue if env loading fails
+  }
+
   const missingEnvs = requiredEnvs.filter(function (env) {
     return !process.env[env.key]
   })

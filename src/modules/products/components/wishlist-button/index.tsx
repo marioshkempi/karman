@@ -30,7 +30,10 @@ const WishlistButton = ({
     checkStatus()
   }, [variantId])
 
-  const handleToggle = async () => {
+  const handleToggle = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
     if (!variantId) return
 
     const isLoggedIn = await isAuthenticated()
@@ -61,15 +64,18 @@ const WishlistButton = ({
     <button
       onClick={handleToggle}
       disabled={!variantId || isLoading}
-      className="flex items-center gap-2 disabled:opacity-50"
+      className="flex items-center gap-2 disabled:opacity-50 py-1 rounded hover:opacity-80 transition-opacity"
     >
       <Heart
         className={`w-5 h-5 transition-colors ${
-          isInWishlistState ? "fill-primary text-primary" : "text-primary"
+          isInWishlistState 
+            ? "fill-red-500 text-red-500" 
+            : "fill-transparent text-gray-500"
         }`}
+        strokeWidth={1.5}
       />
       {showLabel && (
-        <span className="text-[18px] text-secondary">
+        <span className={`text-[16px] ${isInWishlistState ? "text-red-500" : "text-gray-600"}`}>
           {isLoading
             ? "..."
             : isInWishlistState

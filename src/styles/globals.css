@@ -2,6 +2,15 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+/* Global Manrope font */
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-manrope), Manrope, sans-serif;
+}
+
 @layer utilities {
     /* Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
