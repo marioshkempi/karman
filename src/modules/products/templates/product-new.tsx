@@ -352,7 +352,7 @@ const ProductDetailView: React.FC<ProductTemplateProps> = ({
   // ── Add to cart button (shared between desktop & mobile) ────────────────────
   const addToCartButton = (textSize: string) => (
     <button
-      className={`flex-1 bg-primary py-3 sm:py-2 rounded-[5px] text-white ${textSize} hover:opacity-90 disabled:opacity-50 transition-colors`}
+      className={`flex-1 bg-[#007BFF] py-3 sm:py-2 rounded-[5px] text-white ${textSize} hover:bg-[#F97316] disabled:opacity-50 transition-colors`}
       onClick={handleAddToCart}
       disabled={!stockStatus.inStock || !selectedVariant || isAdding}
     >

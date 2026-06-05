@@ -64,18 +64,18 @@ const WishlistButton = ({
     <button
       onClick={handleToggle}
       disabled={!variantId || isLoading}
-      className="flex items-center gap-2 disabled:opacity-50 p-1 rounded-full hover:bg-gray-100 transition-colors"
+      className="flex items-center gap-2 disabled:opacity-50 py-1 rounded hover:opacity-80 transition-opacity"
     >
       <Heart
-        className={`w-6 h-6 transition-colors ${
+        className={`w-5 h-5 transition-colors ${
           isInWishlistState 
             ? "fill-red-500 text-red-500" 
-            : "fill-transparent text-gray-400 hover:text-gray-600"
+            : "fill-transparent text-gray-500"
         }`}
         strokeWidth={1.5}
       />
       {showLabel && (
-        <span className="text-sm text-gray-600">
+        <span className={`text-[16px] ${isInWishlistState ? "text-red-500" : "text-gray-600"}`}>
           {isLoading
             ? "..."
             : isInWishlistState
