@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import React from "react"
 
 import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
 import RefinementList from "@modules/store/components/refinement-list"
@@ -78,12 +79,20 @@ export default function CategoryTemplate({
     <div className="bg-white min-h-screen" key={category.id}>
       {/* Hero Banner */}
       <div 
-        className="w-full py-6 lg:py-10"
-        style={{ background: "linear-gradient(90deg, #283B82 0%, #007BFF 50%, #283B82 100%)" }}
+        className="w-full h-[117px] lg:h-[215px] relative"
+        style={{ 
+          background: "linear-gradient(135deg, #1a237e 0%, #283593 25%, #3949ab 50%, #1976d2 75%, #0d47a1 100%)"
+        }}
       >
-        <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Decorative overlay for automotive feel */}
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: "url('/images/category-banner-overlay.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }} />
+        <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center relative z-10">
           {/* Breadcrumb */}
-          <div className="mb-2">
+          <div className="mb-1 lg:mb-2">
             <Breadcrumb
               showEllipsis={false}
               ellipsisPosition={1}
@@ -92,7 +101,7 @@ export default function CategoryTemplate({
             />
           </div>
           {/* Category Title */}
-          <h1 className="text-white text-2xl lg:text-4xl font-bold">
+          <h1 className="text-white text-xl lg:text-4xl font-bold">
             {category.name}
           </h1>
         </div>
@@ -100,33 +109,38 @@ export default function CategoryTemplate({
 
       {/* Reassurance Row */}
       <div className="w-full bg-white border-b border-gray-100">
-        <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6">
+        <div className="max-w-[1350px] mx-auto px-4 sm:px-6 lg:px-8 py-3 lg:py-4">
           {/* Mobile: horizontal scroll */}
-          <div className="flex lg:hidden overflow-x-auto gap-4 pb-2 -mx-4 px-4 scrollbar-hide">
+          <div className="flex lg:hidden overflow-x-auto gap-3 pb-1 -mx-4 px-4 scrollbar-hide">
             {reassuranceItems.map((item, index) => (
-              <div key={index} className="flex items-center gap-2 min-w-[200px] flex-shrink-0">
-                <div className="w-10 h-10 flex items-center justify-center flex-shrink-0">
-                  <Image src={item.icon} alt={item.title} width={40} height={40} className="object-contain" />
+              <div key={index} className="flex items-center gap-2 min-w-[180px] flex-shrink-0">
+                <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                  <Image src={item.icon} alt={item.title} width={32} height={32} className="object-contain" />
                 </div>
                 <div>
-                  <h3 className="text-[#007BFF] text-xs font-semibold whitespace-nowrap">{item.title}</h3>
-                  <p className="text-gray-500 text-[10px] whitespace-nowrap">{item.description}</p>
+                  <h3 className="text-[#007BFF] text-[11px] font-semibold whitespace-nowrap">{item.title}</h3>
+                  <p className="text-gray-500 text-[9px] whitespace-nowrap">{item.description}</p>
                 </div>
               </div>
             ))}
           </div>
-          {/* Desktop: flex row */}
+          {/* Desktop: flex row with dividers */}
           <div className="hidden lg:flex lg:justify-between lg:items-center">
             {reassuranceItems.map((item, index) => (
-              <div key={index} className="flex items-center gap-3">
-                <div className="w-14 h-14 flex items-center justify-center flex-shrink-0">
-                  <Image src={item.icon} alt={item.title} width={56} height={56} className="object-contain" />
+              <React.Fragment key={index}>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">
+                    <Image src={item.icon} alt={item.title} width={48} height={48} className="object-contain" />
+                  </div>
+                  <div>
+                    <h3 className="text-[#007BFF] text-sm font-semibold">{item.title}</h3>
+                    <p className="text-gray-500 text-xs">{item.description}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-[#007BFF] text-sm font-semibold">{item.title}</h3>
-                  <p className="text-gray-500 text-xs">{item.description}</p>
-                </div>
-              </div>
+                {index < reassuranceItems.length - 1 && (
+                  <div className="h-10 w-px bg-gray-200" />
+                )}
+              </React.Fragment>
             ))}
           </div>
         </div>

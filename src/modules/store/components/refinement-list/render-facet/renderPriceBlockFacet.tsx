@@ -42,12 +42,12 @@ export function renderPriceFacet({
   })
 
   return (
-    <div key="facet-price" className="mb-4">
-      <div className="px-2 py-2 text-[17px] font-medium bg-primary text-white rounded-lg">
+    <div key="facet-price" className="mb-4 bg-white">
+      <div className="py-3 border-b border-gray-200 text-[14px] font-semibold text-gray-900">
         Τιμή
       </div>
 
-      <div className="px-1 py-3">
+      <div className="py-3">
         <Range
           key={priceResetKey}
           values={[minPrice, maxPrice]}
@@ -60,7 +60,7 @@ export function renderPriceFacet({
             <div
               key={key}
               {...trackProps}
-              className="relative py-[2px] px-1 w-full rounded border border-primary"
+              className="relative py-[2px] w-full rounded-full h-1.5 bg-gray-200"
               style={{ background: trackBackground }}
             >
               {children}
@@ -70,13 +70,13 @@ export function renderPriceFacet({
             <div
               key={key}
               {...thumbProps}
-              className="h-3.5 w-3.5 bg-primary rounded-full"
+              className="h-4 w-4 bg-primary rounded-full shadow-md border-2 border-white"
               style={{ ...style, transform: "translateX(-50%)" }}
             />
           )}
         />
 
-        <div className="flex justify-between text-sm mt-2">
+        <div className="flex justify-between text-sm mt-3 text-gray-600">
           <span>{formatPrice(minPrice)} €</span>
           <span>{formatPrice(maxPrice)} €</span>
         </div>
