@@ -18,7 +18,7 @@ const ItemsTemplate = ({ cart }: ItemsTemplateProps) => {
   const t = useTranslations()
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-[20px] border border-black/10 overflow-hidden px-6 py-5">
       {items
         ? items
             .sort((a, b) => {

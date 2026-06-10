@@ -50,7 +50,7 @@ const CartTemplate = async ({
             </div>
 
             {/* Right: Summary */}
-            <div className="w-full lg:w-[380px] flex-shrink-0">
+            <div className="w-full lg:w-[460px] flex-shrink-0">
               <div className="lg:sticky lg:top-6">
                 {cart && cart.region && (
                   <Summary cart={cart as any} customer={customer} />

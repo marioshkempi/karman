@@ -560,7 +560,7 @@ const Shipping: React.FC<ShippingProps> = ({
           <button
             onClick={handleSubmit}
             disabled={isSubmitDisabled}
-            className="mt-6 w-full sm:w-auto px-6 py-3 bg-primary text-white text-[14px] sm:text-[15px] font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity rounded-lg"
+            className="mt-6 w-full sm:w-auto px-6 py-3 bg-[#FF8C00] text-white text-[14px] sm:text-[15px] font-semibold hover:bg-[#E67E00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg"
             data-testid="submit-delivery-option-button"
           >
             {isLoading ? t("common.loading") : t("checkout.continueToPayment")}

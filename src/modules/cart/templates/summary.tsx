@@ -44,22 +44,22 @@ const Summary = ({ cart, customer }: SummaryProps) => {
   const t = useTranslations()
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 lg:p-6">
+    <div className="bg-white rounded-[20px] border border-black/10 p-6">
       {/* Totals */}
       <CartTotals totals={cart} />
 
       {/* Promo Code */}
-      <div className="mt-4 pt-4 border-t border-gray-100">
+      <div className="mt-6 pt-6 border-t border-black/10">
         <DiscountCode cart={cart} />
       </div>
 
       {/* Checkout Button */}
-      <div className="mt-4">
+      <div className="mt-6">
         <LocalizedClientLink
           href={"/checkout?step=" + step}
           data-testid="checkout-button"
         >
-          <button className="w-full h-12 bg-[#FF8C00] hover:bg-[#F97316] text-white font-semibold text-[15px] rounded-full flex items-center justify-center gap-2 transition-colors">
+          <button className="w-full h-[60px] bg-[#FF8C00] hover:bg-[#E67E00] text-white font-semibold text-[15px] rounded-[62px] flex items-center justify-center gap-3 transition-colors">
             {t("cart.goToCheckout")}
             <ArrowRight className="w-5 h-5" />
           </button>

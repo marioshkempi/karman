@@ -134,7 +134,7 @@ const PersonalDetails = ({
               <button
                 type="button"
                 onClick={handleContinue}
-                className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-primary text-white text-[14px] sm:text-base font-medium hover:opacity-90 transition-opacity rounded-[4px]"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-[#FF8C00] text-white text-[14px] sm:text-base font-medium hover:bg-[#E67E00] transition-colors rounded-[4px]"
                 data-testid="continue-logged-in-button"
               >
                 Συνέχεια

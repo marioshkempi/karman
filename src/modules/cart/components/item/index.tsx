@@ -76,8 +76,8 @@ const Item = ({
   return (
     <div
       className={clx(
-        "p-4 relative",
-        !isFirst && "border-t border-gray-200"
+        "py-6 relative",
+        !isFirst && "border-t border-black/10"
       )}
       data-testid="product-row"
     >
@@ -113,7 +113,7 @@ const Item = ({
               className="block flex-1"
             >
               <h3
-                className="text-[#1E3A5F] text-sm sm:text-base font-medium leading-snug hover:opacity-80 line-clamp-2"
+                className="text-[#1A2B3C] text-sm sm:text-base font-medium leading-snug hover:opacity-80 line-clamp-2"
                 data-testid="product-title"
               >
                 {item.product_title}
@@ -126,7 +126,7 @@ const Item = ({
             {/* Delete Button */}
             <DeleteButton
               id={item.id}
-              className="flex-shrink-0 text-red-500 hover:text-red-600"
+              className="flex-shrink-0 text-[#FF3333] hover:opacity-80"
               data-testid="product-delete-button"
             >
               <Trash2 className="w-5 h-5" />
@@ -148,7 +148,7 @@ const Item = ({
               </span>
             )}
             <span
-              className="text-[#007BFF] text-lg font-bold"
+              className="text-[#059669] text-lg font-bold"
               data-testid="product-unit-price"
             >
               {convertToLocale({
@@ -162,12 +162,12 @@ const Item = ({
           {/* Quantity Stepper */}
           {type === "full" && (
             <div className="mt-3 flex items-center justify-between">
-              <div className="flex items-center border border-[#007BFF] rounded-full overflow-hidden">
+              <div className="flex items-center justify-between bg-[#F0F0F0] rounded-[62px] h-11 w-[126px] px-5">
                 <button
                   onClick={decrementQuantity}
                   disabled={updating || item.quantity <= 1}
                   className={clx(
-                    "w-8 h-8 flex items-center justify-center text-[#007BFF] hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors",
+                    "flex items-center justify-center text-[#1A2B3C] hover:opacity-70 transition-opacity",
                     (updating || item.quantity <= 1) && "opacity-50 cursor-not-allowed"
                   )}
                   data-testid="product-decrease-button"
@@ -175,8 +175,8 @@ const Item = ({
                   <Minus className="w-4 h-4" />
                 </button>
 
-                <div className="w-8 h-8 flex items-center justify-center">
-                  <span className="font-medium text-[#1E3A5F]">
+                <div className="flex items-center justify-center">
+                  <span className="font-medium text-[#1A2B3C]">
                     {item.quantity}
                   </span>
                 </div>
@@ -185,7 +185,7 @@ const Item = ({
                   onClick={incrementQuantity}
                   disabled={updating || item.quantity >= Math.min(maxQuantity, 10)}
                   className={clx(
-                    "w-8 h-8 flex items-center justify-center text-[#007BFF] hover:bg-blue-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors",
+                    "flex items-center justify-center text-[#1A2B3C] hover:opacity-70 transition-opacity",
                     (updating || item.quantity >= Math.min(maxQuantity, 10)) && "opacity-50 cursor-not-allowed"
                   )}
                   data-testid="product-increase-button"

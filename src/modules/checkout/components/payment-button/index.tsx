@@ -220,7 +220,7 @@ const StripePaymentButton = ({
       <button
         disabled={disabled || notReady || submitting}
         onClick={handlePayment}
-        className="px-6 py-3 bg-primary text-white font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+        className="px-6 py-3 bg-[#FF8C00] text-white font-medium hover:bg-[#E67E00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         data-testid={dataTestId}
       >
         {submitting ? t("common.loading") : t("common.complete")}
@@ -266,7 +266,7 @@ const ManualTestPaymentButton = ({
       <button
         disabled={notReady || submitting || disabled}
         onClick={handlePayment}
-        className="px-6 py-3 bg-primary text-white font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+        className="px-6 py-3 bg-[#FF8C00] text-white font-medium hover:bg-[#E67E00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         data-testid={dataTestId || "submit-order-button"}
       >
         {submitting ? t("common.loading") : t("common.complete")}
@@ -312,7 +312,7 @@ const CashOnDeliveryPaymentButton = ({
       <button
         disabled={notReady || submitting || disabled}
         onClick={handlePayment}
-        className="px-6 py-3 bg-primary text-white font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+        className="px-6 py-3 bg-[#FF8C00] text-white font-medium hover:bg-[#E67E00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         data-testid={dataTestId || "submit-order-button"}
       >
         {submitting ? t("common.loading") : t("common.complete")}
@@ -359,7 +359,7 @@ const PayInStorePaymentButton = ({
       <button
         disabled={notReady || submitting || disabled}
         onClick={handlePayment}
-        className="w-full bg-oceanBlue rounded-[4px] px-4 py-2.5 sm:py-3 text-center text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-[#FF8C00] rounded-[4px] px-4 py-2.5 sm:py-3 text-center text-white font-medium hover:bg-[#E67E00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         data-testid={dataTestId || "submit-order-button"}
       >
         {submitting ? t("common.loading") : t("checkout.completeOrder")}
@@ -406,7 +406,7 @@ const BankTransferPaymentButton = ({
       <button
         disabled={notReady || submitting || disabled}
         onClick={handlePayment}
-        className="w-full bg-oceanBlue rounded-[4px] px-4 py-2.5 sm:py-3 text-center text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-[#FF8C00] rounded-[4px] px-4 py-2.5 sm:py-3 text-center text-white font-medium hover:bg-[#E67E00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         data-testid={dataTestId || "submit-order-button"}
       >
         {submitting ? t("common.loading") : t("checkout.completeOrder")}

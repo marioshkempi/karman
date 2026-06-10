@@ -61,7 +61,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
 
   return (
     <div className="rounded-md py-4">
-      <div className="flex flex-col gap-y-3 text-sm text-[#5a5a3a]">
+      <div className="flex flex-col gap-y-3 text-sm text-[#1A2B3C]">
         {/* Items subtotal */}
         <Row
           label={itemLabel}
@@ -128,8 +128,8 @@ const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
             label={t("cart.vat")}
             testId="cart-tax-total"
             value={vatAmount}
-            labelClassName="text-sm text-[#5a5a3a] "
-            valueClassName="text-sm text-[#5a5a3a] "
+            labelClassName="text-sm text-[#1A2B3C] "
+            valueClassName="text-sm text-[#1A2B3C] "
           >
             {convertToLocale({ amount: vatAmount, currency_code })}
           </Row>

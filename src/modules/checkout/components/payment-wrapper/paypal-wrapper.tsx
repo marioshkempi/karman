@@ -258,7 +258,7 @@ const CardSubmitButton = ({ disabled }: { disabled?: boolean }) => {
       type="button"
       onClick={handleClick}
       disabled={disabled || submitting}
-      className="w-full h-12 bg-primary hover:bg-secondary text-white uppercase font-medium text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-full h-12 bg-[#FF8C00] hover:bg-[#E67E00] text-white uppercase font-medium text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {submitting ? t("checkout.processing") : t("checkout.payWithCard")}
     </button>
