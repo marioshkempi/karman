@@ -172,7 +172,7 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
         </div>
 
         <div
-          className="w-full md:w-[35%] bg-[#283882]/85 text-white py-4 flex flex-col gap-6 relative overflow-hidden [&>.searchDropdownSection:not(:last-child)]:border-b [&>.searchDropdownSection:not(:last-child)]:border-white/40 [&>.searchDropdownSection]:pb-4"
+          className="w-full md:w-[35%] bg-[#5B9AFF] text-white py-4 flex flex-col gap-6 relative overflow-hidden [&>.searchDropdownSection:not(:last-child)]:border-b [&>.searchDropdownSection:not(:last-child)]:border-white/40 [&>.searchDropdownSection]:pb-4"
         >
           <img
             src="/search/karmann.svg"
