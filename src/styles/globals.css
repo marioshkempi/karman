@@ -207,6 +207,12 @@ mark {
     background-color: #CCCC99;
 }
 
+#search-dropdown mark {
+    background-color: transparent;
+    color: #5B9AFF;
+    font-weight: 600;
+}
+
 .prod-list-desc * {
     font-weight: normal !important;
     background: transparent !important;

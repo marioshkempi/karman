@@ -172,14 +172,14 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
         </div>
 
         <div
-          className="w-full md:w-[35%] bg-[#283882] text-white py-4 flex flex-col gap-6 [&>.searchDropdownSection:not(:last-child)]:border-b [&>.searchDropdownSection:not(:last-child)]:border-white/40 [&>.searchDropdownSection]:pb-4"
-          style={{
-            backgroundImage: "url('/search/car.png')",
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center right",
-          }}
+          className="w-full md:w-[35%] bg-[#283882]/85 text-white py-4 flex flex-col gap-6 relative overflow-hidden [&>.searchDropdownSection:not(:last-child)]:border-b [&>.searchDropdownSection:not(:last-child)]:border-white/40 [&>.searchDropdownSection]:pb-4"
         >
+          <img
+            src="/search/karmann.svg"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none select-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] md:w-[220px] opacity-20"
+          />
           {categories.length > 0 && (
             <div className="searchDropdownSection">
               <div className="px-4">
