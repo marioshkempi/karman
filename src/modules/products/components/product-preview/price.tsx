@@ -48,7 +48,8 @@ export default function PreviewPrice({
       <div className={clx("flex items-center gap-2", className)}>
         <span
           className={clx(
-            "font-semibold text-[#00A676] text-lg",
+            "font-semibold text-lg",
+            showOriginal ? "text-[#059669]" : "text-[#1A2B3C]",
             priceClassName
           )}
           data-testid="product-price"

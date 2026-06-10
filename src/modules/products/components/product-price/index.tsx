@@ -112,7 +112,8 @@ export default function ProductPrice({
       <div className="flex items-center gap-3">
         <span
           className={clx(
-            "text-3xl font-bold transition-transform duration-300 text-[#16a34a]",
+            "text-3xl font-bold transition-transform duration-300",
+            hasDiscount || cubikApplied ? "text-[#059669]" : "text-[#1A2B3C]",
             { "scale-[1.03]": cubikApplied || hasDiscount }
           )}
           data-testid="product-price"

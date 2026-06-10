@@ -114,7 +114,7 @@ const SlideContent = ({ slide }: SlideContentProps) => {
     DESKTOP_ALIGNMENT[slide.text_alignment] || DESKTOP_ALIGNMENT.right
 
   return (
-    <div className="relative w-full h-[300px] md:h-[500px] md:max-h-[650px]">
+    <div className="relative w-full h-[300px] md:h-[640px] md:max-h-[650px]">
       {slide.mobile_image_url ? (
         <>
           <Image
@@ -123,7 +123,7 @@ const SlideContent = ({ slide }: SlideContentProps) => {
             width={0}
             height={0}
             sizes="100vw"
-            className="w-full h-auto hidden md:block"
+            className="w-full h-full object-cover hidden md:block"
             priority
           />
           <Image
@@ -143,7 +143,7 @@ const SlideContent = ({ slide }: SlideContentProps) => {
           width={0}
           height={0}
           sizes="100vw"
-          className="w-full h-auto"
+          className="w-full h-full object-cover"
           priority
         />
       )}

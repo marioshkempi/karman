@@ -172,9 +172,9 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({
         </div>
 
         <div
-          className="w-full md:w-[35%] bg-[#4E3727] text-white py-4 flex flex-col gap-6 [&>.searchDropdownSection:not(:last-child)]:border-b [&>.searchDropdownSection:not(:last-child)]:border-white/40 [&>.searchDropdownSection]:pb-4"
+          className="w-full md:w-[35%] bg-[#283882] text-white py-4 flex flex-col gap-6 [&>.searchDropdownSection:not(:last-child)]:border-b [&>.searchDropdownSection:not(:last-child)]:border-white/40 [&>.searchDropdownSection]:pb-4"
           style={{
-            backgroundImage: "url('/search/search-bg.svg')",
+            backgroundImage: "url('/search/car.png')",
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center right",
