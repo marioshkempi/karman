@@ -218,6 +218,39 @@ mark {
     background: transparent !important;
 }
 
+@keyframes karman-404-orbit {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes karman-404-orbit-reverse {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+.karman-404-orbit {
+    animation: karman-404-orbit 8s linear infinite;
+}
+
+.karman-404-orbit-reverse {
+    animation: karman-404-orbit-reverse 11s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .karman-404-orbit,
+    .karman-404-orbit-reverse {
+        animation: none;
+    }
+}
+
 /*
  * Puck block visibility helpers.
  * Import this in your storefront layout and admin entry point:
