@@ -261,7 +261,7 @@ const ContactForm = ({ customer }: ContactFormProps) => {
                         value="general"
                         checked={subject === "general"}
                         onChange={(e) => setSubject(e.target.value)}
-                        className="w-4 h-4 text-gray-900 border-gray-300 focus:ring-0"
+                        className="w-4 h-4 text-gray-900 border-gray-300 focus:outline-none focus:ring-0"
                       />
                       <span className="text-[14px] text-gray-700">Γενικές Πληροφορίες</span>
                     </label>
@@ -272,7 +272,7 @@ const ContactForm = ({ customer }: ContactFormProps) => {
                         value="support"
                         checked={subject === "support"}
                         onChange={(e) => setSubject(e.target.value)}
-                        className="w-4 h-4 text-gray-900 border-gray-300 focus:ring-0"
+                        className="w-4 h-4 text-gray-900 border-gray-300 focus:outline-none focus:ring-0"
                       />
                       <span className="text-[14px] text-gray-700">Τεχνική Υποστήριξη</span>
                     </label>
@@ -283,7 +283,7 @@ const ContactForm = ({ customer }: ContactFormProps) => {
                         value="feedback"
                         checked={subject === "feedback"}
                         onChange={(e) => setSubject(e.target.value)}
-                        className="w-4 h-4 text-gray-900 border-gray-300 focus:ring-0"
+                        className="w-4 h-4 text-gray-900 border-gray-300 focus:outline-none focus:ring-0"
                       />
                       <span className="text-[14px] text-gray-700">Συνεργασίες</span>
                     </label>

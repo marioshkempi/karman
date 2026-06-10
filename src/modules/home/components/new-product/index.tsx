@@ -22,12 +22,12 @@ export default async function ProductShowCase({
     <div className="w-full bg-white mb-12 lg:mb-20">
       <div className="max-w-[1350px] mx-auto px-4">
         {/* Header with title, tabs, and link */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 lg:mb-5">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6">
+        <div className="flex flex-col items-center text-center lg:text-left lg:items-center lg:flex-row lg:justify-between mb-4 lg:mb-5">
+          <div className="flex flex-col items-center lg:items-center lg:flex-row gap-3 lg:gap-6">
             <h2 className="text-[20px] lg:text-[30px] text-primary font-medium">
               Δημοφιλή προϊόντα
             </h2>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center gap-4">
               {tabs.map((tab, index) => (
                 <button
                   key={index}

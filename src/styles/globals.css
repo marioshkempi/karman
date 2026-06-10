@@ -251,6 +251,36 @@ mark {
     }
 }
 
+/* Reassurance row: hide scrollbar + auto-scroll on mobile */
+.karman-reassurance-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.karman-reassurance-scroll {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+@keyframes karman-reassurance-marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.karman-reassurance-marquee {
+    animation: karman-reassurance-marquee 22s linear infinite;
+    width: max-content;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .karman-reassurance-marquee {
+        animation: none;
+    }
+}
+
 /*
  * Puck block visibility helpers.
  * Import this in your storefront layout and admin entry point:

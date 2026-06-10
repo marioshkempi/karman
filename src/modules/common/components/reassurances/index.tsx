@@ -42,70 +42,78 @@ export default async function Reassurances({
   return (
     <div className="w-full bg-white py-4 lg:py-8">
       <div className="max-w-[1350px] mx-auto px-4 lg:px-8">
-        {/* Mobile: horizontal scroll row */}
-        <div className="flex lg:hidden overflow-x-auto gap-4 pb-2 -mx-4 px-4 scrollbar-hide">
-          {reassurances.map((reassurance) => {
-            const redirectUrl = handleRedirect(reassurance)
-            const content = (
-              <div className="flex flex-row items-center gap-2 p-2 min-w-[140px] hover:opacity-80 transition-opacity">
-                {reassurance.icon_url && (
-                  <div className="flex-shrink-0">
-                    <Image
-                      src={reassurance.icon_url}
-                      alt={reassurance.title}
-                      width={36}
-                      height={36}
-                      className="w-9 h-9 object-contain"
-                    />
-                  </div>
-                )}
-                <div className="flex flex-col">
-                  <h3 className="text-[#283882] text-xs font-semibold whitespace-nowrap">
-                    {reassurance.title}
-                  </h3>
-                  {reassurance.description && (
-                    <p className="text-gray-500 text-[10px] whitespace-nowrap">
-                      {reassurance.description}
-                    </p>
+        {/* Mobile: auto-scrolling marquee row (scrollbar hidden) */}
+        <div className="flex lg:hidden overflow-hidden -mx-4 px-4 karman-reassurance-scroll">
+          <div className="flex karman-reassurance-marquee gap-4 pb-2">
+            {[...reassurances, ...reassurances].map((reassurance, idx) => {
+              const redirectUrl = handleRedirect(reassurance)
+              const content = (
+                <div className="flex flex-row items-center gap-2 p-2 min-w-[140px] hover:opacity-80 transition-opacity">
+                  {reassurance.icon_url && (
+                    <div className="flex-shrink-0">
+                      <Image
+                        src={reassurance.icon_url}
+                        alt={reassurance.title}
+                        width={36}
+                        height={36}
+                        className="w-9 h-9 object-contain"
+                      />
+                    </div>
                   )}
+                  <div className="flex flex-col">
+                    <h3 className="text-[#283882] text-xs font-semibold whitespace-nowrap">
+                      {reassurance.title}
+                    </h3>
+                    {reassurance.description && (
+                      <p className="text-gray-500 text-[10px] whitespace-nowrap">
+                        {reassurance.description}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )
+              )
 
-            if (redirectUrl) {
-              if (
-                reassurance.redirect_type === "url" &&
-                redirectUrl.startsWith("http")
-              ) {
+              if (redirectUrl) {
+                if (
+                  reassurance.redirect_type === "url" &&
+                  redirectUrl.startsWith("http")
+                ) {
+                  return (
+                    <a
+                      key={`${reassurance.id}-${idx}`}
+                      href={redirectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-shrink-0"
+                      aria-hidden={idx >= reassurances.length}
+                    >
+                      {content}
+                    </a>
+                  )
+                }
                 return (
-                  <a
-                    key={reassurance.id}
+                  <LocalizedClientLink
+                    key={`${reassurance.id}-${idx}`}
                     href={redirectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="flex-shrink-0"
+                    aria-hidden={idx >= reassurances.length}
                   >
                     {content}
-                  </a>
+                  </LocalizedClientLink>
                 )
               }
+
               return (
-                <LocalizedClientLink
-                  key={reassurance.id}
-                  href={redirectUrl}
+                <div
+                  key={`${reassurance.id}-${idx}`}
                   className="flex-shrink-0"
+                  aria-hidden={idx >= reassurances.length}
                 >
                   {content}
-                </LocalizedClientLink>
+                </div>
               )
-            }
-
-            return (
-              <div key={reassurance.id} className="flex-shrink-0">
-                {content}
-              </div>
-            )
-          })}
+            })}
+          </div>
         </div>
 
         {/* Desktop: flex row layout */}

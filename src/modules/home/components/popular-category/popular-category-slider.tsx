@@ -50,66 +50,67 @@ export default function PopularCategorySlider({ items, ctaText }: PopularCategor
 
   return (
     <div className="relative">
-      {!isMobile && canGoPrev && (
-        <button
-          onClick={handlePrev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 lg:-translate-x-20 z-10 transition-all text-primary/60 hover:text-primary cursor-pointer"
-          aria-label="Previous categories"
-        >
-          <ChevronLeft className="w-12 h-12 lg:w-20 lg:h-20" strokeWidth={1} />
-        </button>
-      )}
-
-      <div 
-        className={isMobile ? 'overflow-x-auto' : 'overflow-hidden'}
-        ref={sliderRef}
-        style={isMobile ? {
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-          WebkitOverflowScrolling: 'touch'
-        } : {}}
-      >
-        <div
-          className={`flex gap-4 lg:gap-6 ${!isMobile ? 'transition-transform duration-500 ease-out' : ''}`}
-          style={!isMobile ? {
-            transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
-          } : {}}
-        >
+      {/* Mobile: vertical stack of full-width cards */}
+      {isMobile ? (
+        <div className="flex flex-col gap-3">
           {items.map((item) => (
-            <div
-              key={item.id}
-              className="flex-shrink-0"
-              style={!isMobile ? { 
-                width: `calc((100% - ${(slidesPerView - 1) * (slidesPerView === 2 ? 16 : 24)}px) / ${slidesPerView})`
-              } : {
-                width: 'calc((100% - 16px) / 2)'
-              }}
-            >
-              <PopularCategoryCard item={item} ctaText={ctaText} />
-            </div>
+            <PopularCategoryCard key={item.id} item={item} ctaText={ctaText} isMobile />
           ))}
         </div>
-      </div>
+      ) : (
+        <>
+          {canGoPrev && (
+            <button
+              onClick={handlePrev}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 lg:-translate-x-20 z-10 transition-all text-primary/60 hover:text-primary cursor-pointer"
+              aria-label="Previous categories"
+            >
+              <ChevronLeft className="w-12 h-12 lg:w-20 lg:h-20" strokeWidth={1} />
+            </button>
+          )}
 
-      {!isMobile && canGoNext && (
-        <button
-          onClick={handleNext}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 lg:translate-x-20 z-10 transition-all text-primary/60 hover:text-primary cursor-pointer"
-          aria-label="Next categories"
-        >
-          <ChevronRight className="w-12 h-12 lg:w-20 lg:h-20" strokeWidth={1} />
-        </button>
+          <div className="overflow-hidden" ref={sliderRef}>
+            <div
+              className="flex gap-4 lg:gap-6 transition-transform duration-500 ease-out"
+              style={{
+                transform: `translateX(-${currentIndex * (100 / slidesPerView)}%)`,
+              }}
+            >
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex-shrink-0"
+                  style={{
+                    width: `calc((100% - ${(slidesPerView - 1) * (slidesPerView === 2 ? 16 : 24)}px) / ${slidesPerView})`,
+                  }}
+                >
+                  <PopularCategoryCard item={item} ctaText={ctaText} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {canGoNext && (
+            <button
+              onClick={handleNext}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 lg:translate-x-20 z-10 transition-all text-primary/60 hover:text-primary cursor-pointer"
+              aria-label="Next categories"
+            >
+              <ChevronRight className="w-12 h-12 lg:w-20 lg:h-20" strokeWidth={1} />
+            </button>
+          )}
+        </>
       )}
     </div>
   )
 }
 
-function PopularCategoryCard({ item, ctaText }: { item: StorePopularCategoryItem; ctaText: string }) {
+function PopularCategoryCard({ item, ctaText, isMobile }: { item: StorePopularCategoryItem; ctaText: string; isMobile?: boolean }) {
   const href = item.url || '#'
   const isExternal = href.startsWith('http')
 
   const content = (
-    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg group">
+    <div className={`relative w-full overflow-hidden rounded-[8px] group ${isMobile ? 'h-[213px]' : 'aspect-[4/3]'}`}>
       {item.image_url ? (
         <img
           src={item.image_url}
