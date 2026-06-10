@@ -123,7 +123,7 @@ const AccountNav = ({
           </div>
         </div>
         <LocalizedClientLink href="/track-order" className="block mb-4">
-          <button className="w-full bg-secondary text-white text-[14px] font-bold rounded px-1 py-3 flex items-center gap-2 hover:bg-primary transition-all duration-300">
+          <button className="w-full bg-[#FF8C00] text-white text-[14px] font-bold rounded px-1 py-3 flex items-center gap-2 hover:bg-[#E67E00] transition-all duration-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="22"
@@ -195,7 +195,7 @@ const AccountNav = ({
             </span>
           </button>
         </LocalizedClientLink>
-        <div className="bg-lightyellow p-4 min-h-[427px] pt-0 pb-0">
+        <div className="bg-[#EDEFF5] p-4 min-h-[427px] pt-0 pb-0">
           <ul className="flex flex-col">
             <li>
               <AccountNavLink
@@ -279,9 +279,17 @@ const AccountNavLink = ({
       className={clx(
         "text-[14px] text-secondary hover:bg-quinary hover:text-white block transition-all duration-300 -mx-4 px-4 py-2",
         {
-          "bg-quinary text-white font-black ": active,
+          "text-white font-black border-l-4 border-[#FF8C00]": active,
         }
       )}
+      style={
+        active
+          ? {
+              background:
+                "linear-gradient(90deg, #283882 0%, #007BFF 50%, #283882 100%)",
+            }
+          : undefined
+      }
       data-testid={dataTestId}
     >
       {children}

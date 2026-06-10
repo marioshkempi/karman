@@ -67,7 +67,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
             <div className="grid grid-cols-3 gap-4 mb-6">
               <LocalizedClientLink
                 href="/account/profile"
-                className="block bg-lightyellow hover:bg-secondary transition-all"
+                className="block bg-[#EDEFF5] hover:bg-[#283882] transition-all"
               >
                 <div className=" rounded-[4px] p-4 flex flex-col gap-y-1  transition-all cursor-pointer group">
                   <h3 className="text-[14px] text-black group-hover:text-white">
@@ -88,7 +88,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
 
               <LocalizedClientLink
                 href="/account/addresses"
-                className="block bg-lightyellow hover:bg-secondary transition-all"
+                className="block bg-[#EDEFF5] hover:bg-[#283882] transition-all"
               >
                 <div className=" rounded-[4px] p-4 flex flex-col gap-y-1  transition-all cursor-pointer group">
                   <h3 className="text-[14px] text-black group-hover:text-white">
@@ -109,7 +109,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
 
               <LocalizedClientLink
                 href="/account/orders"
-                className="block bg-lightyellow hover:bg-secondary transition-all"
+                className="block bg-[#EDEFF5] hover:bg-[#283882] transition-all"
               >
                 <div className=" rounded-[4px] p-4 flex flex-col gap-y-1  transition-all cursor-pointer group">
                   <h3 className="text-[14px] text-black group-hover:text-white">
@@ -154,7 +154,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                     }}
                   />
                   <div
-                    className="bg-brandBg overflow-auto px-3.5 pb-4 max-h-[600px] orders-table-scrollbar"
+                    className="bg-[#F9F9FB] overflow-auto px-3.5 pb-4 max-h-[600px] orders-table-scrollbar"
                     data-testid="orders-table"
                   >
                     <table className="w-full border-collapse">
@@ -184,12 +184,10 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                           .map((order: HttpTypes.StoreOrder, index: number) => (
                             <tr
                               key={order.id}
-                              className={index % 2 === 0 ? "bg-brandBg" : ""}
-                              style={
-                                index % 2 !== 0
-                                  ? { backgroundColor: "#E0E4EE" }
-                                  : {}
-                              }
+                              style={{
+                                backgroundColor:
+                                  index % 2 === 0 ? "#F9F9FB" : "#EDEFF5",
+                              }}
                             >
                               <td className="py-4 px-4 text-black text-[14px]">
                                 #{order.display_id || order.id}
