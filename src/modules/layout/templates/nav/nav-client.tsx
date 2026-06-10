@@ -144,7 +144,7 @@ export default function NavbarClient({
               <div className="flex items-center gap-6">
                 {/* Search Bar */}
                 <div className="relative">
-                  <div className="flex items-center bg-white rounded-md overflow-hidden">
+                  <div className="flex items-center gap-2 bg-white rounded-[40px] overflow-hidden w-[339px] h-[46px] px-2">
                     <div className="flex items-center justify-center pl-3 text-gray-500">
                       <Search size={18} />
                     </div>
@@ -154,7 +154,7 @@ export default function NavbarClient({
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       onFocus={() => query.trim() && setOpen(true)}
-                      className="w-[240px] h-[40px] px-3 bg-transparent text-gray-800 text-[13px] placeholder:text-gray-500 focus:outline-none"
+                      className="flex-1 h-full bg-transparent text-gray-800 text-[13px] placeholder:text-gray-500 focus:outline-none"
                     />
                   </div>
                 </div>

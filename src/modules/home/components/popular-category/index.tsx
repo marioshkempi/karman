@@ -52,7 +52,7 @@ export default async function PopularCategories() {
           {/* Mobile: 1 column stacked, Desktop: 5 column grid */}
           <div className="flex flex-col gap-3 lg:grid lg:grid-cols-5 lg:gap-4">
             {FALLBACK_CATEGORIES.map((category, index) => (
-              <div key={index} className="relative w-full h-[180px] lg:h-[281px] overflow-hidden rounded-lg group">
+              <div key={index} className="relative w-full h-[213px] lg:h-[281px] overflow-hidden rounded-[8px] group">
                 <img
                   src={category.image}
                   alt=""
@@ -115,7 +115,7 @@ function PopularCategoryCard({ item, ctaText }: { item: any; ctaText: string }) 
   const isExternal = href.startsWith('http');
 
   const content = (
-    <div className="relative w-full h-[180px] lg:h-[281px] overflow-hidden rounded-lg group">
+    <div className="relative w-full h-[213px] lg:h-[281px] overflow-hidden rounded-[8px] group">
       {item.image_url ? (
         <img
           src={item.image_url}

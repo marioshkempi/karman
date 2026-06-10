@@ -1,48 +1,64 @@
-import { ArrowUpRightMini } from "@medusajs/icons"
 import { Metadata } from "next"
+import { Car } from "lucide-react"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import { getTranslations } from "next-intl/server"
 
 export const metadata: Metadata = {
   title: "404",
   description: "Η σελίδα δεν βρέθηκε",
 }
 
-export default async function NotFound() {
-  const t = await getTranslations()
-
+export default function NotFound() {
   return (
-    <main className="grid min-h-[calc(100vh-64px)] place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
-      <div className="text-center">
-        <p className="text-base font-semibold text-primary">404</p>
+    <main className="flex flex-col items-center justify-center bg-white px-6 py-16 sm:py-24 text-center">
+      {/* 404 graphic */}
+      <div className="flex items-center justify-center gap-1 sm:gap-3">
+        <span className="text-[#1A2B3C] font-extrabold leading-none text-[100px] sm:text-[150px] lg:text-[180px]">
+          4
+        </span>
 
-        <h1 className="mt-4 text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
-          {t("notFound.title")}
-        </h1>
+        {/* circular road / "0" */}
+        <div className="relative shrink-0 w-[120px] h-[120px] sm:w-[170px] sm:h-[170px] lg:w-[200px] lg:h-[200px]">
+          {/* road ring */}
+          <div className="absolute inset-0 rounded-full border-[14px] sm:border-[20px] border-[#4D4D4D]" />
+          {/* dashed center line on the road */}
+          <div className="absolute inset-[14px] sm:inset-[20px] rounded-full border-2 border-dashed border-white/70" />
 
-        <p className="mt-6 text-lg font-medium text-gray-500 sm:text-xl">
-          {t("notFound.message")}
-        </p>
-
-        <div className="mt-10 flex items-center justify-center gap-x-6">
-          <LocalizedClientLink
-            href="/"
-            className="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-white shadow hover:bg-secondary"
-          >
-            {t("notFound.backHome")}
-          </LocalizedClientLink>
-
-          <LocalizedClientLink
-            href="/contact-us"
-            className="text-sm font-semibold text-gray-900 flex items-center gap-x-1 group"
-          >
-            {t("notFound.contactSupport")}
-            <ArrowUpRightMini
-              className="group-hover:rotate-45 transition duration-150"
+          {/* orbiting cars (clockwise) */}
+          <div className="absolute inset-0 karman-404-orbit">
+            <Car
+              className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 text-[#FF8C00] w-5 h-5 sm:w-6 sm:h-6"
+              fill="#FF8C00"
+              aria-hidden="true"
             />
-          </LocalizedClientLink>
+          </div>
+
+          {/* orbiting car (counter-clockwise) */}
+          <div className="absolute inset-0 karman-404-orbit-reverse">
+            <Car
+              className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 text-[#1A2B3C] w-5 h-5 sm:w-6 sm:h-6"
+              fill="#1A2B3C"
+              aria-hidden="true"
+            />
+          </div>
         </div>
+
+        <span className="text-[#1A2B3C] font-extrabold leading-none text-[100px] sm:text-[150px] lg:text-[180px]">
+          4
+        </span>
       </div>
+
+      {/* text */}
+      <h1 className="mt-8 text-2xl sm:text-3xl font-bold text-[#1A2B3C]">
+        404 Error
+      </h1>
+
+      {/* button */}
+      <LocalizedClientLink
+        href="/"
+        className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#FF8C00] px-6 py-3 text-sm sm:text-base font-semibold text-white transition-colors hover:bg-[#E67E00]"
+      >
+        Επιστροφή στην αρχική σελίδα
+      </LocalizedClientLink>
     </main>
   )
 }

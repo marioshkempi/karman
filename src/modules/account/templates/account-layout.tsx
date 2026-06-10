@@ -42,11 +42,9 @@ const AccountLayout: React.FC<AccountLayoutProps> = ({
         </div>
       </div>
 
-      {customer && (
-        <div className="mt-8">
-          <NewsletterSignup />
-        </div>
-      )}
+      <div className="mt-8">
+        <NewsletterSignup />
+      </div>
     </div>
   )
 }

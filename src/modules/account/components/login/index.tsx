@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from "react"
-import { Eye, EyeOff } from "lucide-react"
 import { LOGIN_VIEW } from "@modules/account/templates/login-template"
 import { login } from "@lib/data/customer"
 import ErrorMessage from "@modules/checkout/components/error-message"
@@ -14,65 +13,84 @@ type Props = {
 }
 
 const LoginForm = ({ setCurrentView }: Props) => {
-  const [showPassword, setShowPassword] = useState(false)
   const [message, formAction, isPending] = useActionState(login, null)
   const t = useTranslations()
 
   return (
-    <div className="px-0 py-5 lg:px-8">
-      <div className="max-w-[720px] mx-auto">
-        <h1 className="text-primary2 text-[20px] sm:text-[32px] font-semibold text-center mb-6">
-          {t("login.title")}
-        </h1>
-
-        <div className="border border-primary2 bg-white p-6 sm:p-8">
-          <form action={formAction} className="space-y-6">
-            <Input
-              type="email"
-              name="email"
-              required
-              autoComplete="email"
-              className="w-full px-4 py-3 border border-primary2 text-primary2 focus:outline-none focus:ring-2 focus:ring-primary2/40 bg-white"
-              label={t("login.email")}
-            />
-
-            <Input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              required
-              autoComplete="current-password"
-              label={t("login.password")}
-            />
-
-            <ErrorMessage error={message} />
-
-            <div className="text-center flex flex-col space-y-3">
-              <button
-                type="button"
-                className="text-primary2 text-[14px] hover:underline"
-                onClick={() => setCurrentView(LOGIN_VIEW.FORGOTPASSWORD)}
-              >
-                {t("login.forgotPassword")}
-              </button>
-
-              <button
-                type="submit"
-                disabled={isPending}
-                className="w-full sm:w-1/2 bg-primary2 text-white text-[18px] font-semibold py-3 hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed mx-auto"
-              >
-                {isPending ? t("login.submitting") : t("login.submit")}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setCurrentView(LOGIN_VIEW.REGISTER)}
-                className="text-primary2 text-[14px] hover:underline"
-              >
-                {t("login.noAccount")}
-              </button>
-            </div>
-          </form>
+    <div className="px-0 py-8 lg:px-8">
+      <div className="w-full max-w-[480px] mx-auto">
+        {/* Tabs */}
+        <div className="flex items-center justify-center gap-8 mb-4">
+          <button
+            type="button"
+            className="text-[24px] leading-[32px] font-extrabold text-[#1A2B3C]"
+            style={{ fontFamily: "Manrope, sans-serif" }}
+          >
+            {t("login.loginAction")}
+          </button>
+          <button
+            type="button"
+            onClick={() => setCurrentView(LOGIN_VIEW.REGISTER)}
+            className="text-[24px] leading-[32px] font-normal text-[#94A3B8] hover:text-[#1A2B3C] transition-colors"
+            style={{ fontFamily: "Manrope, sans-serif" }}
+          >
+            {t("register.submit")}
+          </button>
         </div>
+
+        {/* Helper text */}
+        <p className="text-center text-[15px] text-[#94A3B8] mb-8">
+          Αν έχετε λογαριασμό, συνδεθείτε με το όνομα χρήστη ή το email σας.
+        </p>
+
+        <form action={formAction} className="flex flex-col gap-5">
+          <Input
+            type="email"
+            name="email"
+            required
+            autoComplete="email"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg text-[#1A2B3C] focus:outline-none focus:ring-2 focus:ring-[#007BFF]/30 bg-white"
+            label="Email ή Κωδικός"
+          />
+
+          <Input
+            type="password"
+            name="password"
+            required
+            autoComplete="current-password"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg text-[#1A2B3C] focus:outline-none focus:ring-2 focus:ring-[#007BFF]/30 bg-white"
+            label={t("login.password")}
+          />
+
+          <ErrorMessage error={message} />
+
+          {/* Remember me + forgot password */}
+          <div className="flex items-center justify-between">
+            <label className="flex items-center gap-2 text-[14px] text-[#1A2B3C] cursor-pointer">
+              <input
+                type="checkbox"
+                className="h-4 w-4 rounded border-gray-300 accent-[#007BFF]"
+              />
+              Να με θυμάσαι
+            </label>
+
+            <button
+              type="button"
+              className="text-[14px] text-[#007BFF] hover:underline"
+              onClick={() => setCurrentView(LOGIN_VIEW.FORGOTPASSWORD)}
+            >
+              {t("login.forgotPassword")}
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isPending}
+            className="w-full h-[42px] bg-[#007BFF] text-white text-[16px] font-semibold rounded-lg hover:bg-[#006ae0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isPending ? t("login.submitting") : t("login.submit")}
+          </button>
+        </form>
       </div>
     </div>
   )

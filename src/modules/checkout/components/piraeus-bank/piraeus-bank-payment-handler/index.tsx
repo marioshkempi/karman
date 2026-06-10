@@ -193,7 +193,7 @@ const PiraeusBankPaymentHandler: React.FC<PiraeusBankPaymentHandlerProps> = ({
         <button
           onClick={handleSubmitPayment}
           disabled={isProcessing}
-          className="w-full bg-primary rounded-[4px] px-4 py-3 text-center text-white font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full bg-[#FF8C00] rounded-[4px] px-4 py-3 text-center text-white font-medium hover:bg-[#E67E00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
           {isProcessing ? (
             <>

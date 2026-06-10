@@ -207,9 +207,78 @@ mark {
     background-color: #CCCC99;
 }
 
+#search-dropdown mark {
+    background-color: transparent;
+    color: #5B9AFF;
+    font-weight: 600;
+}
+
 .prod-list-desc * {
     font-weight: normal !important;
     background: transparent !important;
+}
+
+@keyframes karman-404-orbit {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes karman-404-orbit-reverse {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+.karman-404-orbit {
+    animation: karman-404-orbit 8s linear infinite;
+}
+
+.karman-404-orbit-reverse {
+    animation: karman-404-orbit-reverse 11s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .karman-404-orbit,
+    .karman-404-orbit-reverse {
+        animation: none;
+    }
+}
+
+/* Reassurance row: hide scrollbar + auto-scroll on mobile */
+.karman-reassurance-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.karman-reassurance-scroll {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+@keyframes karman-reassurance-marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.karman-reassurance-marquee {
+    animation: karman-reassurance-marquee 22s linear infinite;
+    width: max-content;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .karman-reassurance-marquee {
+        animation: none;
+    }
 }
 
 /*

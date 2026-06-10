@@ -46,7 +46,7 @@ const PiraeusBankPaymentButton: React.FC<PiraeusBankPaymentButtonProps> = ({
       <button
         disabled={isDisabled}
         onClick={handlePayment}
-        className=" bg-primary rounded-[4px] px-4 py-2.5 sm:py-3 text-center text-white font-medium   disabled:cursor-not-allowed"
+        className=" bg-[#FF8C00] rounded-[4px] px-4 py-2.5 sm:py-3 text-center text-white font-medium hover:bg-[#E67E00] transition-colors  disabled:cursor-not-allowed"
         data-testid={dataTestId || "piraeus-payment-button"}
       >
         {submitting ? t("common.loading") : t("checkout.completeOrder")}

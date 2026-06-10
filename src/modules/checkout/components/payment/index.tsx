@@ -486,7 +486,7 @@ const Payment = ({
               (isStripe && !cardComplete) ||
               (!selectedPaymentMethod && !paidByGiftcard)
             }
-            className="mt-6 w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-primary rounded text-white text-[14px] sm:text-base font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            className="mt-6 w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-[#FF8C00] rounded text-white text-[14px] sm:text-base font-medium hover:bg-[#E67E00] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             data-testid="submit-payment-button"
           >
             {isLoading || isInitiating

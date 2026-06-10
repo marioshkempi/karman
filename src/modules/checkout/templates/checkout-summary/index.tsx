@@ -7,9 +7,9 @@ const CheckoutSummary = async ({ cart }: { cart: any }) => {
 
   return (
     <div className="w-full h-full flex flex-col-reverse small:flex-col gap-y-8 py-8 small:py-0">
-      <div className="w-full flex flex-col bg-lightyellow px-6 md:pr-30 py-4 h-full min-h-[700px]">
+      <div className="w-full flex flex-col bg-[#F9F9FB] rounded-[20px] border border-black/10 px-6 md:pr-30 py-6 h-full min-h-[700px]">
         <h2
-          className="flex flex-row text-secondary text-2xl-regular font-black items-baseline"
+          className="flex flex-row text-[#1A2B3C] text-2xl-regular font-black items-baseline"
         >
           {t("checkout.cartSummary")}
         </h2>
